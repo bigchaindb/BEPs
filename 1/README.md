@@ -40,9 +40,9 @@ C4 is meant to provide a reusable optimal collaboration model for open source so
 
 ### 2.2. Licensing and Ownership
 
-1. The project SHALL use a share-alike license such as the MPLv2, or a GPLv3 variant thereof (GPL, LGPL, AGPL).
+1. The project SHALL use a license such as Apache 2, MIT, MPLv2, or a GPLv3 variant thereof (GPL, LGPL, AGPL).
 1. All contributions to the project source code ("patches") SHALL use the same license as the project.
-1. All patches are owned by their authors. There SHALL NOT be any copyright assignment process.
+1. There MAY be a copyright assignment process for patches submitted by new Contributors.
 1. Each Contributor SHALL be responsible for identifying themselves in the project Contributor list.
 
 ### 2.3. Patch Requirements
