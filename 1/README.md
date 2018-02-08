@@ -5,6 +5,8 @@ status: raw
 editor: Alberto Granzotto <alberto@bigchaindb.com>
 ```
 
+Apart from section 2.2, this RFC is equivalent to the [unprotocols 1/C4](https://github.com/unprotocols/rfc/blob/master/1/README.md).
+
 ## Abstract
 
 C4 provides a standard process for contributing, evaluating and discussing improvements on software projects. It defines specific technical requirements for projects like a style guide, unit tests, `git` and similar platforms. It also establishes different personas for projects, with clear and distinct duties. C4 specifies a process for documenting and discussing issues including seeking consensus and clear descriptions, use of "pull requests" and systematic reviews.
