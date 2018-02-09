@@ -3,18 +3,18 @@ shortname: 2/COSS
 name: Consensus-Oriented Specification System
 status: raw
 editor: Alberto Granzotto <alberto@bigchaindb.com>
+contributors: Troy McConaghy <troy@bigchaindb.com>, Katha Griess <katha@bigchaindb.com>
 ```
 
 This document describes a consensus-oriented specification system (COSS) for building interoperable technical specifications. COSS is based on a lightweight editorial process that seeks to engage the widest possible range of interested parties and move rapidly to consensus through working code.
 
-This specification is based on the original [Digistan 1/COSS](http://www.digistan.org/spec:1/COSS)
-
+This specification is based on [unprotocols.org 2/COSS](https://rfc.unprotocols.org/spec:2/COSS/) and on [EIP1 - EIP Purpose and Guidelines](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1.md).
 
 ## Change Process
 This document is governed by the [2/COSS](../2/README.md) (COSS).
 
 ## Language
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119)
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [BCP 14](https://tools.ietf.org/html/bcp14) \[[RFC2119](https://tools.ietf.org/html/rfc2119)\] \[[RFC8174](https://tools.ietf.org/html/rfc8174)\] when, and only when, they appear in all capitals, as shown here.
 
 ## Goals
 The primary goal of COSS is to facilitate the process of writing, proving, and improving new technical specifications. A "technical specification" defines a protocol, a process, an API, a use of language, a methodology, or any other aspect of a technical environment that can usefully be documented for the purposes of technical or social interoperability.
@@ -34,25 +34,26 @@ Specifications should take minutes to explain, hours to design, days to write, w
 
 Specifications have no special status except that accorded by the community.
 
+The author of the specification is responsible for building consensus within the community and documenting dissenting opinions.
+
 ## Architecture
-COSS is designed around fast, easy to use communications tools. Primarily, COSS uses a wiki model for editing and publishing specifications texts.
 
-* The *domain* is the conservancy for a set of specifications in a certain area.
-* Each domain is implemented as an Internet domain, hosting a wiki and optionally other communications tools.
-* Each specification is a set of wiki pages, together with comments, attached files, and other resources.
-* Important specifications may also exist as subdomains, i.e. child wikis.
+### Types of specification
+There are three types of specifications:
+* A **Standard Track Specification** describes any change to network protocols, transaction validity rules, proposed application standards/conventions, or any change or addition that affects the interoperability of applications using BigchainDB products.
+* An **Informational Specification** describes a BigchainDB design issue, or provides general guidelines or information to the BigchainDB community, but does not propose a new feature. Informational Specifications do not necessarily represent BigchainDB community consensus or a recommendation, so users and implementers are free to ignore Informational Specifications or follow their advice.
+* A **Meta Specification** describes a process surrounding BigchainDB or proposes a change to a process.
 
-Individuals can become members of the domain by completing the necessary legal clearance. The copyright, patent, and trademark policies of the domain must be clarified in an Intellectual Property policy that applies to the domain.
+### Specification Format
+A specification is a set of Markdown documents (the main file SHOULD be called `README.md`), together with comments, attached files, and other resources. A specification is identified by its number and short name (e.g. this specification is **2/COSS**). The number of the specification is also the name of the directory where its files are stored.
 
-Specifications exist as multiple pages, one page per version of the specification (see "Branching and Merging", below), which may be assigned URIs that include an incremental number. Thus, we refer to a specification by specifying its domain, number, and short name. New versions of the same specification will have new numbers. The syntax for a specification reference is:
+Every specification (including branches) carries a different number. New versions of the same specification have new numbers.
 
+### Specification template
+TBD: Embed Muawia work here https://github.com/bigchaindb/bigchaindb/tree/master/proposals
 
-  <domain>/spec:<number>/<shortname>
-
-
-For example, this specification is **rfc.unprotocols.org/spec:2/COSS**. The short form **2/COSS** may be used when referring to the specification from other specifications in the same domain.
-
-Every specification (including branches) carries a different number. Lower numbers indicate more mature specifications, higher numbers indicate more experimental specifications.
+### Copyright Waiver
+All Specifications MUST be in public domain. The only two exceptions are 1/C4 and 2/COSS, licensed under GPL.
 
 ## COSS Lifecycle
 Every specification has an independent lifecycle that documents clearly its current status.
