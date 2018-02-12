@@ -53,7 +53,9 @@ Every specification (including branches) carries a different number. New version
 TBD: Embed Muawia work here https://github.com/bigchaindb/bigchaindb/tree/master/proposals
 
 ### Copyright Waiver
-All Specifications MUST be in public domain. The only two exceptions are 1/C4 and 2/COSS, licensed under GPL.
+Except for 1/C4 and 2/COSS, all Specifications MUST be released to the public domain.
+The following waiver SHOULD be used:
+> To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work.
 
 ## COSS Lifecycle
 Every specification has an independent lifecycle that documents clearly its current status.
@@ -98,7 +100,7 @@ Any member of the domain MAY branch a specification at any point. This is done b
 
 The responsible editor of a branched specification is the person who makes the branch.
 
-Branches, including added contributions, are derived works and thus licensed under the same terms as the original specification. This means that contributors are guaranteed the right to merge changes made in branches back into their original specifications.
+Branches, including added contributions, SHOULD be dedicated to the public domain using CC0 (just like the original specification). This means that contributors are guaranteed the right to merge changes made in branches back into their original specifications.
 
 Technically speaking, a branch is a *different* specification, even if it carries the same name. Branches have no special status except that accorded by the community.
 
