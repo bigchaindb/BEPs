@@ -50,12 +50,35 @@ A specification is a set of Markdown documents (the main file SHOULD be called `
 Every specification (including branches) carries a different number. New versions of the same specification have new numbers.
 
 ### Specification template
-TBD: Embed Muawia work here https://github.com/bigchaindb/bigchaindb/tree/master/proposals
+Each Specification MUST customize and include this header:
+````
+```
+shortname: [number/shortname]
+name: [Full name of the specification]
+type: [standard track | informational | meta ]
+status: [raw | draft | stable | deprecated | retired | deleted]
+editor: [Editor Name <email address>]
+contributors: [Optional Contributor 1 <email address>, ..., Optional Contributor N <email address>]
+```
+````
+_Note: the `number` is assigned after a specification has been submitted._
 
-### Copyright Waiver
-Except for 1/C4 and 2/COSS, all Specifications MUST be released to the public domain.
-The following waiver SHOULD be used:
-> To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work.
+Each Specification SHOULD include the following sections:
+
+1. **Abstract**. The abstract is a short (~200 word) description of the technical issue being addressed.
+
+1. **Motivation**. The motivation is critical for specifications that want to change the BigchainDB protocol. It should clearly explain why the existing protocol specification is inadequate to address the problem that the specification solves. Specification submissions without sufficient motivation may be rejected outright.
+
+1. **Specification**: The technical specification should describe the syntax and semantics of any new feature. The specification should be detailed enough to allow competing, interoperable implementations. It MAY describe the impact on data models, API endpoints, security, performance, end users, deployment, documentation, and testing.
+
+1. **Rationale**. The rationale fleshes out the specification by describing what motivated the design and why particular design decisions were made. It should describe alternate designs that were considered and related work, e.g. how the feature is supported in other languages. The rationale may also provide evidence of consensus within the community, and should discuss important objections or concerns raised during discussion.
+
+1. **Backwards Compatibility**. All specifications that introduce backwards incompatibilities must include a section describing these incompatibilities and their severity. The specification must explain how the author proposes to deal with these incompatibilities. Specification submissions without a sufficient backwards compatibility treatise may be rejected outright.
+
+1. **Implementation**. The implementations must be completed before any specification is given status "stable", but it need not be completed before the specification is accepted. While there is merit to the approach of reaching consensus on the specification and rationale before writing code, the principle of "rough consensus and running code" is still useful when it comes to resolving many discussions of API details.
+
+1. **Copyright Waiver**. Except for 1/C4 and 2/COSS, all specifications MUST be released to the public domain. The following waiver SHOULD be used: _To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work._
+
 
 ## COSS Lifecycle
 Every specification has an independent lifecycle that documents clearly its current status.
