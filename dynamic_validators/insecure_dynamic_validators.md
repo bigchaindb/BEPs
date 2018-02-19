@@ -72,7 +72,7 @@ NOTE: a validators diff which results in a change of `>1/3` of voting power will
 
 ### Workflow overview
 Below is a summary of workflow sequence which should be executed in order to add/remove a validator dynamically,
-- BigchainDB client wishes to add/remove validators from their own node.
+- BigchainDB node operator wishes to add/update/delete a validator from their own node.
 - The admin use `bigchaindb upsert-validator` to add the validator,
 - BigchainDB stores the payload in a MongoDB collection as follows,
 ```json
