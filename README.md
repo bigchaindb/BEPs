@@ -2,12 +2,12 @@
 
 # BigchainDB Enhancement Proposals (BEPs)
 
-This is the BigchainDB Enhancement Proposal project. We collect specifications for APIs, protocols, and processes.
+This is the BigchainDB Enhancement Proposal project. We collect BEPs for APIs, protocols, and processes.
 
-The process to add or change an EIP is the following:
-- A specification is created and modified by pull requests according to [C4](./1).
-- Specification lifecycle SHOULD follow the lifecycle defined in [COSS](./2).
-- Non-cosmetic changes are allowed only on [Raw](./2#raw-specifications) and [Draft](./2#draft-specifications) specifications.
+The process to add or change a BEP is the following:
+- A BEP is created and modified by pull requests according to [C4](./1).
+- BEP lifecycle SHOULD follow the lifecycle defined in [COSS](./2).
+- Non-cosmetic changes are allowed only on [Raw](./2#raw-beps) and [Draft](./2#draft-beps) specifications.
 
 # Current BEPs
 
