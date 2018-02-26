@@ -11,7 +11,7 @@ The process to add or change an EIP is the following:
 
 # Current BEPs
 
-Short Name | Title                                                        | Type     | Status     | Editor
------------|--------------------------------------------------------------|----------|------------|-------
-1/C4       | Collective Code Construction Contract                        | Meta     | Raw        | Alberto Granzotto
-2/COSS     | Consensus-Oriented Specification System                      | Meta     | Raw        | Alberto Granzotto
+Short Name    | Title                                                        | Type     | Status     | Editor
+--------------|--------------------------------------------------------------|----------|------------|-------
+[1/C4](1)     | Collective Code Construction Contract                        | Meta     | Raw        | Alberto Granzotto
+[2/COSS](2)   | Consensus-Oriented Specification System                      | Meta     | Raw        | Alberto Granzotto
