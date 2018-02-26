@@ -1,6 +1,7 @@
 ```
 shortname: 1/C4
 name: Collective Code Construction Contract
+type: Meta
 status: raw
 editor: Alberto Granzotto <alberto@bigchaindb.com>
 ```
