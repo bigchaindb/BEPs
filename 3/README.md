@@ -1,4 +1,11 @@
-# Dynamically add/remove validators at runtime (Insecure version)
+```
+shortname: 3/UPSERT-VALIDATORS
+name: Dynamically add/remove validators at runtime (Insecure version)
+type: Feature
+status: raw
+editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
+```
+
 
 ## Problem Description
 In the current state of tendermint bdb, validator nodes are specified in the Tendermint config file before starting the node. It is necessary that the users should be able to dynamically add new validators.
