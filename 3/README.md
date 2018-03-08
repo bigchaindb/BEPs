@@ -1,7 +1,7 @@
 ```
 shortname: 3/UPSERT-VALIDATORS
 name: Dynamically add/remove validators at runtime (Insecure version)
-type: Feature
+type: standard
 status: raw
 editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
 ```
@@ -132,3 +132,7 @@ N/A
 ## Reference(s)
 - [Updating validators during `end_block`](http://tendermint.readthedocs.io/en/master/app-development.html#endblock)
 - [Tendermint validators](http://tendermint.readthedocs.io/en/master/specification/validators.html)
+
+
+## Copyright Waiver
+To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work.
