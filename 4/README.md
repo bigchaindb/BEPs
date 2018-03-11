@@ -66,13 +66,13 @@ If the incoming it _is_ encrypted (and there is some way to check, which there i
 
 Anyway, there's a worse problem. Here's a thought experiment:
 
-> Joe Criminal uploads some encrypted illegal data to your node somehow. Then he uploads _the decryption key_. Now anyone can get the encrypted illegal data and the decryption key and it's as if the data was never encrypted. They can get the unencrypted illegal data.
+> Monica the Criminal uploads some encrypted illegal data to your node somehow. Then she uploads _the decryption key_. Now anyone can get the encrypted illegal data and the decryption key and it's as if the data was never encrypted. They can get the unencrypted illegal data.
 
 ### Allow Only Hashed Data!
 
 (There might be a way to make this work, but how _depressing_ if the only thing you are allowed to store is hashes!) To first order, if you allow arbitrary hashes to come in, then here's your thought experiment of how to use that to upload illegal data:
 
-> Joe Criminal takes his illegal data file. You can think of it as a sequence of zeroes and ones. Now he starts sending each zero and one, one at a time. It's a zero if the hash (as binary) starts with 0, and 1 otherwise. This is slow but will work as a proof of concept. You could speed this up, but the result is the same: allowing arbitrary hashes is like allowing arbitrary data, over time.
+> Richard the Criminal gets an illegal data file. You can think of it as a sequence of zeroes and ones. Now he starts sending each zero and one, one at a time, as follows. It's a zero if the hash (as binary) starts with 0, and 1 otherwise. This is slow but will work as a proof of concept. You could speed this up, but the result is the same: allowing arbitrary hashes is like allowing arbitrary data, over time.
 
 Exercise for the reader: what could you do to prevent the above technique? There's a way. It's fun.
 
@@ -82,7 +82,7 @@ What if you just prevent anyone from writing to the network except for, say, the
 
 Again, here's a thought experiment:
 
-> Joe Criminal breaks into the office of Node Operator Susan at 3:00 am. He uses one of those things to make a nice circle in the glass, like in the movies. Or something. Anyway, he gets in. He sits at Susan's computer, he turns it on, enters the password from the sticky note on the montior, and he's in. (Maybe he got the password some other way, like social engineering. It's not that hard to make someone believe you need their password, or to trick them into telling it to you.) Now he uploads some illegal data because Susan's computer thinks he is Susan who has access. Done.
+> Julie the Criminal breaks into the office of Node Operator Fred at 3:00 am. She uses one of those things to make a nice circle in the glass, like in the movies. Or something. Anyway, she gets in. She sits at Fred's computer, she turns it on, enters the password from the sticky note on the montior, and she's in. (Maybe she got the password some other way, like social engineering. It's not that hard to make someone believe you need their password, or to trick them into telling it to you.) Now she uploads some illegal data because Fred's computer thinks she is Fred, who has access. Done.
 
 Read [_The Art of Deception: Controlling the Human Element of Security_](https://www.amazon.com/Art-Deception-Controlling-Element-Security/dp/076454280X), by by Kevin Mitnick, Wiley, 2003. 
 
