@@ -169,6 +169,8 @@ Following documents will be impacted:
 
 - [CONTRIBUTING.md](https://github.com/bigchaindb/bigchaindb/blob/tendermint/CONTRIBUTING.md)
 - [Run BigchainDB with Docker](https://docs.bigchaindb.com/projects/server/en/tendermint/appendices/run-with-docker.html)
+- [tests/README.d](https://github.com/bigchaindb/bigchaindb/blob/tendermint/tests/README.md)
+- [TENDERMINT_INTEGRATION.rst](https://github.com/bigchaindb/bigchaindb/blob/tendermint/TENDERMINT_INTEGRATION.rst)
 
 
 ### Testing impact
