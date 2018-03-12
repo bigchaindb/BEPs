@@ -1,5 +1,5 @@
 ```
-shortname: 6/PUBLIC-API
+shortname: 7/PUBLIC-API
 name: Definition of the BigchainDB Public API
 type: Informational
 status: raw
