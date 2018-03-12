@@ -67,10 +67,13 @@ There are multiple problems with our current workflow and directory structure wh
 - Update the workflows with the new deployment workflow(s).
   - Update `docker-compose.yml` to support the current deployment strategy i.e. BigchainDB + Tendermint + Stand alone MongoDB.
 - Integrate the development and CI compose file(s) in such a way that there are minimal differences and they can be tested on a CI, also rename the files:
-  - `docker-compose.yml` should have the base services i.e.
-  BigchainDB, MongoDB, Tendermint and any tools on top can be made part of `docker-compose.dev.yml`
-    - docker-compose.travis.yml -> docker-compose.yml
-    - docker-compose.tendermint.yml -> docker-compose.dev.yml
+  - `docker-compose.yml` will have the base services i.e.
+  BigchainDB, MongoDB, Tendermint started with:
+    - `docker-compose up bdb`
+  - Any tools used to help with development, `bigchaindb-driver`, `nginx`, and `curl-client`,can be brought up using:
+    - `docker-compose up curl-client`
+    - `docker-compose up bdb-driver`
+    - `docker-compose up vdocs`
 
 - Update the MongoDB and Tendermint version(s) to the latest supported version:
 
@@ -83,7 +86,7 @@ There are multiple problems with our current workflow and directory structure wh
 
 - Remove `compose/bigchaindb-server`, `compose-bigchaindb-driver`, and `compose/travis`.
 
-- [IF NEEDED]: Introduce `bigchaindb/tools` directory for tools required for development i.e.
+- [IF NEEDED]: Introduce `bigchaindb/tools` directory to handle `Dockerfile`(s) for tools required for development i.e.
   - `bigchaindb-driver`
     - Python driver to interact and transact with the BigchainDB server.
   - `curl-client`
@@ -91,17 +94,6 @@ There are multiple problems with our current workflow and directory structure wh
   - `nginx`
     - For hosting docs
 
-### Technical challenges
-N/A
-
-### API impact
-N/A
-
-### Security impact
-N/A
-
-### Performance impact
-N/A
 
 ### End user impact
 This will impact and introduce ease for end users i.e. users deploying BigchainDB for development and testing.
@@ -111,10 +103,6 @@ This will impact and introduce ease for end users i.e. users deploying BigchainD
 ```
 # For development/testing and CI
 docker-compose build
-
-# For development with tools e.g. bigchaindb-driver,curl-client, nginx(hosting docs),
-# everything else is inherited from docker-compose.yml
-docker-compose -f docker-compose.dev.yml build
 ```
 
 **Run**
@@ -124,38 +112,18 @@ docker-compose -f docker-compose.dev.yml build
 docker-compose up bdb
 ```
 
-```
-# For development
-docker-compose -f docker-compose.dev.yml up bdb
-```
-
 **Run tests**
 ```
 # Without coverage
-docker-compose -f docker-compose.yml run --rm --no-deps bdb pytest -v
-
-OR
-
-# Without coverage and using dev file
-docker-compose -f docker-compose.dev.yml run --rm --no-deps bdb pytest -v
+docker-compose run --rm --no-deps bdb pytest -v
 
 # With coverage
-docker-compose -f docker-compose.yml run --rm --no-deps bdb pytest -v --cov=bigchaindb
-
-OR
-
-# With coverage and using dev file
-docker-compose -f docker-compose.dev.yml run --rm --no-deps bdb pytest -v --cov=bigchaindb
+docker-compose run --rm --no-deps bdb pytest -v --cov=bigchaindb
 ```
 
 **Build docs**
 ```
-docker-compose -f docker-compose.yml run --rm --no-deps bdb make -C docs/server html
-
-OR
-
-# with dev file
-docker-compose -f docker-compose.dev.yml run --rm --no-deps bdb make -C docs/server html
+docker-compose run --rm --no-deps bdb make -C docs/server html
 ```
 
 
@@ -164,6 +132,7 @@ One impact on the deployment strategy is covered with earlier in the [End user i
 
 Another deployment impact this change will have is with CI, we will need to update the CI scripts @`bigchaindb/.ci` to use `docker-compose.yml` instead of `docker-compose.travis.yml`.
 
+
 ### Documentation impact
 Following documents will be impacted:
 
@@ -171,36 +140,26 @@ Following documents will be impacted:
 - [Run BigchainDB with Docker](https://docs.bigchaindb.com/projects/server/en/tendermint/appendices/run-with-docker.html)
 - [tests/README.d](https://github.com/bigchaindb/bigchaindb/blob/tendermint/tests/README.md)
 - [TENDERMINT_INTEGRATION.rst](https://github.com/bigchaindb/bigchaindb/blob/tendermint/TENDERMINT_INTEGRATION.rst)
+- [docs/contributing](https://github.com/bigchaindb/bigchaindb/pull/2119)
 
-
-### Testing impact
-[Impact here]
 
 ## Rationale
 Already covered with [Abstract](#abstract) and [Motivation](#motivation)
 
-## Backwards Compatibility
-N/A
-
 
 ## Implementation
+
 
 ### Assignee(s)
 Primary assignee(s): @muawiakh
 
+
 ### Targeted Release
-BigchainDB Tendermint MVP
+BigchainDB==v2.0
 
-
-### Dependencies
-N/A
 
 ### Status
 unstable
-
-
-### Reference(s)
-N/A
 
 
 ## Copyright Waiver
