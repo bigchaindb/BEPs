@@ -38,7 +38,6 @@ We also have multiple Dockerfiles in the repository:
   - Dockerfile used for development purposes.
 - compose/bigchaindb-driver/Dockerfile
   - Dockerfile used to spawn a container in development environment with bigchaindb-driver installed.
-    - This seems to be an invalid usecase for a separate container. In my opinion, `bigchaindb-driver` does not qualify as a service. It is just a python-package that can reside on a any of the containers, preferably BigchainDB.
 - compose/bigchaindb-server/Dockerfile
   - This is a duplicate of `Dockerfile-dev`
 - compose/travis/Dockerfile
