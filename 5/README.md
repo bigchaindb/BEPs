@@ -1,5 +1,5 @@
 ```
-shortname: 4/IDRP
+shortname: 5/IDRP
 name: Illegal Data Response Plan
 type: Informational
 status: raw
@@ -24,7 +24,7 @@ This is an **Informational BigchainDB Enhancement Proposal** (BEP) because it pr
 
 ## BEP Name
 
-This BEP can be referred to as "4/IDRP" or "BEP-4." The number might change if someont else proposes another BEP that becomes number 4.
+This BEP can be referred to as "5/IDRP" or "BEP-5." The number might change if someont else proposes another BEP that becomes number 5.
 
 ## Rationale
 
