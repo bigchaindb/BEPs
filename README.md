@@ -13,7 +13,8 @@ The process to add or change a BEP is the following:
 
 Short Name    | Title                                                        | Type     | Status     | Editor
 --------------|--------------------------------------------------------------|----------|------------|-------
-[1/C4](1)     | Collective Code Construction Contract                        | Meta     | Raw        | Alberto Granzotto
-[2/COSS](2)   | Consensus-Oriented Specification System                      | Meta     | Raw        | Alberto Granzotto
+[1/C4](1)     | Collective Code Construction Contract                        | Meta     | Draft      | Alberto Granzotto
+[2/COSS](2)   | Consensus-Oriented Specification System                      | Meta     | Draft      | Alberto Granzotto
 [3/UPSERT-VALIDATORS](3) | Dynamically add/remove validators at runtime (Insecure version)  | Standard | Raw | Vanshdeep Singh
+[4/STANDARIDIZE-DC](4) | Standard process to set up a local node for development & testing, using Docker Compose | Standard | Raw | Muawia Khan
 [7/PUBLIC_API](7) | Definition of the BigchainDB Public API                  | Informational | Raw   | Troy McConaghy
