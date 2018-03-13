@@ -17,4 +17,4 @@ Short Name    | Title                                                        | T
 [2/COSS](2)   | Consensus-Oriented Specification System                      | Meta     | Draft      | Alberto Granzotto
 [3/UPSERT-VALIDATORS](3) | Dynamically add/remove validators at runtime (Insecure version)  | Standard | Raw | Vanshdeep Singh
 [4/STANDARIDIZE-DC](4) | Standard process to set up a local node for development & testing, using Docker Compose | Standard | Raw | Muawia Khan
-[7/PUBLIC_API](7) | Definition of the BigchainDB Public API                  | Informational | Raw   | Troy McConaghy
+[7/PUBLIC-API](7) | Definition of the BigchainDB Public API                  | Informational | Raw   | Troy McConaghy
