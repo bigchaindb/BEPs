@@ -2,7 +2,7 @@
 shortname: 2/COSS
 name: Consensus-Oriented Specification System
 type: Meta
-status: raw
+status: Draft
 editor: Alberto Granzotto <alberto@bigchaindb.com>
 contributors: Troy McConaghy <troy@bigchaindb.com>, Katha Griess <katha@bigchaindb.com>
 ```
