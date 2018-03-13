@@ -1,5 +1,5 @@
 ```
-shortname: 4/STANDARIDIZE-DC
+shortname: 4/STANDARDIZE-DC
 name: Standard process to set up a local node for development & testing, using Docker Compose
 type: standard
 status: raw

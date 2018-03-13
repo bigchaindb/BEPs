@@ -25,7 +25,7 @@ Note: `"power": 0` implies that the validator should be removed from the validat
 
 
 ## Proposed Change
-- Add a new subcommand `bighciandb upsert-validator PUBLIC_KEY POWER` which will allow the node operator to add/update/delete a validator.
+- Add a new subcommand `bigchaindb upsert-validator PUBLIC_KEY POWER` which will allow the node operator to add/update/delete a validator.
 
 - `GET /api/v1/validators` should be introduced to list the current validators.
 
