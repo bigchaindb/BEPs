@@ -1,5 +1,30 @@
 **DISCLAIMER: THIS IS A WORK IN PROGRESS**
 
+# Current Participants
+
+## Contributors
+
+- Anyone who wants to contribute
+- The whole [BigchainDB Team in Berlin](https://github.com/orgs/bigchaindb/people)
+
+## Maintainers
+
+- Troy - @ttmc
+- Alberto - @vrde
+- Vanshdeep - @kansi
+- More! Ask if you can be one.
+
+## Administrators (Founders and Others)
+
+- Kamal - @GataKamsky
+- Gautaum - @gautamdhameja
+- Alberto - @vrde
+- Vanshdeep - @kansi
+- Troy - @ttmc
+- Trent - @trentmc (Inactive but advising)
+
+Note: Administrators serve limited terms of six months or less. That's the idea, anyway.
+
 # BigchainDB Enhancement Proposals (BEPs)
 
 This is the BigchainDB Enhancement Proposal project. We collect BEPs for APIs, protocols, and processes.
