@@ -12,6 +12,8 @@
 - Troy - @ttmc
 - Alberto - @vrde
 - Vanshdeep - @kansi
+- Katha - @codegeschrei - Python Driver
+- Manolo - @manolodewiner - JavaScript Driver
 - More! Ask if you can be one.
 
 ## Administrators (Founders and Others)
