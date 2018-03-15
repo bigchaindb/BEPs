@@ -1,5 +1,5 @@
 ```
-shortname: ?/CRASH-RECOVERY
+shortname: 8/CRASH-RECOVERY
 name: Restore system state after crash
 type: standard
 status: raw
