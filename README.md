@@ -1,5 +1,37 @@
 **DISCLAIMER: THIS IS A WORK IN PROGRESS**
 
+# Current Participants
+
+## Contributors
+
+- Anyone who wants to contribute
+- The whole [BigchainDB Team in Berlin](https://github.com/orgs/bigchaindb/people)
+
+## Maintainers
+
+Everyone with the ability to merge pull requests. Today that is mainly BigchainDB employees.
+
+In the future, we can add more people who are not BigchainDB employees as maintainers.
+
+Some people have specializations:
+
+- Python Driver: Katha
+- JavaScript Driver: Manolo
+- Core: Vanshdeep, Alberto
+- Docker, Kubernetes, NGINX: Shahbaz, Muawia
+- Docs: Troy
+
+## Administrators (Founders and Others)
+
+- Kamal - @GataKamsky
+- Gautaum - @gautamdhameja
+- Alberto - @vrde
+- Vanshdeep - @kansi
+- Troy - @ttmc
+- Trent - @trentmc (Inactive but advising)
+
+Note: Administrators serve limited terms of six months or less. That's the idea, anyway.
+
 # BigchainDB Enhancement Proposals (BEPs)
 
 This is the BigchainDB Enhancement Proposal project. We collect BEPs for APIs, protocols, and processes.
