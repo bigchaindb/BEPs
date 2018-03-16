@@ -18,7 +18,7 @@ Some people have specializations:
 - Python Driver: Katha
 - JavaScript Driver: Manolo
 - Core: Vanshdeep, Alberto
-- Kubernetes-related: Shahbaz, Muawia
+- Docker, Kubernetes, NGINX: Shahbaz, Muawia
 - Docs: Troy
 
 ## Administrators (Founders and Others)
