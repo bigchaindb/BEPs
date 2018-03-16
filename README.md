@@ -9,12 +9,9 @@
 
 ## Maintainers
 
-- Troy - @ttmc
-- Alberto - @vrde
-- Vanshdeep - @kansi
-- Katha - @codegeschrei - Python Driver
-- Manolo - @manolodewiner - JavaScript Driver
-- More! Ask if you can be one.
+Everyone with the ability to merge pull requests. Today that is mainly BigchainDB employees.
+
+In the future, we can add more people who are not BigchainDB employees as maintainers.
 
 ## Administrators (Founders and Others)
 
