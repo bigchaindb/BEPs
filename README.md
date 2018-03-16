@@ -13,6 +13,14 @@ Everyone with the ability to merge pull requests. Today that is mainly BigchainD
 
 In the future, we can add more people who are not BigchainDB employees as maintainers.
 
+Some people have specializations:
+
+- Python Driver: Katha
+- JavaScript Driver: Manolo
+- Core: Vanshdeep, Alberto
+- Kubernetes-related: Shahbaz, Muawia
+- Docs: Troy
+
 ## Administrators (Founders and Others)
 
 - Kamal - @GataKamsky
