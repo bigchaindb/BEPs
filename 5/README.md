@@ -4,6 +4,7 @@ name: Illegal Data Response Plan
 type: Informational
 status: raw
 editor: Troy McConaghy <troy@bigchaindb.com>
+reviewers: Kamal Ved, Alberto Granzotto, Dimitri De Jonghe, Sarah Vallon, Carsten Stöcker, Michael Rüther
 ```
 
 ## Abstract
