@@ -31,6 +31,12 @@ This BEP can be referred to as "5/IDRP" or "BEP-5." The number might change if s
 
 The immediate reason for writing this BEP was that a new BigchainDB consortium was starting and there were questions about what they should do about the illegal data should it show up on their computers somehow. Some were seriously wondering what they were getting themselves into.
 
+## About GDPR
+
+This BEP is not about how to comply with the European Union's [General Data Protection Regulation (GDPR)](https://www.eugdpr.org/). Look elsewhere for information about GDPR compliance.
+
+There are *rare* cases where GDPR-relevant data is also illegal data. This BEP can help you then, but only because the data is illegal, not because it is GDPR-relevant.
+
 ## The Illegal Data Response Plan
 
 Here's what we reccommend a node operator do if they discover illegal data stored on their computer because it was stored there by BigchainDB:
