@@ -169,7 +169,3 @@ Your consortium might have a variation of the IDPR. Your consortium can modify i
 ## Copyright Waiver
 
 _To the extent possible under law, the person who associated CC0 with this work_ (Troy McConaghy, editor) _has waived all copyright and related or neighboring rights to this work._
-
-## The Process to Change this BEP
-
-There's a process to change this BEP. It's the same for all BEPs. See [2/COSS](https://github.com/bigchaindb/BEPs/tree/master/2).
