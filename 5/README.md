@@ -4,7 +4,8 @@ name: Illegal Data Response Plan
 type: Informational
 status: raw
 editor: Troy McConaghy <troy@bigchaindb.com>
-reviewers: Kamal Ved, Alberto Granzotto, Dimitri De Jonghe, Sarah Vallon, Carsten Stöcker, Michael Rüther
+contributors: Carsten Stöcker
+reviewers: Kamal Ved, Alberto Granzotto, Dimitri De Jonghe, Sarah Vallon, Michael Rüther
 ```
 
 ## Abstract
@@ -15,7 +16,7 @@ If Joe is operating a BigchainDB node, he doesn't want to get fined, go to jail,
 
 We want people to use BigchainDB, not to be terrified of breaking the law if they do so. To do that, we:
 
-* Show BigchinDB node operators how they can avoid breaking the law. We provide a step-by-step **Illegal Data Response Plan (IDRP)**.
+* Show BigchinDB node operators how they can avoid breaking the law. We provide a step-by-step **Illegal Data Response Plan (IDRP)** ("Plan").
 * Aim to keep BichainDB node operators in good terms with the law.
 * Explain what they shouldn't do because it won't work, and why.
 
@@ -37,16 +38,27 @@ This BEP is not about how to comply with the European Union's [General Data Prot
 
 There are *rare* cases where GDPR-relevant data is also illegal data. This BEP can help you then, but only because the data is illegal, not because it is GDPR-relevant.
 
+## Who This Plan is for (and not for)
+
+The Plan is for smaller consortia who need *some* plan. It should be fine for them. It's an "MVP," a *Minimum Viable Plan*.
+
+The Plan is *not* for big consortia or companies. They can afford attorneys who can come up with something better.
+
+## The Need for Governance
+
+Coordinating execution the Plan will take some communication. The consortium members will all have to *agree* on what to do, and to do it. In short, there is a need for some minimal consortium *governance* for the Plan to get done and to work.
+
 ## The Illegal Data Response Plan
 
 Here's what we reccommend a node operator do if they discover illegal data stored on their computer because it was stored there by BigchainDB:
 
+1. Be sure that illegal data have been clearly identified. Have some reasonable, validated and difficult-to-dispute evidence that the data is illegal. Avoid [crying wolf](https://dictionary.cambridge.org/dictionary/english/cry-wolf).
 1. Publicly announce that you've discovered illegal data on your computer and that you are following the **Illegal Data Response Plan** spelled out here. You can link to this page. The process now begins. You are acting responsibly. The law will give you a a reasonable amount of time to act. (Unless you are in some really sucky jurisdiction. Use discretion.)
 1. Inform all other members of the BigchainDB consortium where your node is a cluster member. Tell them to follow the same plan.
 1. Contact BigchainDB GmbH at contact@bigchaindb.com or some other way. Employees tend to have an email like firstname@bigchaindb.com. This is like [the Bat-Signal](https://en.wikipedia.org/wiki/Bat-Signal). You need their help. They will help. They don't want you to get in trouble with the law either! That would be bad for BigchainDB. (Note: You don't _have_ to contact BigchainDB if you have developers who are competent to the next step without help.)
 1. The BigchainDB team (or your team) will work with you create a modified version of BigchainDB Server (software) that is okay with certain specific data being deleted. This the core magic bit. It means that soon you will be deleting data and breaking the "immutability rule" but there's _nothing_ that was stopping you from doing that before. You could always delete data, but it would have broken BigchainDB. Unless BigchainDB was modified not to care, which is what's now happening!
-1. Upgrade BigchainDB Server on your node to run the new version.
-1. Delete the illegal data.
+1. Upgrade BigchainDB Server on your node to run the new version. *All nodes in the network must do this upgrade.*
+1. Delete the illegal data. *All nodes in the network must do this deletion step.*
 1. [There's no place like home.](https://www.youtube.com/watch?v=ooM-RGUTe2E)
 
 Optional follow-up: a _second_ version of BigchainDB Server that will only believe the new situation, with the illegal data deleted is okay. The old situation, with the illegal data still there, should register as an error. Upgrade to that. 
@@ -61,7 +73,7 @@ Yes. And it gets you out of trouble with the law. You'll notice it's not easy to
 
 There are a lot of things that don't work. That's what the rest of this BEP is about: to convince you that those other ways will still land you in trouble with the law.
 
-### Fiter Incoming Data!
+### Filter Incoming Data!
 
 There's no way to detect all illegal data, not even using the best classifiers (Machine Learning) in the world. There are all kinds of tricks to fool classifiers. Like [Steganography](https://en.wikipedia.org/wiki/Steganography). Illegal data will get by. Now what?
 
@@ -102,7 +114,7 @@ Bitcoin and Ethereum are public networks and they haven't had problems with ille
 
 It won't work, but this one is more subtle to explain.
 
-First of all, it's just a matter of time until someone does upload illegal data to the Bitcoin or Ethereum blockchains. It just hasn't happened yet. You'll know when it happens. It will be on the news.
+First of all, it's just a matter of time until someone does upload illegal data to the Bitcoin or Ethereum blockchains. It just hasn't happened yet. (Or maybe it has, but the illegal data was encrypted, and nobody has said anything yet!) You'll know when it happens. It will be on the news.
 
 Everyone hosting a Bitcoin or Ethereum full node will have a full copy of the illegal data and therefore will be acting illegally. They will all become criminals. Maybe they aren't caught yet, but do you think Tim the university student is going to continue running a Bitcoin full node if it risks him going to jail rather than graduating and marrying his fiancee in June? No, he is not. He's smart. He will shut down his node.
 
@@ -140,7 +152,6 @@ I wouldn't be surprised if some cryptographers figure out some great tricks, but
 
 Meanwhile, we've got to do something _today._
 
-
 ## Why Now?
 
 Why didn't we publish this sooner? I actually proposed an idea like this over a year ago, and Trent (my brother, and our CTO) liked it. We're both former Canadian farmboys who grew up raising pigs together and are very practical.
@@ -148,6 +159,12 @@ Why didn't we publish this sooner? I actually proposed an idea like this over a 
 We told the idea to some of our work colleagues (who will remain nameless), and they _hated it_. "Blockchains are supposed to be immutable!" they said. "Do this and BigchainDB won't be a blockchain anymore!"
 
 So we dropped it. Maybe we are too nice. Dogmatism got in the way of pragmatism. Well, pragmatism is back.
+
+## How to Improve the IDPR (BEP-5)?
+
+BigchainDB GmbH has a proces to improve BEPs like this one. Please see [BEP-1/C4](https://github.com/bigchaindb/BEPs/blob/master/1) and [BEP-2/COSS](https://github.com/bigchaindb/BEPs/blob/master/2).
+
+Your consortium might have a variation of the IDPR. Your consortium can modify its variant using it's own governance processes.
 
 ## Copyright Waiver
 
