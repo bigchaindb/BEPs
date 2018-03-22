@@ -53,3 +53,5 @@ Short Name    | Title                                                        | T
 [6/SWP](6)    | Shared Workspace Protocol                                    | Meta     | Draft      | Alberto Granzotto
 [7/PUBLIC-API](7) | Definition of the BigchainDB Public API                  | Informational | Raw   | Troy McConaghy
 [8/CRASH-RECOVERY](8) | Restore system state after crash                     | Standard | Raw        | Vanshdeep Singh
+[12/TX-SPEC-1](12) | BigchainDB Transaction Spec v1                          | Standard | Stable     | Troy McConaghy
+[13/TX-SPEC-2](13) | BigchainDB Transaction Spec v2                          | Standard | Stable     | Troy McConaghy
