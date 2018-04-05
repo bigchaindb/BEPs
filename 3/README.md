@@ -1,16 +1,15 @@
 ```
 shortname: 3/UPSERT-VALIDATORS
-name: Dynamically add/remove validators at runtime (Insecure version)
+name: Dynamically add/update/remove validators at runtime
 type: standard
 status: raw
 editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
 ```
 
-
 ## Problem Description
 In the current state of tendermint bdb, validator nodes are specified in the Tendermint config file before starting the node. It is necessary that the users should be able to dynamically add new validators.
 
-**NOTE**: This document presents an insecure implementation intended for bigchaindb tendermint MVP.
+**NOTE**: This document presents an implementation intended for BigchainDB 2.0.
 
 ### Technical details
 Tendermint allows the abci client application to return a list of validators during `end_block` call. If the client doesn't wish to modify the validators an empty list should be returned. The return value allows the client to dynamically add/remove validators. Note that the return value could be thought of as a (validators) diff of desired validators list and current validators list. Below is an example of validators diff,
@@ -94,16 +93,8 @@ Below is a summary of workflow sequence which should be executed in order to add
 
 
 ### Security impact
-The current implementation is insecure i.e. any user who gains access to a given node can modify its validators. This node could effectively be considered byzantine and the network can tolerate (<1/3) byzantine nodes.
+The current implementation is somewhat insecure because anyone who gains access to a node can modify its local list of validators. However, unless >2/3 of the nodes make the same change, it won't take effect.
 
-### Performance impact
-N/A
-
-### End user impact
-N/A
-
-### Deployment impact
-N/A
 
 ### Documentation impact
 The new api introduced should be documented along with its current state of security.
@@ -122,11 +113,7 @@ Following test cases should be included:
 Primary assignee(s): @kansi
 
 ### Targeted Release
-BigchainDB tendermint MVP
-
-
-## Dependencies
-N/A
+BigchainDB 2.0
 
 
 ## Reference(s)

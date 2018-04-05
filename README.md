@@ -47,7 +47,7 @@ Short Name    | Title                                                        | T
 --------------|--------------------------------------------------------------|----------|------------|-------
 [1/C4](1)     | Collective Code Construction Contract                        | Meta     | Draft      | Alberto Granzotto
 [2/COSS](2)   | Consensus-Oriented Specification System                      | Meta     | Draft      | Alberto Granzotto
-[3/UPSERT-VALIDATORS](3) | Dynamically add/remove validators at runtime (Insecure version)  | Standard | Raw | Vanshdeep Singh
+[3/UPSERT-VALIDATORS](3) | Dynamically add/update/remove validators at runtime | Standard | Stable | Vanshdeep Singh
 [4/STANDARDIZE-DC](4) | Standard process to set up a local node for development & testing, using Docker Compose | Standard | Raw | Muawia Khan
 [5/IDRP](5)   | Illegal Data Response Plan                                   | Informational | Raw   | Troy McConaghy
 [6/SWP](6)    | Shared Workspace Protocol                                    | Meta     | Draft      | Alberto Granzotto
