@@ -2,7 +2,7 @@
 shortname: 3/UPSERT-VALIDATORS
 name: Dynamically add/update/remove validators at runtime
 type: standard
-status: raw
+status: stable
 editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
 ```
 
