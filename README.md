@@ -1,5 +1,29 @@
 **DISCLAIMER: THIS IS A WORK IN PROGRESS**
 
+# BigchainDB Enhancement Proposals (BEPs)
+
+This is the BigchainDB Enhancement Proposal project. We collect BEPs for APIs, protocols, and processes.
+
+The process to add or change a BEP is the following:
+- A BEP is created and modified by pull requests according to [C4](./1).
+- BEP lifecycle SHOULD follow the lifecycle defined in [COSS](./2).
+- Non-cosmetic changes are allowed only on [Raw](./2#raw-beps) and [Draft](./2#draft-beps) specifications.
+
+# Current BEPs
+
+Short Name    | Title                                                        | Type     | Status     | Editor
+--------------|--------------------------------------------------------------|----------|------------|-------
+[1/C4](1)     | Collective Code Construction Contract                        | Meta     | Draft      | Alberto Granzotto
+[2/COSS](2)   | Consensus-Oriented Specification System                      | Meta     | Draft      | Alberto Granzotto
+[3/UPSERT-VALIDATORS](3) | Dynamically add/update/remove validators at runtime | Standard | Stable | Vanshdeep Singh
+[4/STANDARDIZE-DC](4) | Standard process to set up a local node for development & testing, using Docker Compose | Standard | Raw | Muawia Khan
+[5/IDRP](5)   | Illegal Data Response Plan                                   | Informational | Raw   | Troy McConaghy
+[6/SWP](6)    | Shared Workspace Protocol                                    | Meta     | Draft      | Alberto Granzotto
+[7/PUBLIC-API](7) | Definition of the BigchainDB Public API                  | Informational | Raw   | Troy McConaghy
+[8/CRASH-RECOVERY](8) | Restore system state after crash                     | Standard | Raw        | Vanshdeep Singh
+[12/TX-SPEC-1](12) | BigchainDB Transaction Spec v1                          | Standard | Stable     | Troy McConaghy
+[13/TX-SPEC-2](13) | BigchainDB Transaction Spec v2                          | Standard | Stable     | Troy McConaghy
+
 # Current Participants
 
 ## Contributors
@@ -31,27 +55,3 @@ Some people have specializations:
 - Trent - @trentmc (Inactive but advising)
 
 Note: Administrators serve limited terms of six months or less. That's the idea, anyway.
-
-# BigchainDB Enhancement Proposals (BEPs)
-
-This is the BigchainDB Enhancement Proposal project. We collect BEPs for APIs, protocols, and processes.
-
-The process to add or change a BEP is the following:
-- A BEP is created and modified by pull requests according to [C4](./1).
-- BEP lifecycle SHOULD follow the lifecycle defined in [COSS](./2).
-- Non-cosmetic changes are allowed only on [Raw](./2#raw-beps) and [Draft](./2#draft-beps) specifications.
-
-# Current BEPs
-
-Short Name    | Title                                                        | Type     | Status     | Editor
---------------|--------------------------------------------------------------|----------|------------|-------
-[1/C4](1)     | Collective Code Construction Contract                        | Meta     | Draft      | Alberto Granzotto
-[2/COSS](2)   | Consensus-Oriented Specification System                      | Meta     | Draft      | Alberto Granzotto
-[3/UPSERT-VALIDATORS](3) | Dynamically add/update/remove validators at runtime | Standard | Stable | Vanshdeep Singh
-[4/STANDARDIZE-DC](4) | Standard process to set up a local node for development & testing, using Docker Compose | Standard | Raw | Muawia Khan
-[5/IDRP](5)   | Illegal Data Response Plan                                   | Informational | Raw   | Troy McConaghy
-[6/SWP](6)    | Shared Workspace Protocol                                    | Meta     | Draft      | Alberto Granzotto
-[7/PUBLIC-API](7) | Definition of the BigchainDB Public API                  | Informational | Raw   | Troy McConaghy
-[8/CRASH-RECOVERY](8) | Restore system state after crash                     | Standard | Raw        | Vanshdeep Singh
-[12/TX-SPEC-1](12) | BigchainDB Transaction Spec v1                          | Standard | Stable     | Troy McConaghy
-[13/TX-SPEC-2](13) | BigchainDB Transaction Spec v2                          | Standard | Stable     | Troy McConaghy
