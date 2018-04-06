@@ -1,5 +1,3 @@
-**DISCLAIMER: THIS IS A WORK IN PROGRESS**
-
 # BigchainDB Enhancement Proposals (BEPs)
 
 This is the BigchainDB Enhancement Proposal project. We collect BEPs for APIs, protocols, and processes.
