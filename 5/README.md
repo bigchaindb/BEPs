@@ -61,7 +61,7 @@ Here's what we reccommend a node operator do if they discover illegal data store
 1. Delete the illegal data. *All nodes in the network must do this deletion step.*
 1. [There's no place like home.](https://www.youtube.com/watch?v=ooM-RGUTe2E)
 
-Optional follow-up: a _second_ version of BigchainDB Server that will only believe the new situation, with the illegal data deleted is okay. The old situation, with the illegal data still there, should register as an error. Upgrade to that. 
+Optional follow-up: a _second_ version of BigchainDB Server that will only believe the new situation, with the illegal data deleted is okay. The old situation, with the illegal data still there, should register as an error. Upgrade to that.
 
 ## Your Expected Response
 
@@ -69,9 +69,17 @@ Optional follow-up: a _second_ version of BigchainDB Server that will only belie
 
 Yes. And it gets you out of trouble with the law. You'll notice it's not easy to do deletion. You can't just delete data without BigchainDB complaining. You have to do something special to make it not complain first.
 
+Moreover, the planned change is extremely specific. It doesn't make the entire blockchain mutable. If only one transaction is involved, then the change will allow only two possible versions of that transaction. It won't allow arbitrary changes to the transaction. All the other transactions remain as immutable as ever.
+
 ## Things that Won't Work
 
 There are a lot of things that don't work. That's what the rest of this BEP is about: to convince you that those other ways will still land you in trouble with the law.
+
+### "We're running a blockchain so the rules are different for us."
+
+You might say, "Blockchains are supposed to be immutable so we can't delete the data. Therefore the law should make an exception for us."
+
+I don't know of any jurisdiction that makes an exception for blockchains. The best you can hope for is for your case to end up in legal limbo for months or years, until some court or legislature decides what to do. Meanwhile, your users, partners and investors (and potential ones) will be scared away. Is that really what you want?
 
 ### Filter Incoming Data!
 
@@ -107,32 +115,31 @@ Read [_The Art of Deception: Controlling the Human Element of Security_](https:/
 
 "People always make the best exploits. I've never found it hard to hack most people. If you listen to them, watch them, their vulnerabilities are like a neon sign screwed into their heads." - [Elliot](https://youtu.be/32VKyY4ymvc?t=1m5s), _Mr. Robot_
 
-
 ### Make the BigchainDB Network Fully Public!
 
-Bitcoin and Ethereum are public networks and they haven't had problems with illegal data. Make BigchainDB a public, permissionless network like that! All nodes are anonymous! There would be nobody to go after!
+Bitcoin and Ethereum are public networks and they haven't had problems with illegal data! Make BigchainDB a public, permissionless network like that! All nodes are anonymous! There would be nobody to go after!
 
-It won't work, but this one is more subtle to explain.
+For a long time, there was no illegal data known to be stored on the Bitcoin or Ethereum blockchains. Why? Here are some potential explanations:
 
-First of all, it's just a matter of time until someone does upload illegal data to the Bitcoin or Ethereum blockchains. It just hasn't happened yet. (Or maybe it has, but the illegal data was encrypted, and nobody has said anything yet!) You'll know when it happens. It will be on the news.
+* It’s considered a taboo topic in the blockchain world, so people tend not to think about it in general.
 
-Everyone hosting a Bitcoin or Ethereum full node will have a full copy of the illegal data and therefore will be acting illegally. They will all become criminals. Maybe they aren't caught yet, but do you think Tim the university student is going to continue running a Bitcoin full node if it risks him going to jail rather than graduating and marrying his fiancee in June? No, he is not. He's smart. He will shut down his node.
+* Nobody with significant investment in those networks will want to bring it up, or do it, and risk their investment.
 
-Only actual outlaws, scofflaws and crazy liberarians will be left hosting nodes. Also Chinese miners who don't give a shit and are all making money for their local government officials and themselves.
+* The people developing the software to implement permissionless networks are caught up in the fun technical questions, and not spending much time pondering legal questions. Even if they do think about legal questions, they say, “I am not a lawyer. I am not qualified.” They assume that the lawyers have thought about the legal questions and decided that everything is okay. The fact is, everyone knows about certain basic laws so they don’t get in trouble, and that’s all that’s needed here. For example, you don’t need a law degree to know that you can’t steal headphones from an Apple Store. A software developer can’t say, “I just wrote the software to control the headphone-stealing drone. I’m not a lawyer, so I’m not qualified to comment on whether it’s legal to use my software.”
+
+* It’s quite expensive to write a lot of data to those blockchains. Something like tens of millions of US dollars per Gigiabyte. Not free!
+
+* A law-abiding person would be reluctant to store some illegal data (e.g. in Bitcoin `OP_RETURN` slots), because they’d have to have some first, before they can store it elsewhere, and that’s illegal. They might consider doing it anonymously, but it’s not easy to be anonymous online, so why risk it?
+
+In any case, it's just a matter of time before someone stores illegal data on a public blockchain. In early 2018, some researchers at Germany's RWTH Aachen University (Matzutt _et al._) published [a paper](https://fc18.ifca.ai/preproceedings/6.pdf) describing potentially-illegal data that they discovered in the Bitcoin blockchain. Moreover, they wrote:
+
+> "Our analysis shows that certain content … can render the mere possession of a blockchain illegal."
+
+The basic idea is that everyone hosting a Bitcoin or Ethereum full node will have a full copy of the illegal data and therefore will be acting illegally. They will all become criminals. Maybe they aren't caught yet, but do you think Tim the university student is going to continue running a Bitcoin full node if it means he risks going to jail rather than graduating and marrying his fiancee in June? No, he is not. He's smart. He will shut down his node.
+
+Only outlaws, scofflaws and crazy liberarians will be left hosting nodes.
 
 In America and Europe, people know who of their friends has crypto nodes. There won't be any hiding. Bitcoin and Ethereum people tend to be well-known. They chat on Twitter and go to events. The authorities would have no trouble finding them, and if they continue to run nodes, they will get in trouble. The whole anonymity thing is an illusion.
-
-Why hasn't someone uploaded illegal data to Bitcoin or Ethereum already?
-
-- It’s considered a taboo topic in the blockchain world, so people tend not to think about it in general.
-
-- Nobody with significant investment in those networks will want to bring it up, or do it, and risk their investment.
-
-- The people developing the software to implement permissionless networks are caught up in the fun technical questions, and not spending much time pondering legal questions. Even if they do think about legal questions, they say, “I am not a lawyer. I am not qualified.” They assume that the lawyers have thought about the legal questions and decided that everything is okay. The fact is, everyone knows about certain basic laws so they don’t get in trouble, and that’s all that’s needed here. For example, you don’t need a law degree to know that you can’t steal headphones from an Apple Store. A software developer can’t say, “I just wrote the software to control the headphone-stealing drone. I’m not a lawyer, so I’m not qualified to comment on whether it’s legal to use my software.”
-
-- It’s quite expensive to write a lot of data to those blockchains. Something like tens of millions of US dollars per Gigiabyte. Not free!
-
-- A law-abiding person would be reluctant to store some illegal data (e.g. in Bitcoin `OP_RETURN` slots), because they’d have to have some first, before they can store it elsewhere, and that’s illegal. They might consider doing it anonymously, but it’s not easy to be anonymous online, so why risk it?
 
 ### Erasure Coding!
 
@@ -162,9 +169,9 @@ So we dropped it. Maybe we are too nice. Dogmatism got in the way of pragmatism.
 
 ## How to Improve the IDPR (BEP-5)?
 
-BigchainDB GmbH has a proces to improve BEPs like this one. Please see [BEP-1/C4](https://github.com/bigchaindb/BEPs/blob/master/1) and [BEP-2/COSS](https://github.com/bigchaindb/BEPs/blob/master/2).
+BigchainDB GmbH has a process to improve BEPs like this one. Please see [BEP-1/C4](https://github.com/bigchaindb/BEPs/blob/master/1) and [BEP-2/COSS](https://github.com/bigchaindb/BEPs/blob/master/2).
 
-Your consortium might have a variation of the IDPR. Your consortium can modify its variant using it's own governance processes.
+Your consortium might have a variation of the IDRP. Your consortium can modify its variant using it's own governance processes.
 
 ## Copyright Waiver
 
