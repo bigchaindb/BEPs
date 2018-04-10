@@ -45,7 +45,7 @@ About the existing BigchainDB Server:
 
 About the new `bigchaindb-go` Server:
 - It implements the endpoint `POST /api/v1/transactions`.
-- It implements the ABCI interface (`check_tx`, `begin_block`, `deliver_tx`, `end_block`, `commit`), and communicates to the local MongoDB instance to write transactions once they are validated.
+- It implements the ABCI interface (`check_tx`, `begin_block`, `deliver_tx`, `end_block`, `commit`), and communicates to the local MongoDB instance to write transactions once they are validated, ideally using the [in process interface][abci:in-process].
 
 The following diagram shows how the two systems work together.
 
@@ -84,4 +84,5 @@ To the extent possible under law, the person who associated CC0 with this work h
 [strangler:case-study-1]: https://paulhammant.com/2013/07/14/legacy-application-strangulation-case-studies/
 [strangler:case-study-2]: http://agilefromthegroundup.blogspot.de/2011/03/strangulation-pattern-of-choice-for.html
 [abci]: http://tendermint.readthedocs.io/en/master/introduction.html#abci-overview
+[abci:in-process]: https://github.com/tendermint/abci#in-process
 [diagram]: ./diagram.jpg
