@@ -16,7 +16,7 @@ The UTXO (unspent transaction output) of each transaction is tracked using the a
 - This list of unspent outputs fetched from the `utxo` collection is considered as the leaves of the UTXO merkle tree. Refer the image below,
 - The list of leaves is hashed and sorted after which the merkle root is calculated by pairing adjacent leaves.
 
-![Merkel Tree](https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Hash_Tree.svg/800px-Hash_Tree.svg.png)
+![Merkle Tree](https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Hash_Tree.svg/800px-Hash_Tree.svg.png)
 
 
 
