@@ -15,12 +15,10 @@ This document describes an experimental architecture for BigchainDB Server, illu
 ## Motivation
 BigchainDB 2.0 Alpha 1 has been developed using BigchainDB 1.3 as a starting point. Design decisions that were correct for the first generation of BigchainDB, are now challenged by the integration of a new consensus algorithm (managed by Tendermint). Specifically, the Tendermint state machine runs in a separate process, and communicates with BigchainDB using multiple channels.
 
-## Overview
 BigchainDB 2.0 Alpha 1 is now the composition of three different system (MongoDB, Tendermint, and BigchainDB itself). This setup generates different problems: a) managing multiple services together adds overhead and complicates deployment; b) the current design makes some calls going from BigchainDB to Tendermint to BigchainDB again, penalizing performance; c) there is data duplication between LevelDB and MongoDB; d) we need to maintain [`py-abci`][pyabci], while the official implementation of the [ABCI][abci] interface is in Golang; e) the logic to validate transactions is spread across multiple files and it's difficult to manage, and a heavy refactoring is needed; f) the configuration is spread across BigchainDB and Tendermint.
 
-In this BEP, we discuss a possible path towards an architecture more suitable for BigchainDB 2.0.
-
-In this BEP, we evaluate a rewrite of BigchainDB in another language, specifically Golang. The benefits are multiple: Golang it is a fairly simple language, easy to learn and read; it is shown to be efficient and faster than Python and can compile to a binary file; it is used in several big projects, and it's the language of choice for major blockchain projects: this simplifies code reuse if we need it in the future, and allows us a tighter integration with Tendermint.
+## Overview
+In this BEP, we evaluate a rewrite of some parts of BigchainDB in another language, specifically Golang. The benefits are multiple: Golang it is a fairly simple language, easy to learn and read; it is shown to be efficient and faster than Python and can compile to a binary file; it is used in several big projects, and it's the language of choice for major blockchain projects: this simplifies code reuse if we need it in the future, and allows us a tighter integration with Tendermint.
 
 Rewriting a system to another language is a risky and possibly endless process. To minimize the risk, an incremental approach is proposed. The approach is incremental in the following sense:
 - It is divided into different subsequent steps.
@@ -41,8 +39,8 @@ The integration between the existing BigchainDB Server code (written in Python) 
 
 About the existing BigchainDB Server:
 - All the HTTP API endpoints will still be served from the existing code.
-- The endpoint `POST /api/v1/transactions` will be just a _pass through proxy_ to the `bigchaindb-go` implementation. Since we are *asking for information*, using the HTTP verb `GET` would be more appropriate, but using `GET` with an HTTP request body is [controversial][get:controversial].
-- A new endpoint `POST /api/v1/validate` will be implemented, to check the validity of a transaction (this endpoint will be used by `bigchaindb-go` to do the actual validation, and will give us more time to actually focus on the experiment).
+- The endpoint `POST /api/v1/transactions` will be just a _pass through proxy_ to the `bigchaindb-go` implementation.
+- A new endpoint `POST /api/v1/validate` will be implemented, to check the validity of a transaction (this endpoint will be used by `bigchaindb-go` to do the actual validation, and will give us more time to actually focus on the experiment). Since we are *asking for information*, using the HTTP verb `GET` would be more appropriate, but using `GET` with an HTTP request body is [controversial][get:controversial].
 
 About the new `bigchaindb-go` Server:
 - It implements the endpoint `POST /api/v1/transactions`.
@@ -58,7 +56,9 @@ It is important to notice that the existing BigchainDB Server will only **read**
 If the experiment is successful, other API endpoints can be easily integrated one by one into the `bigchaindb-go` implementation. This BEP does not cover this part for now.
 
 ## Rationale
-Two alternate approaches have been internally discussed before writing this BEP.
+Instead of exposing the new `POST /api/v1/validate` endpoint from the Python codebase, there are techniques to [call Python functions from Go code][cgo-python]. While this is probably more performant and allows a deeper integration, we might end up with a more complex solution.
+
+It's worth mentioning that two alternate approaches have been internally discussed before writing this BEP.
 
 ### Approach A
 The first approach entailed implementing the ABCI proxy app in Golang and then creating a corresponding abstraction in BigchainDB so that the new Golang ABCI proxy can talk to BigchainDB. This approach was more conservative as it required defining and implementing an abstraction layer to talk to ABCI proxy app.
@@ -88,3 +88,4 @@ To the extent possible under law, the person who associated CC0 with this work h
 [abci:in-process]: https://github.com/tendermint/abci#in-process
 [diagram]: ./diagram.jpg
 [get:controversial]: https://stackoverflow.com/a/983458/597097
+[cgo-python]: https://www.datadoghq.com/blog/engineering/cgo-and-python/
