@@ -45,6 +45,7 @@ The idea is that the BigchainDB node operator can decide which transaction valid
 1. Seperate the code for checking transaction validity from the code for converting a transaction object to/from a Python dict. This just means that the code for converting a dict to an object of class Transaction shouldn't also do transaction validation as a hidden side effect. The transaction validation code should be something separate. Some transaction validation could be done before the conversion to an object (e.g. JSON Schema validation) and some could be done after. It's possible that the conversion might fail even if the JSON string or dict passes JSON Schema validation. I'm not sure. It might not be possible, and if it is, then I suspect it's a weird edge case.
 1. Separate the code for checking transaction validity from the code for converting a transaction JSON string to/from a Python dict, if there is any such code.
 1. Look at [the spec for checking if a version 2.0 transaction is valid](https://github.com/bigchaindb/BEPs/blob/master/13/README.md#transaction-validation). Are all those checks _actually done_? Is all the code for doing those checks in _one logical place_ in the code?
+1. Resolve [issue #1940](https://github.com/bigchaindb/bigchaindb/issues/1940): Does the check for a duplicate transaction check in the block or mempool?
 
 # References
 
