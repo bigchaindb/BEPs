@@ -22,6 +22,7 @@ Short Name    | Title                                                        | T
 [10/CBD](10)  | Consolidating BigchainDB 2.0 Design   			     | Informational | Raw   | Alberto Granzotto
 [12/TX-SPEC-1](12) | BigchainDB Transaction Spec v1                          | Standard | Stable     | Troy McConaghy
 [13/TX-SPEC-2](13) | BigchainDB Transaction Spec v2                          | Standard | Stable     | Troy McConaghy
+[14/GIDR](14) | Guidelines to Improve Drivers Reliability                    | Standard | Raw        | Alberto Granzotto
 
 # Current Participants
 
