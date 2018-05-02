@@ -12,7 +12,7 @@ The "public interface" or "public API" of any software is the stuff that _extern
 
 # Motivation
 
-The definition of the BigchainDB Public API was in the `CHANGELOG.md` file, which is crazy because it's not obvioius that's the place to look for such a thing.
+The definition of the BigchainDB Public API was in the `CHANGELOG.md` file, which is not the obvious place to look for it.
 
 External users want to be able to guess, _based on the version number of a release_, what has changed, if anything. To make that possible, BigchainDB Server (and affiliated projects) use [the Python form of Semantic Versioning](https://packaging.python.org/tutorials/distributing-packages/#choosing-a-versioning-scheme) (or at least we try). It's almost the same as regular semantic versioning except release candidates are labelled like `3.4.5rc2` not `3.4.5-rc2` (with no hyphen).
 
