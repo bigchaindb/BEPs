@@ -34,7 +34,7 @@ const conn = new driver.Connection('https://test.bigchaindb.com/api/v1/')
 As mentioned before, if `test.bigchaindb.com` is down, no request can be fulfilled by the driver. From an end-user perspective the **whole bigchaindb test network is down**, even if it's just a node that is unreachable. That's a shame since there are (hopefully) other three healthy nodes to use.
 
 ### Initialize the driver with a list of endpoints
-The driver should support initialization with a list of endpoints. Each endpoint is the URL of a BigchainDB node API. Note that the list of endpoints should be known beforehand by the developer when using the driver: there is no automatic propagation of the peers from a BigchainDB node to the driver. Remember: a node can cheat, and the driver needs a way to check the validity of the list of peers. We keep things simple for this BEP, so you'll need to fill the list yourself for now.
+The driver should support initialization with a list of endpoints. Each endpoint is the URL of a BigchainDB node API. The list of endpoints doesn't need to contain **all** endpoints. Note that the list of endpoints should be known beforehand by the developer when using the driver: there is no automatic propagation of the peers from a BigchainDB node to the driver. Remember: a node can cheat, and the driver needs a way to check the validity of the list of peers. We keep things simple for this BEP, so you'll need to fill the list yourself for now.
 
 In addition to the current way to initialize the driver, this BEP allows initialization with list of URLs.
 
@@ -152,7 +152,7 @@ When a driver needs to forward a request to the network, the following algorithm
     1. move the index to the next node `i = (i + 1) mod len(N)`
     1. return error
 
-Please note that the code provided does **not** retry to submit again a failed request. To resubmit a request, the previous code should be tried multiple times, but the whole process MUST be stopped and return an error if more than `2/3` of the nodes are unreachable.
+Please note that the code provided does **not** retry to submit again a failed request. To resubmit a request, the previous code should be tried multiple times, but the whole process MUST be stopped and return an error if all nodes are unreacheable.
 
 ## Rationale
 There are many optimizations that can be done, for example the round-robin strategy can be improved by prioritizing nodes with low latency, or `DELAY` can be incremental and capped to a max value (first time `DELAY` is 1s, then 2s, 4s, 8s, for a maximum of 128s).
@@ -164,7 +164,7 @@ Another great feature would be to have a list of endpoints from a single Bigchai
 This design has been chosen for it's simplicity and backward compatibility. This design can be easily implemented in our drivers. Moreover, this design is the shortest path to a more reliable BigchainDB network.
 
 ## Backwards Compatibility
-As long as the driver handles both single and multiple endpoints on its initialization, this change is fully backward compatible.
+As long as the driver handles both single and multiple endpoints on its initialization, this change is fully backwards compatible.
 
 ## Implementation
 The implementation is TBD.
