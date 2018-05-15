@@ -31,19 +31,13 @@ There is information about listing on Azure Marketplace in the Microsoft Azure h
 - Publish BigchainDB on Azure Marketplace or AppSource? Azure Marketplace.
 - What listing type? List, Trial or Transaction? Transaction.
 
-The next step is to become a "cloud partner publisher."
+The next step is to become a "cloud partner publisher." We (BigchainDB GmbH) already signed up for something like that some time ago. We have an "azure publisher" account that can login to the Microsoft developer resources dashboard and the Microsoft Azure Publishing workspace as of May 9, 2018.
 
-- We (BigchainDB GmbH) signed up for something like that some time ago, so we might be able to use our existing account ("azure publisher"). It could login to the Microsoft developer resources dashboard and the Microsoft Azure Publishing workspace as of May 9, 2018.
-- We also have another, different account that we use for Microsoft Azure itself ("bruce"). That second account has Azure credits associated with it.
-- Ricardo also started signing up for a _third_ account.
-
-We will have to determine which account to use. We should make sure all the account information is up-to-date.
-
-We'd like to allow several BigchainDB accounts to have access. Apparently that _can_ be done, so long as the accounts use Azure Active Directory.
+That account should be able to add more user accounts by going to cloudpartner.azure.com. The added user accounts will then have access the same Microsoft Azure Publishing workspace. The added user accounts can be Microsoft accounts or Azure accounts.
 
 We might have to do some more steps in the "2. Become a cloud partner publisher" section of that help page.
 
-Lastly, we must do step "3. Complete offer and listing type prerequisites". For details, see the [Publisher Guide](https://docs.microsoft.com/en-us/azure/marketplace/marketplace-publishers-guide). The main _technical_ one is to create an Azure-compatible virtual hard disk (VHD).
+Lastly, we must do step "3. Complete offer and listing type prerequisites". For details, see the [Publisher Guide](https://docs.microsoft.com/en-us/azure/marketplace/marketplace-publishers-guide). The main _technical_ task is to create an Azure-compatible virtual hard disk (VHD). See the help page titled, "[How to use Packer to create Linux virtual machine images in Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/build-image-with-packer)".
 
 # Rationale
 
