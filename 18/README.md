@@ -27,9 +27,9 @@ By storing it in a BigchainDB Network, it allows Members to vote asynchronously,
 
 At any point in time, a Member of a BigchainDB Network can start a new Election.This Member is called **Initiator**.
 
-An Election is a transaction representing the matter of change, and some Vote tokens. The Initiator issues a `CREATE` transaction with the `amount` set to the total number of Validators, and transfer one vote token per Validator using the transaction `outputs`.
+An Election is a transaction representing the matter of change, and some Vote tokens. The Initiator issues a `CREATE` transaction with the `amount` set to the total power of the Validators. There will be multiple `outputs`, one per Validator. Each output is populated with the public key of the Validator, and an amount equal to the power of the Validator.
 
-At this point the Election starts. Independently, and asynchronously, each Validator can spend its Vote Token to an Election Address to show agreement on the matter of change. The Election Address is the `id` of the first `CREATE` transaction. Once a Vote Token has been transferred to that address, it is not possible to transfer it again, because there private key is not known.
+At this point the Election starts. Independently, and asynchronously, each Validator can spend its Vote tokens to an Election Address to show agreement on the matter of change. The Election Address is the `id` of the first `CREATE` transaction. Once the Vote tokens has been transferred to that address, it is not possible to transfer it again, because there private key is not known.
 
 During the `end_block` call, all transactions about to be committed are checked. Every transfer of a vote token triggers a functions that counts the number of positive votes of Election over the number of voters. If the ratio is greater than ⅔, then the current validator commits the change. Given the BFT nature of the system, all non-Byzantine Validator will commit the change at the same block height.
 
@@ -60,10 +60,10 @@ A Validator must be able to discern valid Elections from invalid ones. The proce
 9. Return true.
 
 ### Extra: Vote delegation
-Vote delegation is trivial. Let's consider a Network of three Members: Alice, Bob, and Carly. Alice is the Initiator, and starts a new Election. Alice generates a `CREATE` transaction with three vote tokens, one per each Member. Bob wants to delegate his vote to Carly, so he transfers his output to Carly, granting her two votes she can spend in the way she wants.
+Vote delegation is trivial. Let's consider a Network of three Members: Alice, Bob, and Carly. Alice is the Initiator, and starts a new Election. Alice generates a `CREATE` transaction with three outputs, one per each Member. Bob wants to delegate his vote to Carly, so he transfers his output to Carly, granting her more votes she can spend in the way she wants.
 
 ### Example: an Election to add a new Validator
-Alice, Bob, Carly and Daniel want to add Frank to the Network. Alice is the Initiator, and starts a new Election. Alice generates a `CREATE` transaction with four vote tokens, one per each Member. The transaction looks roughly like this:
+Alice (power `20`), Bob (power `10`), Carly (power `10`) and Daniel (power `10`) want to add Frank to the Network. Alice is the Initiator, and starts a new Election. Alice generates a `CREATE` transaction with `50` vote tokens. The transaction looks roughly like this:
 
 ```json
 {
@@ -95,7 +95,7 @@ Alice, Bob, Carly and Daniel want to add Frank to the Network. Alice is the Init
   "operation": "CREATE",
   "outputs": [
     {
-      "amount": "1",
+      "amount": "20",
       "condition": {
         "details": {
           "public_key": "Alice's public key",
@@ -108,7 +108,7 @@ Alice, Bob, Carly and Daniel want to add Frank to the Network. Alice is the Init
       ]
     },
     {
-      "amount": "1",
+      "amount": "10",
       "condition": {
         "details": {
           "public_key": "Bob's public key",
@@ -121,7 +121,7 @@ Alice, Bob, Carly and Daniel want to add Frank to the Network. Alice is the Init
       ]
     },
     {
-      "amount": "1",
+      "amount": "10",
       "condition": {
         "details": {
           "public_key": "Carly's public key",
@@ -134,7 +134,7 @@ Alice, Bob, Carly and Daniel want to add Frank to the Network. Alice is the Init
       ]
     },
     {
-      "amount": "1",
+      "amount": "10",
       "condition": {
         "details": {
           "public_key": "Daniel's public key",
@@ -176,7 +176,7 @@ Now that the Election has been created, each Member can cast their vote. Bob sta
   "operation": "TRANSFER",
   "outputs": [
     {
-      "amount": "1",
+      "amount": "10",
       "condition": {
         "details": {
           "public_key": "Election Address",
