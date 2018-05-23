@@ -15,7 +15,9 @@ This specification introduces the new concept of **Election**. An Election is an
 
 ## Motivation
 <!--The motivation is critical for BEPs that want to change the BigchainDB protocol. It should clearly explain why the existing protocol BEP is inadequate to address the problem that the BEP solves. BEP submissions without sufficient motivation may be rejected outright.-->
-Changing the shape of a BigchainDB Network at runtime is an important requirement. While this BEP does not address this issue directly, it wants to solve the limitations we had with [Upsert Validators][BEP-3] by giving a tool that can be used this and other situations.
+Changing the shape of a BigchainDB Network at runtime is an important requirement. While this BEP does not address this issue directly, it wants to solve the limitations we had with [Upsert Validators (BEP-3)][BEP-3] by giving a tool that can be used this and other situations. BEP-3 addresses a really interesting use case: adding a Member to a running Network. Since changes in the Validator Set are not themselves expressed as transactions but are included into the metadata of an arbitrary block, all the nodes have to add a validator simultaneously—if less than the majority of the nodes attempt to include a Validator, the block fails and the whole Network can stuck. Since those changes are **not** stored in the blockchain itself, a new Node that needs to sync with the Network will fail in validating blocks from a specific *height* on. The *height* will match the one of the first block voted by a new Validator that was **not** included in the `genesis.json` file (and Tendermint will fail with `Invalid commit (last validator set size) vs (number of precommits)`).
+
+The abstract version of the problem is "make Network wide decisions". We need a way for Members to vote on proposals, and implement them as soon as the quorum of ⅔ is reached. In this BEP, a proposal is named *Election*, a vote is a fungible token formalized with the capitalized name *Vote*. Elections and Votes are stored in the blockchain, so a new Node that syncs with the Network will be able to replay them locally, and reach the same state of all other Members.
 
 The basic idea is to formalize the concept of an Election storing its data in a [BigchainDB Transaction Spec v2][BEP-13].
 By storing it in a BigchainDB Network, it allows Members to vote asynchronously, and Validators to apply changes synchronously.
@@ -70,6 +72,7 @@ Alice, Bob, Carly and Daniel want to add Frank to the Network. Alice is the Init
       "type": "election",
       "name": "upsert-validator",
       "version": "1.0",
+      "matter": "After the meeting we had on May 23rd, 2018, we decided to add Frank to the Network.",
       "args": [
         "Frank's public key",
         "Frank's node id",
@@ -185,7 +188,7 @@ Now that the Election has been created, each Member can cast their vote. Bob sta
         "Election Address"
       ]
     }
-  ]
+  ],
   "version": "2.0"
 }
 ```
@@ -200,6 +203,7 @@ This BEP is fully backwards compatible.
 
 ## Implementation
 <!--The implementations must be completed before any BEP is given status "stable", but it need not be completed before the BEP is accepted. While there is merit to the approach of reaching consensus on the BEP and rationale before writing code, the principle of "rough consensus and running code" is still useful when it comes to resolving many discussions of API details.-->
+This section will be filled in once there *is* an implementation.
 
 # Copyright Waiver
 To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work.
