@@ -1,5 +1,5 @@
 ```
-shortname: 3.1/UPSERT-VALIDATORS
+shortname: [20/UPSERT-VALIDATORS]
 name: Dynamically add/update/remove validators at runtime
 type: standard
 Status: raw
@@ -57,7 +57,7 @@ NOTE: The `CREATE` transaction is signed using the private key generated and sto
 3. The node operator can list the `upsert-validator` request using,
 
 ```
-$ bigchaindb upsert-validator list-request node_upsert_request_id
+$ bigchaindb upsert-validator show-request node_upsert_request_id
 public_key=Wn2DedV9OA0LJJjOxr7Sl7jqCSYjQihA6dCBX+iHaEI=
 power=10
 node_id=82190eb6396bdd80b83aef0f931d0f45738ed075
