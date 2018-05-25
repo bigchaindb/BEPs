@@ -31,7 +31,7 @@ Consider a network of 4 nodes `{A,B,C,D}` if now if a node A wishes to add a new
 1. Node `A` executes
 
 ```
-$ bigchaindb upsert-validator E_PUBKEY E_POWER
+$ bigchaindb upsert-validator E_PUBKEY E_POWER  --private-key /home/user/.tendermint/config/priv_validator.json
 node_upsert_request_id
 ```
 
@@ -68,7 +68,7 @@ The above command list the details about the node which is being added/updated/d
 4. If the node operator aggrees to the operation being proposed by the `node_upsert_request_id` then they can vote on the same using the following,
 
 ```
-$ bigchaindb upsert-validator approve-request node_upsert_request_id
+$ bigchaindb upsert-validator approve-request node_upsert_request_id --private-key /home/user/.tendermint/config/priv_validator.json
 ```
 
 The above command `POST`s a `TRANSFER` transaction casting the vote of the node for the given TEP.
