@@ -461,8 +461,6 @@ To change it into a 1-of-2 condition, just change the value of `threshold` to 1 
 
 The operation indicates the type/kind of transaction, and how it should be validated. It must be a string. The allowed values are `"CREATE"` and `"TRANSFER"`.
 
-Note: Some implementations may allow other values, but maybe only internally. For example, BigchainDB Server allows the value `"GENESIS"`. See <a href="#implementation-specific-deviations"><span>the section about implementation-specific deviations</span></a>.
-
 ### Transaction Components: Asset
 
 In a CREATE transaction, an asset can be <a href="#ctnull"><span>ctnull</span></a> (e.g. `None` in Python), or an <a href="#associative-array"><span>associative array</span></a> containing exactly one key-value pair. The key must be `"data"` and the value can be any valid associative array. Here’s a JSON example:
@@ -749,6 +747,11 @@ Note: The first two rules prevent double spending.
 
 Regardless of whether the transaction is a CREATE or TRANSFER transaction: For all inputs, `input.fulfillment` must be valid. See the <a href="#transaction-components-inputs"><span>section about inputs</span></a> for more details about what that means.
 
+#### More Rules
+
+Some implementations of the BigchainDB Transactions Spec impose more rules. See the section titled [Implementation-Specific Deviations](#implementation-specific-deviations).
+
+
 ## Implementation-Specific Deviations
 
 Some implementations of BigchainDB-compliant servers or drivers deviate from the BigchainDB Transaction Spec.
@@ -756,8 +759,6 @@ Some implementations of BigchainDB-compliant servers or drivers deviate from the
 ### BigchainDB Server Deviations
 
 <a href="https://github.com/bigchaindb/bigchaindb">BigchainDB Server</a> is a BigchainDB-compliant server implemented in Python.
-
-It allows <a href="#transaction-components-operation"><span>operation</span></a> to have the value `"GENESIS"`, but only for transactions in the GENESIS block.
 
 When BigchainDB Server is used *with MongoDB*, it inherits some quirks from MongoDB:
 
