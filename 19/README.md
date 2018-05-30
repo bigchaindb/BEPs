@@ -1,5 +1,5 @@
 ```
-shortname: [20/UPSERT-VALIDATORS]
+shortname: [19/UPSERT-VALIDATORS]
 name: Dynamically add/update/remove validators at runtime
 type: standard
 Status: raw
@@ -49,7 +49,12 @@ The above command `POST`s a TEP `CREATE` transaction and return the `node_upsert
 }
 ```
 
-NOTE: The `CREATE` transaction is signed using the private key generated and stored by Node `A`'s' Tendermint in `priv_validator.json`.
+NOTE:
+- The `CREATE` transaction is signed using the private key generated and stored by Node `A`'s' Tendermint in `priv_validator.json`.
+- `type` indicates that the transaction is a `"election"`.
+- `name` indicates that validaton logic for this election.
+- `version` indicates version for the validation logic (i.e. `upsert-validator`) for this election. This field would be helpful when upgrading to new validation logic for the `upsert-validator` election to validate old elections when they are being replayed.
+- `args` necessary data to execute the action when an election has received majority vote.
 
 
 2. The `node_upsert_request_id` is then manually sent (via email or message) to rest of the nodes in the network.
