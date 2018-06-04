@@ -95,14 +95,27 @@ It is important to notice that the existing BigchainDB Server will only **read**
 If the experiment is successful, other API endpoints can be easily integrated one by one into the `bigchaindb-go` implementation. This BEP does not cover this part for now.
 
 ## Rationale
+
+#### Call Python from Go?
+
 Instead of exposing the new `POST /api/v1/validate` endpoint from the Python codebase, there are techniques to [call Python functions from Go code][cgo-python]. While this is probably more performant and allows a deeper integration, we might end up with a more complex solution.
+
+#### Profiling and benchmarking BigchainDB
+
+In order to gain confidence in the application rewrite, we profiled the main BigchainDB process.
+We identified the work that constitutes the major part of the collected profile. We isolated the corresponding functions and compared them to the prototyped Golang implementations. Go equivalents turned out to be
+faster by an order of magnitude.
+
+Read the detailed report [in the appendix][profiling-bigchaindb].
+
+#### Picking a migration approach
 
 The following approaches were considered while developing the design for the BEP:
 
-### Approach A
+##### Approach A
 The approach entailed implementing the ABCI proxy app in Golang and then creating a corresponding abstraction in BigchainDB so that the new Golang ABCI proxy can talk to BigchainDB. This approach was more conservative as it required defining and implementing an abstraction layer to talk to ABCI proxy app.
 
-### Approach B
+##### Approach B
 The approach required to re-implement the validation logic and to integrate it with the ABCI interface. This approach is too risky because it requires more work to have something functional and deliverable in the short term.
 
 ## Backwards Compatibility
@@ -126,3 +139,4 @@ To the extent possible under law, the person who associated CC0 with this work h
 [diagram]: ./diagram.jpg
 [get:controversial]: https://stackoverflow.com/a/983458/597097
 [cgo-python]: https://www.datadoghq.com/blog/engineering/cgo-and-python/
+[profiling-bigchaindb]: ./profile_bigchaindb.md
