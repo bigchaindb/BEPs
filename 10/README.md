@@ -106,7 +106,17 @@ In order to gain confidence in the application rewrite, we profiled the main Big
 We identified the work that constitutes the major part of the collected profile. We isolated the corresponding functions and compared them to the prototyped Golang implementations. Go equivalents turned out to be
 faster by an order of magnitude.
 
-Read the detailed report [in the appendix][profiling-bigchaindb].
+Read the detailed report [in appendix 1][profiling-bigchaindb].
+
+#### Profiling the TCP connection
+
+To get a sense of the performance impact of the TCP connection, we ran a simple comparison test. Tendermint provides a nice benchmarking tool, [tm-bench][tm-bench], which measures transactions and blocks per second, using some proxy app.
+
+As a proxy app, we used a simple kv-store implemented in Golang. The proxy-app was configured both as an integrated Tendermint process and as an external process communicating over a TCP connection. We ran benchmarks using a number of different parameters to isolate the effect of load, number of connections, logging, and test duration on overall performance.
+
+Over several test conditions, we observed an average performance loss of 14% due to the TCP connection. It is worth nothing, however, that under sustained high load, transaction rates for both internal and external processes were identical. This suggests that while the TCP connection slows down performance when Tendermint has idle cycles, under high load, our bottleneck occurs on the Tendermint side. This conclusion is supported be observing the connection rate under sustained but low load, which reveals no significant difference in the internal and external transaction rates.
+
+Results can be seen in detail [in appendix 2][benchmark-tcp-connection].
 
 #### Picking a migration approach
 
@@ -140,3 +150,5 @@ To the extent possible under law, the person who associated CC0 with this work h
 [get:controversial]: https://stackoverflow.com/a/983458/597097
 [cgo-python]: https://www.datadoghq.com/blog/engineering/cgo-and-python/
 [profiling-bigchaindb]: ./profile_bigchaindb.md
+[benchmark-tcp-connection]: ./benchmark_tcp_pipeline.md
+[tm-bench]: https://github.com/tendermint/tools/tree/master/tm-bench
