@@ -5,7 +5,7 @@ type: Informational
 status: Raw
 Editors: Alberto Granzotto <alberto@bigchaindb.com>
 Contributors: Vanshdeep Singh <vanshdeep@bigchaindb.com>, Lev Berman <ldmberman@gmail.com>
-```
+Zach Bowen <zach@bigchaindb.com>```
 
 # A Strangler Application Approach to Rewriting Some Code in Go
 
