@@ -12,6 +12,20 @@ We took [data] on hardware with the following specifications
 * Memory: 15GB
 * OS: Ubuntu 18.04 LTS
 
+For the following graphs, we use the coloring scheme:
+* Blue
+  * KV-store integrated with Tendermint (no TCP pipeline)
+  * Logging enabled 
+* Red
+  * KV-store integrated with Tendermint (no TCP pipeline)
+  * Logging disabled
+* Yellow
+  * KV-store remote from Tendermint (yes TCP pipeline)
+  * Logging enabled
+* Green
+  * KV-store remote from Tendermint (yes TCP pipeline)
+  * Logging disabled
+
 Examining the data collected, we can see a few patterns.
 
 ###### Transactions per Second / Duration
@@ -42,7 +56,7 @@ We are currently running a more detailed investigation of the performance degrad
 [tm-bench]: https://github.com/tendermint/tools/tree/master/tm-bench
 [tests]: ./tcp_benchmark_parameters.sh
 [runtests]: ./run_tcp_benchmark.sh
-[data]: https://docs.google.com/spreadsheets/d/1ue8PjxOPaSFfSqUnTniWjVqZE1NHl28bzgu3hO0aBG0/edit?usp=sharing
+[data]: ./tendermint_connection_tests.ods
 [connections]: ./connections_vs_tx_rate.png
 [requests]: ./requests_vs_tx_rate.png
 [duration]: ./duration_vs_tx_rate.png
