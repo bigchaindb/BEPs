@@ -11,6 +11,7 @@ We took [data] on hardware with the following specifications
 * Processor: Intel(R) Xeon(R) CPU E5-2650 v3 @ 2.30GHz (10 cores)
 * Memory: 15GB
 * OS: Ubuntu 18.04 LTS
+* Tendermint version: 0.19.5-747f28f8
 
 For the following graphs, we use the coloring scheme:
 * Blue
@@ -51,12 +52,26 @@ It is worth noting that the transaction rate seems to *increase* when logging is
 
 #### Further investigation
 
-We are currently running a more detailed investigation of the performance degradation at low and high transaction rates, sustained for different durations. The results will be incorporated into this document when they become available.
+Following up on the observed performance degradation seen in [longer test runs][duration], we ran trials with more data points, at both low and high transaction rates.
+
+###### Sustained load at 10000 requests/s
+![tx/s vs time][high_load]
+
+We are able to reproduce the result at a transaction rate of 10,000 requests per second. We see a decrease in the reported tx rate. The data set is still too small for me to want to put any stock in statistical analysis, but a first glance, it looks like our performance decays exponentially, with a half-life on the order of 200-300s
+
+###### Sustained load at 100 requests/s
+![tx/s vs time][low_load]
+
+We see the same decay at low load. With a transaction rate of only 100 requests per second, we observe the same exponential decrease in transaction rate, again with a half-life on the order of only a couple of minutes.
+
+Further investigation of this issue is outside the scope of BEP-10, since it is reproducible using an integrated KV-store. However, this is a potentially serious problem. I intend to continue studying it, and will publish any findings in a separate BEP.
 
 [tm-bench]: https://github.com/tendermint/tools/tree/master/tm-bench
-[tests]: ./tcp_benchmark_parameters.sh
-[runtests]: ./run_tcp_benchmark.sh
-[data]: ./tendermint_connection_tests.ods
-[connections]: ./connections_vs_tx_rate.png
-[requests]: ./requests_vs_tx_rate.png
-[duration]: ./duration_vs_tx_rate.png
+[tests]: ./scripts/tcp_benchmark_parameters.sh
+[runtests]: ./scripts/run_tcp_benchmark.sh
+[data]: ./data/tendermint_connection_tests.ods
+[connections]: ./figures/connections_vs_tx_rate.png
+[requests]: ./figures/requests_vs_tx_rate.png
+[duration]: ./figures/duration_vs_tx_rate.png
+[low_load]: ./figures/performance_degradation-low_load.png
+[high_load]: ./figures/performance_degradation-high_load.png

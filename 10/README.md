@@ -146,7 +146,7 @@ To the extent possible under law, the person who associated CC0 with this work h
 [strangler:case-study-2]: http://agilefromthegroundup.blogspot.de/2011/03/strangulation-pattern-of-choice-for.html
 [abci]: http://tendermint.readthedocs.io/en/master/introduction.html#abci-overview
 [abci:in-process]: https://github.com/tendermint/abci#in-process
-[diagram]: ./diagram.jpg
+[diagram]: figures/diagram.jpg
 [get:controversial]: https://stackoverflow.com/a/983458/597097
 [cgo-python]: https://www.datadoghq.com/blog/engineering/cgo-and-python/
 [profiling-bigchaindb]: ./profile_bigchaindb.md
