@@ -55,13 +55,16 @@ Here's what we reccommend a node operator do if they discover illegal data store
 1. Be sure that illegal data have been clearly identified. Have some reasonable, validated and difficult-to-dispute evidence that the data is illegal. Avoid [crying wolf](https://dictionary.cambridge.org/dictionary/english/cry-wolf).
 1. Publicly announce that you've discovered illegal data on your computer and that you are following the **Illegal Data Response Plan** spelled out here. You can link to this page. The process now begins. You are acting responsibly. The law will give you a a reasonable amount of time to act. (Unless you are in some really sucky jurisdiction. Use discretion.)
 1. Inform all other members of the BigchainDB consortium where your node is a cluster member. Tell them to follow the same plan.
-1. Contact BigchainDB GmbH at contact@bigchaindb.com or some other way. Employees tend to have an email like firstname@bigchaindb.com. This is like [the Bat-Signal](https://en.wikipedia.org/wiki/Bat-Signal). You need their help. They will help. They don't want you to get in trouble with the law either! That would be bad for BigchainDB. (Note: You don't _have_ to contact BigchainDB if you have developers who are competent to the next step without help.)
+1. Contact BigchainDB GmbH at contact@bigchaindb.com or some other way. Employees tend to have an email like firstname@bigchaindb.com. This is like [the Bat-Signal](https://en.wikipedia.org/wiki/Bat-Signal). You need their help. They will help. They don't want you to get in trouble with the law either! That would be bad for BigchainDB. (Note: You don't _have_ to contact BigchainDB if you have developers who are competent to do the next step without help.)
 1. The BigchainDB team (or your team) will work with you create a modified version of BigchainDB Server (software) that is okay with certain specific data being deleted. This the core magic bit. It means that soon you will be deleting data and breaking the "immutability rule" but there's _nothing_ that was stopping you from doing that before. You could always delete data, but it would have broken BigchainDB. Unless BigchainDB was modified not to care, which is what's now happening!
 1. Upgrade BigchainDB Server on your node to run the new version. *All nodes in the network must do this upgrade.*
 1. Delete the illegal data. *All nodes in the network must do this deletion step.*
-1. [There's no place like home.](https://www.youtube.com/watch?v=ooM-RGUTe2E)
 
 Optional follow-up: a _second_ version of BigchainDB Server that will only believe the new situation, with the illegal data deleted is okay. The old situation, with the illegal data still there, should register as an error. Upgrade to that.
+
+Note: BigchainDB currently stores all data on-chain, but if it stores some data off-chain in the future, then the general idea of the plan would still work. It would just have to be modified a bit.
+
+A conceptually simpler but more expensive alternative would be to make all changes or deletions necessary, find the highest unchanged block, and generate/write a whole new blockchain following that block, i.e. a "clean fork." All the new/clean blocks must be agreed upon by more than two thirds of the network (i.e. using Tendermint consensus), and that might be impossible in practice.
 
 ## Your Expected Response
 
@@ -73,13 +76,17 @@ Moreover, the planned change is extremely specific. It doesn't make the entire b
 
 ## Things that Won't Work
 
-There are a lot of things that don't work. That's what the rest of this BEP is about: to convince you that those other ways will still land you in trouble with the law.
+There are many things that won't work. That's what the rest of this BEP is about: to convince you that those other ways will still land you in trouble with the law.
 
-### "We're running a blockchain so the rules are different for us."
+### "We're running a blockchain so the rules should be different for us."
 
 You might say, "Blockchains are supposed to be immutable so we can't delete the data. Therefore the law should make an exception for us."
 
 I don't know of any jurisdiction that makes an exception for blockchains. The best you can hope for is for your case to end up in legal limbo for months or years, until some court or legislature decides what to do. Meanwhile, your users, partners and investors (and potential ones) will be scared away. Is that really what you want?
+
+### Buy Insurance!
+
+Insurance isn't going to do you much good if you get arrested for breaking the law. It might pay for some lawyers to tie your case up in the courts for a few years, but you've got to keep storing the illegal data, and it's unlikely that law enforcement is going to let you do that.
 
 ### Filter Incoming Data!
 
@@ -89,11 +96,15 @@ That said, it wouldn't hurt to have some basic filters ("sanity checks") on inco
 
 ### Allow Only Encrypted Data!
 
-If the incoming it _is_ encrypted (and there is some way to check, which there isn't, but I digress), it's not legal to store illegal data, even if it's encrypted. Actually, that hasn't been decided in many jurisdictions, but are you really going to wait around for the courts to decide if you're breaking the law. What if they decide you are?
+If the incoming data is encrypted, then it's okay, right?
 
-Anyway, there's a worse problem. Here's a thought experiment:
+That depends on the legal jurisdiction. But even if it were legal to store encrypted illegal data everywhere in the world, there are many issues with the "encrypt everything solution."
 
-> Monica the Criminal uploads some encrypted illegal data to your node somehow. Then she uploads _the decryption key_. Now anyone can get the encrypted illegal data and the decryption key and it's as if the data was never encrypted. They can get the unencrypted illegal data.
+Here's a thought experiment:
+
+> Monica the Criminal uploads some encrypted illegal data to your node somehow. Then she publishes _the decryption key_ in ads in 50 newspapers globally. Now anyone can get the encrypted illegal data _and_ the decryption key and it's as if the data was never encrypted. They can get the unencrypted illegal data.
+
+Moreover, sometimes encryption algorithms get broken, i.e. someone discovers a fast decryption algorithm, so all the data encrypted by the encryption algorithm becomes effectively not-encrypted. Quantum computers bring the same issue. History teaches us we shouldn't assume encryption is forever, but blockchains are supposed to store data forever.
 
 ### Allow Only Hashed Data!
 
@@ -103,11 +114,23 @@ Anyway, there's a worse problem. Here's a thought experiment:
 
 Exercise for the reader: what could you do to prevent the above technique? There's a way. It's fun.
 
+### Store All the Data Off-Chain!
+
+_Something_ must get stored on-chain, unless it's a trivial (and therefore useless) blockchain. If on-chain data depends, _in any way_, on the transactions submitted by external parties, then those parties can manipulate their transactions to store arbitrary data on-chain, including illegal data.
+
+For example, when Bitcoin started, it didn't support the `OP_RETURN` opcode, but it was still possible to store arbitrary data in the Bitcoin blockchain. There's a survey of methods in the paper "[Data Insertion in Bitcoin's Blockchain](https://ledgerjournal.org/ojs/index.php/ledger/article/viewFile/101/93)" by Sward, Vecna and Stonedahl (2018).
+
+If it's possible to prevent external parties from storing arbitrary data on-chain, then there are a few possibilities:
+
+1. If the off-chain data must be stored immutably forever, then the people storing that data face the same problem with illegal data. It has just been shunted to them.
+1. If the off-chain data can be changed or deleted without causing problems, then haven't we lost one of the main blockchain features, i.e. immutability?
+1. If the off-chain data can be changed or deleted, but it takes a lot of effort to prevent problems, then you've got a variant of the plan proposed in this BEP. (BigchainDB, today, stores all data on-chain, so this variant is irrelevant for the BigchainDB of today.)
+
 ### Make the BigchainDB Network Fully Private!
 
 What if you just prevent anyone from writing to the network except for, say, the node operators themselves. Surely that would keep the bad guys out? Nope. You need to start thinking more like a criminal!
 
-Again, here's a thought experiment:
+Here's a thought experiment:
 
 > Julie the Criminal breaks into the office of Node Operator Fred at 3:00 am. She uses one of those things to make a nice circle in the glass, like in the movies. Or something. Anyway, she gets in. She sits at Fred's computer, she turns it on, enters the password from the sticky note on the montior, and she's in. (Maybe she got the password some other way, like social engineering. It's not that hard to make someone believe you need their password, or to trick them into telling it to you.) Now she uploads some illegal data because Fred's computer thinks she is Fred, who has access. Done.
 
@@ -151,23 +174,31 @@ Maybe not! For example, it's in some places it's illegal to carry a gun, but it'
 
 Maybe someday erasure coding could be used, but for now the legal question isn't decided yet, so why risk it?
 
+Moreover, if it's known that a blockchain has some illegal data stored in it, somehow, then many people won't use it (e.g. for ethical reasons).
+
+### Deindex the Data!
+
+Google and other search engines are often asked to remove links from their search indexes, so those links stop showing up in search results. Maybe we could just deindex the illegal data in the blockchain?
+
+Even if that was possible without breaking the blockchain or its auditability, the illegal data would still be stored _somewhere_, and whoever is storing it is still breaking the law.
+
 ### There Must Be a Way!
 
 Please share! If there is, and it works, that would be awesome.
 
-I wouldn't be surprised if some cryptographers figure out some great tricks, but I'm not from that world and I can't guess what they might do. I know it's just math, and math can be used to do amazing things, so there is hope! (My first dergree was in math, and physics.)
+I wouldn't be surprised if some cryptographers figure out some great tricks, but I'm not from that world and I can't guess what they might do. I know it's just math, and math can be used to do amazing things, so there is hope!
 
 Meanwhile, we've got to do something _today._
 
 ## Why Now?
 
-Why didn't we publish this sooner? I actually proposed an idea like this over a year ago, and Trent (my brother, and our CTO) liked it. We're both former Canadian farmboys who grew up raising pigs together and are very practical.
+Why didn't we publish this sooner? I actually proposed an idea like this over a year ago, and Trent (my brother, and our CTO) liked it.
 
 We told the idea to some of our work colleagues (who will remain nameless), and they _hated it_. "Blockchains are supposed to be immutable!" they said. "Do this and BigchainDB won't be a blockchain anymore!"
 
 So we dropped it. Maybe we are too nice. Dogmatism got in the way of pragmatism. Well, pragmatism is back.
 
-## How to Improve the IDPR (BEP-5)?
+## Can I Suggest an Improvement to This BEP?
 
 BigchainDB GmbH has a process to improve BEPs like this one. Please see [BEP-1/C4](https://github.com/bigchaindb/BEPs/blob/master/1) and [BEP-2/COSS](https://github.com/bigchaindb/BEPs/blob/master/2).
 
