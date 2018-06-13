@@ -142,14 +142,14 @@ sys	0m0.013s
 
 This is about 15 times faster than the Python equivalent.
 
-[post-tx-script]: ./bulk_post_transactions.py
+[post-tx-script]: ./scripts/bulk_post_transactions.py
 [flame-graph]: https://github.com/brendangregg/FlameGraph
 [pyflame]: https://github.com/uber/pyflame
-[profile-script]: ./profile_bigchaindb
-[flame-100-sync]: ./profile_sync_100_threads.svg
-[flame-100-async]: ./profile_async_100_threads.svg
-[flame-1000-async]: ./profile_async_1000_threads.svg
-[python-serialisation-benchmark]: ./serialise_fulfillment_python_benchmark.py
-[go-serialisation-benchmark]: ./serialise_fulfillment_golang_benchmark.go
-[python-schema-benchmark]: ./validate_schema_python_benchmark.py
-[go-schema-benchmark]: ./validate_schema_golang_benchmark.go
+[profile-script]: ./scripts/profile_bigchaindb
+[flame-100-sync]: ./figures/profile_sync_100_threads.svg
+[flame-100-async]: ./figures/profile_async_100_threads.svg
+[flame-1000-async]: ./figures/profile_async_1000_threads.svg
+[python-serialisation-benchmark]: ./scripts/serialise_fulfillment_python_benchmark.py
+[go-serialisation-benchmark]: ./scripts/serialise_fulfillment_golang_benchmark.go
+[python-schema-benchmark]: ./scripts/validate_schema_python_benchmark.py
+[go-schema-benchmark]: ./scripts/validate_schema_golang_benchmark.go
