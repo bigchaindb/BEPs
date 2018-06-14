@@ -1,5 +1,5 @@
 ```
-shortname: 9/TX-CODE-REFACTOR-1
+shortname: BEP-9
 name: Transaction Code Refactoring, Phase 1
 type: Standard
 status: Raw
@@ -54,7 +54,7 @@ The idea is that the BigchainDB node operator can decide which transaction valid
 
 # Change Process
 
-This document is governed by the [2/COSS](../2/README.md) (COSS).
+Changes to this document are governed by [BEP-2 (COSS)](../2/README.md).
 
 # Copyright Waiver
 
