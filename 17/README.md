@@ -1,5 +1,5 @@
 ```
-shortname: 17/AZURE-1
+shortname: BEP-17
 name: Listing BigchainDB in Azure Marketplace, Phase 1
 type: Standard
 status: Raw

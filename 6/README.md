@@ -1,6 +1,6 @@
 # Shared Workspace Protocol
 ```
-shortname: 6/SWP
+shortname: BEP-6
 name: Shared Workspace Protocol
 type: Meta
 status: Draft

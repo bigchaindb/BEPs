@@ -1,5 +1,5 @@
 ```
-shortname: 5/IDRP
+shortname: BEP-5
 name: Illegal Data Response Plan
 type: Informational
 status: raw
@@ -200,7 +200,7 @@ So we dropped it. Maybe we are too nice. Dogmatism got in the way of pragmatism.
 
 ## Can I Suggest an Improvement to This BEP?
 
-BigchainDB GmbH has a process to improve BEPs like this one. Please see [BEP-1/C4](https://github.com/bigchaindb/BEPs/blob/master/1) and [BEP-2/COSS](https://github.com/bigchaindb/BEPs/blob/master/2).
+BigchainDB GmbH has a process to improve BEPs like this one. Please see [BEP-1 (C4)](https://github.com/bigchaindb/BEPs/blob/master/1) and [BEP-2 (COSS)](https://github.com/bigchaindb/BEPs/blob/master/2).
 
 Your consortium might have a variation of the IDRP. Your consortium can modify its variant using it's own governance processes.
 

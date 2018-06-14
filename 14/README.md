@@ -1,5 +1,5 @@
 ```
-shortname: 14/GIDR
+shortname: BEP-14
 name: Guidelines to Improve Drivers Reliability
 type: standard
 status: raw

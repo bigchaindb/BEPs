@@ -1,5 +1,5 @@
 ```
-shortname: 8/CRASH-RECOVERY
+shortname: BEP-8
 name: Restore system state after crash
 type: standard
 status: raw

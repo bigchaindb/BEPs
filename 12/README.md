@@ -1,5 +1,5 @@
 ```
-shortname: 12/TX-SPEC-1
+shortname: BEP-12
 name: BigchainDB Transactions Spec v1
 type: Standard
 status: Stable
@@ -26,7 +26,7 @@ It was also implemented by several BigchainDB drivers. We may make a complete li
 
 # Change Process
 
-The process to change this document is [2/COSS](../2/README.md) (COSS).
+The process to change this document is [BEP-2 (COSS)](../2/README.md).
 
 # Specification
 
