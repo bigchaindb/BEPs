@@ -82,12 +82,16 @@ Also note that the shape of the data could be attributed to an initial burst of 
 
 We ruled this possibility out by manually monitoring the blocks written for several minutes while the test script ran. We continued to see blocks with new transactions being written well past the 10th minute of test execution, albeit only one every few seconds. The reader can repeat this test by repeatedly pinging ``$ curl localhost:46657/block | grep height`` while a test script runs and watching the block height increment.
 
+We additionally verified that the increment in block height was linked to actual transactions being written in two ways. First, we repeated selected tests with `create_empty_blocks=false` in the `config.toml`. Second, by omitting the `grep height` while monitoring the block height, we could see transactions included in the newly mined blocks.
+
 #### Intermittent Load Tests
 Next, we tested the effect of pausing the test and restarting it. In essence, rather than broadcasting at a constant rate, we set a square wave, with a constant broadcast, followed by a pause. Our assumption was that if Tendermint was experiencing a backlog somewhere, the pause should give the system a chance to clear itself out, restoring the performance once the broadcast restarted.
 
 Of greatest interest, we can see that in a series of tests where we separate broadcasts with a pause of varying duration, the transaction rate is stabilized. For example, examine lines 126 to 194 of the [data]. In this series of tests, we send 10 request batches. Each batch lasts 100 seconds, and has a request rate of 1,000 requests per second. We vary the pauses between request batch from 1 to 20 seconds in successive tests, and in all cases, our transaction rate stabilizes between 900 and 1,000 transactions per second. Compare this to sending 1,000 requests per second for 1,000 seconds straight, as we did on line 13 of the [data]. Without pauses, our average transaction rate fell to 210 transactions per second.
 
 Note that there is a sweet spot here. When we reduce our broadcast time too much, we start to lose performance, (see lines 254 - 294 in the [data]). This is due to the fact that there is a lag when we initialize the connection to Tendermint. There is a cost to breaking and re-establishing this connection that needs to be balanced against the increase in transaction rate.
+
+Also, it is worth mentioning that it may not be necessary to fully break the connection with Tendermint. Recall that the tests were run using an integrated kv-store written in GoLang. In the context of these tests, 'breaking the connection' and 'pausing transmission' look the same. It is possible that in the context of BigChainDB, we can simply pause transmission of new requests for a second, without actually breaking the TCP connection. However, testing this would require re-engineering parts of the tm-bench tool, and in the interest of getting results out rapidly, I will simply present the 'worst case' analysis, as if we really need to break the TCP connection.
 
 ## Recommendations
 
@@ -101,9 +105,11 @@ First, we can use the sentinel to protect against DoS attacks, by limiting the n
     User_3, 10 requests/s----------------->| pause_interval=100s |   User_3, 10 requests/s      |____________|
                                            |_____________________|   Break every 100s
 
-Second, we can use the sentinel to break and reinitialize connection with Tendermint as a mitigation for the perfomance degradation.
+Second, we can use the sentinel to break/pause the connection with Tendermint as a mitigation for the perfomance degradation.
 
 This could be implemented in two ways. First, we could simply experiment to find the optimal frequency with which we hang up and call back to Tendermint. This has the advantage of being easy to engineer. However, we could also implement active monitoring from the sentinel layer, where we measure the transaction rate and hang up if it falls below a certain threshold. This offers the advantage of being a more general solution that will respond to changes in performance as different version of Tendermint are rolled out, or when the system is run on different hardware, for example.
+
+In any case, the sentinel server should function as a buffer between the request author and the Tendermint layer. Incoming requests should be stored in memory and fed to Tendermint at a manageable rate. Any pauses needed to maintain throughput on the Tendermint end should be invisible to the user, as the memory buffer stays available at all times.
 
 [tm_benchmark_claim]: https://github.com/tendermint/tendermint/wiki/Benchmarks
 [Tendermint]: http://tendermint.readthedocs.io/projects/tools/en/master/install.html
