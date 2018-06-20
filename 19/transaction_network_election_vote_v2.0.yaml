@@ -1,7 +1,7 @@
 ---
 "$schema": "http://json-schema.org/draft-04/schema#"
 type: object
-title: Network Election Schema - Propose a network change
+title: Validator Election Vote Schema - Vote on a validator set change
 required:
 - operation
 - version
