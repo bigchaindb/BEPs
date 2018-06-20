@@ -31,38 +31,22 @@ Consider a network of 4 nodes `{A,B,C,D}` if now if a node A wishes to add a new
 1. Node `A` executes
 
 ```
-$ bigchaindb upsert-validator E_PUBKEY E_POWER  --private-key /home/user/.tendermint/config/priv_validator.json
-node_upsert_request_id
+$ bigchaindb upsert-validator E_PUBKEY E_POWER E_NODE_ID --private-key /home/user/.tendermint/config/priv_validator.json
+<election_id>
 ```
 
-The above command `POST`s a TEP `CREATE` transaction and return the `node_upsert_request_id`. The asset data is of the following form,
-```json
-{
-    "type": "election",
-    "name": "upsert-validator",
-    "version": "1.0",
-    "args": {
-        "public_key": "Wn2DedV9OA0LJJjOxr7Sl7jqCSYjQihA6dCBX+iHaEI=",
-        "power": 10,
-        "node_id": "82190eb6396bdd80b83aef0f931d0f45738ed075"
-    }
-}
-```
+The above command `POST`s a [`VALIDATOR_ELECTION`][spec_validator_election] transaction and returns the `election_id`.
 
 NOTE:
-- The `CREATE` transaction is signed using the private key generated and stored by Node `A`'s' Tendermint in `priv_validator.json`.
-- `type` indicates that the transaction is a `"election"`.
-- `name` indicates that validaton logic for this election.
-- `version` indicates version for the validation logic (i.e. `upsert-validator`) for this election. This field would be helpful when upgrading to new validation logic for the `upsert-validator` election to validate old elections when they are being replayed.
-- `args` necessary data to execute the action when an election has received majority vote.
+- The `VALIDATOR_ELECTION` transaction is signed using the private key generated and stored by Node `A`'s' Tendermint in `priv_validator.json`.
 
 
-2. The `node_upsert_request_id` is then manually sent (via email or message) to rest of the nodes in the network.
+2. The `election_id` is then manually sent (via email or message) to rest of the nodes in the network.
 
-3. The node operator can list the `upsert-validator` request using,
+3. The node operator can list the contents of `election_id` request using,
 
 ```
-$ bigchaindb upsert-validator show-request node_upsert_request_id
+$ bigchaindb upsert-validator show-request <election_id>
 public_key=Wn2DedV9OA0LJJjOxr7Sl7jqCSYjQihA6dCBX+iHaEI=
 power=10
 node_id=82190eb6396bdd80b83aef0f931d0f45738ed075
@@ -70,14 +54,14 @@ node_id=82190eb6396bdd80b83aef0f931d0f45738ed075
 
 The above command list the details about the node which is being added/updated/deleted from the network.
 
-4. If the node operator aggrees to the operation being proposed by the `node_upsert_request_id` then they can vote on the same using the following,
+4. If the node operator aggrees to the operation being proposed by the `election_id` then they can vote on the same using the following,
 
 ```
 $ bigchaindb upsert-validator approve-request node_upsert_request_id --private-key /home/user/.tendermint/config/priv_validator.json
 ```
 
-The above command `POST`s a `TRANSFER` transaction casting the vote of the node for the given TEP.
-NOTE: The `TRANSFER` transaction is signed using the private key generated and stored by Tendermint in `priv_validator.json`.
+The above command `POST`s a [`VALIDATOR_ELECTION_VOTE`][spec_validator_election] transaction casting the vote of the node for given `election_id`.
+NOTE: The `VALIDATOR_ELECTION_VOTE` transaction is signed using the private key generated and stored by Tendermint in `priv_validator.json`.
 
 
 ## Backwards Compatibility 
@@ -101,3 +85,7 @@ BigchainDB 2.0
 
 ## Copyright Waiver
 To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work.
+
+
+[spec_validator_election]: ./transaction_network_election_v2.0.yaml
+[spec_validator_election_vote]: ./transaction_network_election_vote_v2.0.yaml
