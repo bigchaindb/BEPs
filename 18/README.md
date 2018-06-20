@@ -25,6 +25,8 @@ All tests were run on hardware with the following specifications
 * OS: Ubuntu 18.04 LTS
 * Tendermint version: 0.20.0-27bd1dea
 
+We ran tests against a single Tendermint instance, which is initialized in the setup of the test run. The [``config.toml``][config.toml] is modified at run time to set the ``mempool_size``, according to a test parameter. All other parameters were left with their default values.
+
 ## Tests
 All tests were based on the [tm-bench] benchmarking tool. The tool specifies
 
@@ -123,3 +125,4 @@ In any case, the sentinel server should function as a buffer between the request
 [mempool_size=100000+]: ./figures/mempool_size=100000+.png
 [scripts]: ./scripts
 [data]: ./data/tendermint_mempool_tests_15_6_2018.csv
+[config.toml]: ./data/config.toml
