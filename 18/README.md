@@ -124,5 +124,5 @@ In any case, the sentinel server should function as a buffer between the request
 [mempool_size=1000]: ./figures/mempool_size=1000.png
 [mempool_size=100000+]: ./figures/mempool_size=100000+.png
 [scripts]: ./scripts
-[data]: ./data/tendermint_mempool_tests_15_6_2018.csv
+[data]: ./data/tendermint_mempool_tests_16_6_2018.csv
 [config.toml]: ./data/config.toml
