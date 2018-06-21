@@ -1,5 +1,5 @@
 ```
-shortname: 1/BOUNTY
+shortname: 20/BOUNTY
 name: Bounties in BigchainDB
 type: Meta
 status: Raw
