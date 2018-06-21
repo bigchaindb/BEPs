@@ -34,8 +34,9 @@ An issue is called **bounty** when it has
 * a successful payment transaction. 
 
 The purpose of bounties is to 
- * scale developments in the ecosystem
- * attract contributors for key components
+ * resolve issues,
+ * scale developments in the ecosystem,
+ * attract contributors for key components,
  * support adoption and
  * self-maintenance
  
