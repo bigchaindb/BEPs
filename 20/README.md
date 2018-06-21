@@ -40,23 +40,22 @@ The purpose of bounties is to
  * support adoption and
  * self-maintenance
  
-## Processes
-The process runs through following steps
+## Process
+The process requires following activities that should be performed
 
-1. Identify issue and write requirements specification 
-1. Effort estimates for the work to be done
-1. Definition of the bounty, eg. funds/DoD
+1. Identify issue and provide requirements specification 
+1. Estimate efforts for the work to be done
+1. Define the bounty, eg. funds/DoD
 1. Clarify revisions and issue labeling ("bounty")
 1. Create and submit bounty on the platform
 1. Publish to blog, slack, gitter, twitter and linkedin
 1. Monitor progress and comment where applicable
 1. Revise pull request and merge
-1. Reward / pay
+1. Reward / pay the bounty hunter
 
 Gitcoin as a platform supports the lifecycle of the bounty with Github integration and enables monitoring via email. Additional guidance can be found [here](https://docs.google.com/document/d/1_U9IdDN8FIRMGAdLWCMl2BnqCTAv558QvyJiSWQfkbs/edit?usp=sharing).
 
 ![img](https://github.com/gitcoinco/web/raw/master/docs/bounty_flow.png) 
-
 
 ## License
 Copyright (c) 2018 BigchainDB GmbH, Notice <notices@consensys.net> Copyright (C) 2018 Gitcoin
