@@ -55,12 +55,11 @@ The process runs through following steps
 
 Gitcoin as a platform supports the lifecycle of the bounty with Github integration and enables monitoring via email. Additional guidance can be found [here](https://docs.google.com/document/d/1_U9IdDN8FIRMGAdLWCMl2BnqCTAv558QvyJiSWQfkbs/edit?usp=sharing).
 
-![img](gitcoinprocess.png) 
+![img](https://github.com/gitcoinco/web/raw/master/docs/bounty_flow.png) 
 
 
 ## License
-Copyright (c) 2008-16 Yurii Rashkovskii <yrashk@gmail.com>, Pieter Hintjens <ph@imatix.com>, André Rebentisch <andre@openstandards.de>, Alberto Barrionuevo <abarrio@opentia.es>, Chris Puttick <chris.puttick@thehumanjourney.net>
-Copyright (c) 2018 BigchainDB GmbH
+Copyright (c) 2018 BigchainDB GmbH, Notice <notices@consensys.net> Copyright (C) 2018 Gitcoin
 
 This BEP is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
 
