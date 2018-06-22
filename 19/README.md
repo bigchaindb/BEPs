@@ -66,6 +66,20 @@ The above command `POST`s a [`VALIDATOR_ELECTION_VOTE`][spec_validator_election_
 NOTE: The `VALIDATOR_ELECTION_VOTE` transaction is signed using the private key generated and stored by Tendermint in `priv_validator.json`.
 
 
+### Election process
+
+#### Valid election
+
+A valid `VALIDATOR_ELECTION` is one which allocates in the `outputs` votes to the current validators in the network in accordance with the power.
+
+#### Valid vote
+
+A validator can choose to vote/delegate/burn their vote. It is purely up to a voter to decide how to spend their vote.
+
+#### Election conclusion
+
+An election is concluded only when `> 2/3 (TOTAL_POWER)` casts their vote to `election_id`.
+
 ## Backwards Compatibility 
 The approach suggested in this specification is entirely different. The previous approach involved storing `upsert-validator` request in a seperate collection, which will not be required anymore. So migrating to the implementation of this new approach would involve to optionally drop collection holding the `upsert-validator` request.
 
