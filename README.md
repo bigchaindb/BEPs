@@ -24,6 +24,7 @@ Short Name    | Title                                                        | T
 [13/TX-SPEC-2](13) | BigchainDB Transaction Spec v2                          | Standard | Stable     | Troy McConaghy
 [14/GIDR](14) | Guidelines to Improve Drivers Reliability                    | Standard | Raw        | Alberto Granzotto
 [17/AZURE-1](17) | Listing BigchainDB in Azure Marketplace, Phase 1          | Standard | Raw        | Troy McConaghy
+[19/TM-STRESS](19) | Tendermint Performance Profiling                        | Informational | Raw   | Zach Bowen
 
 # Current Participants
 
