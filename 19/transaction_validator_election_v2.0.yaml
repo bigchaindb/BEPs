@@ -4,17 +4,10 @@ type: object
 title: Validator Election Schema - Propose a change to validator set
 required:
 - operation
-- version
 - asset
 - outputs
 properties:
   operation: "VALIDATOR_ELECTION"
-  # version should greater than or equal the base transaction spec version
-  # - major number should be equal to the base transaction spec major version
-  # - minor number should be greater than or equal to base transaction spec minor version
-  version:
-    type: string
-    pattern: "^2\\.0$"
   asset:
     additionalProperties: false
     properties:

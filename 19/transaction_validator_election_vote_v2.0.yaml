@@ -4,13 +4,9 @@ type: object
 title: Validator Election Vote Schema - Vote on a validator set change
 required:
 - operation
-- version
 - outputs
 properties:
   operation: "VALIDATOR_ELECTION_VOTE"
-  version:
-    type: string
-    pattern: "^2\\.0$"
   outputs:
     type: array
     items:
