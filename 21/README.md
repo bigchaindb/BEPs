@@ -1,5 +1,5 @@
 ```
-shortname: [19/UPSERT-VALIDATORS]
+shortname: [21/UPSERT-VALIDATORS]
 name: Dynamically add/update/remove validators at runtime
 type: standard
 Status: raw
