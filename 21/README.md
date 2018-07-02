@@ -79,7 +79,7 @@ Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new nod
 
 #### Valid election
 
-A valid `VALIDATOR_ELECTION` is one which allocates in the `outputs` votes to the current validators in the network in accordance with the power.
+A valid `VALIDATOR_ELECTION` is one where change to validator set is `< 1/3 CURRENT_POWER`.
 
 #### Valid vote
 
@@ -87,11 +87,7 @@ A validator can choose to vote/delegate/burn their vote. It is purely up to a vo
 
 #### Election conclusion
 
-An election is concluded only when `> 2/3 (TOTAL_POWER)` casts their vote to `election_id`.
-
-
-**NOTE**: It is necessary that an election be able to gather `> 2/3 TOTAL_POWER` (super-majority) in order to be concluded. But gathering super-majority votes may not be sufficient in case `TOTAL_POWER` of the network gets updated. There might be cases where a super-majority cannot be gather even if all the votes allocated in the election have been casted. In such cases the validator change must be re-proposed by creating a new election.
-
+Election conclusion is inherited from the [TEP](https://github.com/bigchaindb/BEPs/pull/44) definition
 
 
 ## Backwards Compatibility 
