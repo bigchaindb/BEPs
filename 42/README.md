@@ -1,6 +1,6 @@
 ```
 shortname: [42/HARD-FORKS]
-name: Handling Hard Forks
+name: Handling Forks
 type: information
 Status: raw
 editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
@@ -20,7 +20,7 @@ Currently, there is no active strategy to address breaking changes in BigchainDB
 ## Handling Hard Forks
 
 ### Type 1 scenarios
-In case of change to spec it might not be possible to port all existing validated transaction to the new format. In such cases one needs to make a distinction between transactions which have already been validated and stored in the Blockchain from new incoming transactions. Furthermore, a suitable trigger is needed so that the network can collectively jump to the new logic else there could be situations wherein the network might not be able to commit any new blocks because of honest nodes running different validation logic. So, it is apparent that a mechanism for transitioning to this new validation logic is need. Below is one such procedure to achieve the same,
+In case of change to spec it might not be possible to port all existing validated transaction to the new format. In such cases one needs to make a distinction between transactions which have already been validated and stored in the Blockchain from new incoming transactions. Furthermore, a suitable trigger is needed so that the network can collectively jump to the new logic else there could be situations wherein the network might not be able to commit any new blocks because of honest nodes running different validation logic. So, it is apparent that a mechanism for transitioning to this new validation logic is needed. Below is one such procedure to achieve the same,
 
 - In order to decide when the validation logic should be upgraded to its newer version a TEP is initiated which defines the future block `height` at which to upgrade and the corresponding `BigchainDB` class to use.
 
@@ -39,7 +39,7 @@ In case of change to spec it might not be possible to port all existing validate
    }
    ```
 
-- Each node operator needs to approve the TEP proposal in order for the validation logic to be upgraded.
+- Each node operator needs to approve the [TEP](https://github.com/bigchaindb/BEPs/pull/44) proposal in order for the validation logic to be upgraded.
 
 - If a super-majority of the network i.e. `> 2/3` voting power agrees with the change and the proposed height is still lies in the future then the proposed TEP is commit-ed and a new validation version is added (see above)
 
