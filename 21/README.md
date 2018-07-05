@@ -37,16 +37,20 @@ This implementation SHOULD also include tests and code coverage of atleast 95%.
 
 # Architecture
 
-### Current Architecture
+
+## Current Architecture
+
 ![Image of Current Python driver implementation](./images/before-orm-implementation.png)
 
-### Architecture After ORM Implementation
+## Architecture After ORM Implementation
+
 ![Image of ORM Python driver implementation](./images/after-orm-implementation.png)
 
 # References
 
 * [CRUD vs CRAB](https://blog.bigchaindb.com/crab-create-retrieve-append-burn-b9f6d111f460)
 * [BigchainDB's official python driver](https://github.com/bigchaindb/bigchaindb-driver)
+* [BigchainDB's official python driver documentation](https://docs.bigchaindb.com/projects/py-driver/en/latest/index.html)
 * [BigchainDB's official javascript driver](https://github.com/bigchaindb/js-bigchaindb-driver)
 * [ORM implementation of javascript driver](https://github.com/bigchaindb/js-driver-orm)
 * [CRAB tutorial showing javascript ORM driver usage](https://github.com/bigchaindb/tutorial-crab)
