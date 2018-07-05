@@ -53,6 +53,11 @@ The process requires following activities that should be performed
 1. Revise pull request and merge
 1. Reward / pay the bounty hunter
 
+A typical interaction between bounty poster and bounty hunter is described in following sequence diagram.
+
+![img](bounty_sequence.png)
+
+
 Gitcoin as a platform supports the lifecycle of the bounty with Github integration and enables monitoring via email. Additional guidance can be found [here](https://docs.google.com/document/d/1_U9IdDN8FIRMGAdLWCMl2BnqCTAv558QvyJiSWQfkbs/edit?usp=sharing).
 
 ![img](https://github.com/gitcoinco/web/raw/master/docs/bounty_flow.png) 
