@@ -25,6 +25,7 @@ Short Name    | Title                                                        | T
 [14/GIDR](14) | Guidelines to Improve Drivers Reliability                    | Standard | Raw        | Alberto Granzotto
 [17/AZURE-1](17) | Listing BigchainDB in Azure Marketplace, Phase 1          | Standard | Raw        | Troy McConaghy
 [20/BOUNTY](20) | Bounties in BigchainDB ecosystem                           | Meta | Raw        | Chalid Mannaa
+[19/TM-STRESS](19) | Tendermint Performance Profiling                        | Informational | Raw   | Zach Bowen
 
 # Current Participants
 
