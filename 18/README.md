@@ -14,12 +14,11 @@ contributors: Vanshdeep Singh <vanshdeep@bigchaindb.com>, Lev Berman <lev@bigcha
 This specification introduces the new concept of **Election**. An Election is an asynchronous process that when successful triggers Network wide changes synchronously (i.e. at the same *block height*). An Election is started by any Validator in the Network, called **Initiatior**. The Election itself and all cast Votes are transactions, hence stored in the blockchain. This enables new Validators to replay Network changes incrementally, while syncing.
 
 ## Motivation
-Changing the shape of a BigchainDB Network at runtime is an important requirement. While this BEP does not address this issue directly, it wants to solve the limitations we had with [Upsert Validators (BEP-3)][BEP-3] by giving a tool that can be used this and other situations. BEP-3 addresses a really interesting use case: adding a Member to a running Network. Since changes in the Validator Set are not themselves expressed as transactions but are included into the metadata of an arbitrary block, all the nodes have to add a validator simultaneously—if less than the majority of the nodes attempt to include a Validator, the block fails and the whole Network can stuck. Since those changes are **not** stored in the blockchain itself, a new Node that needs to sync with the Network will fail in validating blocks from a specific *height* on. The *height* will match the one of the first block voted by a new Validator that was **not** included in the `genesis.json` file (and Tendermint will fail with `Invalid commit (last validator set size) vs (number of precommits)`).
+Changing the shape of a BigchainDB Network at runtime is an important requirement. While this BEP does not address this issue directly, it wants to solve the limitations we had with [Upsert Validators (BEP-3)][BEP-3] by giving a tool that can be used this and other situations. BEP-3 addresses a really interesting use case: adding a Member to a running Network. Since changes in the Validator Set are not themselves expressed as transactions but are included into the metadata of an arbitrary block, all the nodes have to add a Validator simultaneously—if less than the majority of the nodes attempt to include a Validator, the block fails and the whole Network can stuck. Since those changes are **not** stored in the blockchain itself, a new Node that needs to sync with the Network will fail in validating blocks from a specific *height* on. The *height* will match the one of the first block voted by a new Validator that was **not** included in the `genesis.json` file (and Tendermint will fail with `Invalid commit (last Validator set size) vs (number of precommits)`).
 
 The abstract version of the problem is "make Network wide decisions". We need a way for Members to vote on proposals, and implement them as soon as the quorum of ⅔ is reached. In this BEP, a proposal is named *Election*, a vote is a fungible token formalized with the capitalized name *Vote Token*. Elections and Vote Tokens are stored in the blockchain, so a new Node that syncs with the Network will be able to replay them locally, and reach the same state of all other Members.
 
-The basic idea is to formalize the concept of an Election storing its data in a [BigchainDB Transaction Spec v2 (BEP-13)][BEP-13].
-By storing it in a BigchainDB Network, it allows Members to vote asynchronously, and Validators to apply changes synchronously.
+The basic idea is to formalize the concept of an Election storing its data in a [BigchainDB Transaction Spec v2 (BEP-13)][BEP-13]. Implementations of this BEP might introduce new operations for a *BigchainDB Transaction Spec v2*, and new validation rules for the Election transaction and the Vote transaction. By storing it in a BigchainDB Network, it allows Members to vote asynchronously, and Validators to apply changes synchronously.
 
 ## Specification
 At any point in time, a Member of a BigchainDB Network can start a new Election.This Member is called **Initiator**.
@@ -32,10 +31,10 @@ During the `end_block` call, all transactions about to be committed are checked.
 
 Each Validator checks every new transaction that is about to be committed in a block. The process is roughly the following:
 1. If the transaction is **not** a valid Vote, return.
-2. If `asset.data.id` is **not** a valid Election, return.
-3. If the Election has less than ⅔ of positive votes, return.
-4. If the Election has been already implemented, return.
-5. Since all previous checks has been successful, execute the logic to implement the Election.
+2. If the Vote is for a **not** valid Election, return.
+3. If the Election **including** the current Vote has less than ⅔ of positive votes, return.
+4. If the Election **excluding** the current Vote has more than ⅔ of positive votes, return. (It has been concluded already.)
+5. If the Election **excluding** the current Vote has less than ⅔ of positive votes and **including** the current Vote has more than ⅔ of positive votes, execute the logic to implement the Election.
 
 ### What is a valid Vote?
 A Validator must be able to discern valid Votes from invalid ones. A valid vote is a transaction that spends one or more Vote Tokens to the Election Address.
@@ -50,19 +49,19 @@ A Validator must be able to discern valid Elections from invalid ones. A valid E
 5. Each Validator is represented in `outputs`.
 6. Each entry in `outputs` can be spent by only one Validator, and the amount attached to it is equal to the power of that Validator.
 
-**Note: any change in the Validator Set will make old Elections invalid.**
+**Note: any change in the Validator Set will make old Elections invalid. Check [approach 2](#generalized-approach-approach-2) for a process that can tolerate a certain degree of change to the Validator Set.**
 
 ### Extra: Vote delegation
 Vote delegation is trivial. Let's consider a Network of three Members: Alice, Bob, and Carly. Alice is the Initiator, and starts a new Election. Alice generates a `CREATE` transaction with three outputs, one per each Member. Bob wants to delegate his vote to Carly, so he transfers his output to Carly, granting her more votes she can spend in the way she wants.
 
-### Constraints
+### About Election finality
 Let the Validator Set be denoted by ![V_t][eq_V_t] at time ![][eq_t], a member of a BigchainDB Network can start a new Election. This member is called **Initiator** (![v_it][eq_v_it] s.t. ![v_it in V][eq1]) .
 
 #### Valid Election
-An Election proposal is a transaction representing the matter of change. The _Initiator_ ![v_it][eq_v_it], issues a create election transaction ![][EC_t]. The election MUST contain outputs  such that each output is populated with the public key of the validator ![][eq_v_k] s.t. ![][v_k_in_V_t], and an amount equal to the current power ![][eq_p(v_k, t)]  of the validator.
+An Election proposal is a transaction representing the matter of change. The _Initiator_ ![v_it][eq_v_it], issues a create election transaction ![][EC_t]. The election MUST contain outputs  such that each output is populated with the public key of the Validator ![][eq_v_k] s.t. ![][v_k_in_V_t], and an amount equal to the current power ![][eq_p(v_k, t)]  of the Validator.
 
 #### Voting
-Once ![][EC_t] is committed in a block, the election starts. Independently and asynchronously, each validator may spend its vote tokens (referred as ![][T_k]) to the election address ![][EC_t_addr] to show agreement on the matter of change. The Election Address ![][EC_t_addr] is the `id` of the transaction ![][EC_t].
+Once ![][EC_t] is committed in a block, the election starts. Independently and asynchronously, each Validator may spend its vote tokens (referred as ![][T_k]) to the election address ![][EC_t_addr] to show agreement on the matter of change. The Election Address ![][EC_t_addr] is the `id` of the transaction ![][EC_t].
 
 NOTE: Once the vote tokens ![][T_k] have been transferred to the election address ![][EC_t_addr] it is not possible to transfer it again, because the private key is not known.
 
@@ -74,7 +73,7 @@ At time ![][t_n] let,
 
 
 ##### Constrained approach (Approach 1)
-In the constrained approach any change to the validator set invalidates all the elections which were initiated with a different validator set.
+In the constrained approach any change to the Validator Set invalidates all the elections which were initiated with a different Validator Set.
 
 If below conditions hold true then the election is concluded and the proposed change is applied,
 1. ![][V_tn_equals_V_t]
@@ -83,7 +82,7 @@ If below conditions hold true then the election is concluded and the proposed ch
 
 
 ##### Generalized approach (Approach 2)
-The generalized constraints can tolerate a certain degree of change to the validator set.
+The generalized constraints can tolerate a certain degree of change to the Validator Set.
 
 If below conditions hold then the election is concluded and the proposed change is applied,
 
@@ -91,7 +90,7 @@ If below conditions hold then the election is concluded and the proposed change 
 2. ![][constrain_condition1] where ![][v_k_in_V_t] and ![][T_k] denotes the vote tokens received at ![][EC_t_addr] prior the the current token
 3. ![][constrain_condition2]
 
-The above constraints state that if the validators with which an election ![][EC_t] was initiated still hold super-majority then the election can be concluded.
+The above constraints state that if the Validators with which an election ![][EC_t] was initiated still hold super-majority then the election can be concluded.
 
 ##### Approach 1 vs Approach 2
 
@@ -103,15 +102,15 @@ Approach 2 has two benefits over the Approach 1.
 
 ```election 1 creation height < election 2 creation height < election 1 conclusion height < election 2 conclusion height```
 
-2. Elections can survive network updates. For example, each validator in the network can move to a new address and delegate his vote to the new address. Elections created prior to such migrations can still be concluded.
+2. Elections can survive network updates. For example, each Validator in the network can move to a new address and delegate his vote to the new address. Elections created prior to such migrations can still be concluded.
 
 For a start, we plan to implement Approach 1 because of its simplicity. We are able to switch to Approach 2 in the future by the means of a soft fork with additional support for the new type of elections described in Approach 2.
 
 ### Applying change
-During the `end_block` call, all transactions about to be committed are checked. Every vote token triggers a function (which implements **Approch 1** or **Approach 2**) that checks the necessary conditions. If the function returns `True` then the current validator applies the suggested change in ![][EC_t]. Given the BFT nature of the system, all non-Byzantine Validator will commit the change at the same block height.
+During the `end_block` call, all transactions about to be committed are checked. Every vote token triggers a function (which implements **Approch 1** or **Approach 2**) that checks the necessary conditions. If the function returns `True` then the current Validator applies the suggested change in ![][EC_t]. Given the BFT nature of the system, all non-Byzantine Validator will commit the change at the same block height.
 
 ## Rationale
-A *blockchain* is a Byzantine fault tolerant, replicated state machine. BigchainDB is a permissioned one, this means that the nodes that validate transactions and create blocks know about each other: their identity is not anonymous. This is not true for networks like Bitcoin or Ethereum: in those permissionless blockchains the validator set changes over time and the identity is anonymous.
+A *blockchain* is a Byzantine fault tolerant, replicated state machine. BigchainDB is a permissioned one, this means that the nodes that validate transactions and create blocks know about each other: their identity is not anonymous. This is not true for networks like Bitcoin or Ethereum: in those permissionless blockchains the Validator set changes over time and the identity is anonymous.
 
 The reasoning behind this BEP exploits the permissioned nature of a BigchainDB Network, and the instant finality of the blocks.
 
@@ -129,7 +128,7 @@ This BEP is fully backwards compatible.
 This BEP proposes a framework to handle Elections. An implementation of this BEP is another BEP that defines the scope of the Election and all the details related to it.
 
 By now, this BEP has been implemented in:
-- [Dynamically add/update/remove validators at runtime (BEP-21)][BEP-21]
+- [Dynamically add/update/remove Validators at runtime (BEP-21)][BEP-21]
 
 # Copyright Waiver
 To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work.
