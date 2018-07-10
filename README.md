@@ -14,7 +14,7 @@ Short Name   | Title                                                         | T
 -------------|---------------------------------------------------------------|----------|------------|-------
 [BEP-1](1)   | Collective Code Construction Contract                         | Meta     | Draft      | Alberto Granzotto
 [BEP-2](2)   | Consensus-Oriented Specification System                       | Meta     | Draft      | Alberto Granzotto
-[BEP-3](3)   | Dynamically add/update/remove validators at runtime           | Standard | Stable | Vanshdeep Singh
+[BEP-3](3)   | Dynamically add/update/remove validators at runtime           | Standard | Stable     | Vanshdeep Singh
 [BEP-4](4)   | Standard process to set up a local node for development & testing, using Docker Compose | Standard | Raw | Muawia Khan
 [BEP-5](5)   | Illegal Data Response Plan                                    | Informational | Raw   | Troy McConaghy
 [BEP-6](6)   | Shared Workspace Protocol                                     | Meta     | Draft      | Alberto Granzotto
@@ -25,6 +25,8 @@ Short Name   | Title                                                         | T
 [BEP-13](13) | BigchainDB Transaction Spec v2                                | Standard | Stable     | Troy McConaghy
 [BEP-14](14) | Guidelines to Improve Drivers Reliability                     | Standard | Raw        | Alberto Granzotto
 [BEP-17](17) | Listing BigchainDB in Azure Marketplace, Phase 1              | Standard | Raw        | Troy McConaghy
+[BEP-18](18) | Transactional Election Process 	                    		     | Standard | Draft      | Alberto Granzotto
+[BEP-19](19) | Tendermint Performance Profiling                              | Informational | Raw   | Zach Bowen
 
 ## Current Participants
 
