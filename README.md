@@ -26,6 +26,7 @@ Short Name    | Title                                                        | T
 [17/AZURE-1](17) | Listing BigchainDB in Azure Marketplace, Phase 1          | Standard | Raw        | Troy McConaghy
 [18/AZURE-1](18) | Transactional Election Process 			     | Standard | Draft      | Alberto Granzotto
 [19/TM-STRESS](19) | Tendermint Performance Profiling                        | Informational | Raw   | Zach Bowen
+[21/UPSERT-VALIDATORS](21) | Dynamically add/update/remove validators at runtime | Standard | Raw   | Vanshdeep Singh
 
 # Current Participants
 
