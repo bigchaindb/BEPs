@@ -31,7 +31,7 @@ Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new nod
 1. Node `A` executes
 
   ```
-  $ bigchaindb upsert-validator E_PUBKEY E_POWER E_NODE_ID --private-key /home/user/.tendermint/config/priv_validator.json
+  $ bigchaindb upsert-validator new E_PUBKEY E_POWER E_NODE_ID --private-key /home/user/.tendermint/config/priv_validator.json
   <election_id>
  ```
 
@@ -48,7 +48,7 @@ Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new nod
 3. The node operator can list the contents of `election_id` request using,
 
   ```
-  $ bigchaindb upsert-validator show-request <election_id>
+  $ bigchaindb upsert-validator show <election_id>
   public_key=Wn2DedV9OA0LJJjOxr7Sl7jqCSYjQihA6dCBX+iHaEI=
   power=10
   node_id=82190eb6396bdd80b83aef0f931d0f45738ed075
@@ -59,7 +59,7 @@ Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new nod
 4. If the node operator aggrees to the operation being proposed by the `election_id` then they can vote on the same using the following,
 
   ```
-  $ bigchaindb upsert-validator approve-request <election_id> --private-key /home/user/.tendermint/config/priv_validator.json
+  $ bigchaindb upsert-validator approve <election_id> --private-key /home/user/.tendermint/config/priv_validator.json
   ```
 
   The above command `POST`s a [`VALIDATOR_ELECTION_VOTE`][spec_validator_election_vote] transaction casting the vote of the node for given `election_id`.
@@ -73,6 +73,9 @@ Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new nod
   votes_allocated=<Sum_of_votes_allocated_in_election>
   network_size=<Total_network_power>
   ```
+
+### Validating transaction schemas
+Two new transaction specs namely, [`VALIDATOR_ELECTION`][spec_validator_election] and [`VALIDATOR_ELECTION_VOTE`][spec_validator_election_vote] have been proposed for implementing this BEP. It is worth mentioning that `VALIDATOR_ELECTION` is an extension of [`CREATE` transaction](../13) and `VALIDATOR_ELECTION_VOTE` is an extension of [`TRANSFER` transaction](../13). Consequentially the validation of each of these new transaction specs must be evaluated by re-using the validation for the base spec after which the schema can be validated against its extended spec.
 
 
 ### Election process
