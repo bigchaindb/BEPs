@@ -32,7 +32,7 @@ This implementation SHOULD include following **CRAB** operations -
 ```
 /**
 * creates the asset in bigchaindb
-* @param {object} inputs - object containing keypairs and data for the asset
+* @param {dict} inputs - dictionary containing keypairs and data for the asset
 */
 def create(inputs) 
 ```
@@ -41,7 +41,7 @@ def create(inputs)
 ```
 /**
 * retrieves the asset for a given input query
-* @param {object} input - query to retrieve asset
+* @param {dict} input - query to retrieve asset
 */
 def retrieve(input)
 ```
@@ -50,7 +50,7 @@ def retrieve(input)
 ```
  /**
 * appends (i.e. transfer transaction) the asset in bigchaindb
-* @param {object} inputs - object incl. public key of new owner and private key for current owner
+* @param {dict} inputs - dictionary incl. public key of new owner and private key for current owner
 */
 def append(inputs) 
 ```
@@ -59,7 +59,7 @@ def append(inputs)
 ```
 /**
 * burns the asset to unretrievable address
-* @param {object} inputs - object containing details of burn address (i.e. public key)
+* @param {dict} inputs - dictionary containing details of burn address (i.e. public key)
 */
 def burn(inputs)
 ```
