@@ -1,6 +1,6 @@
 ```
-shortname: 21/PYTHON-ORM-DRIVER
-name: Orm implementation for official bigchaindb python driver
+shortname: 11/PYTHON-ORM-DRIVER
+name: ORM Implementation For Official BigchainDB Python Driver
 type: Standard
 status: raw
 editor: Manan Patel <manan@bigchaindb.com>
@@ -24,13 +24,45 @@ The need for this implementation is driven by following rationale -
 
 # Specification
 
-This Orm should be implemented on top of python driver - [https://github.com/bigchaindb/bigchaindb-driver](https://github.com/bigchaindb/bigchaindb-driver).
+This ORM implmentation is inspired from the ORM implementation of [bigchaindb javascript driver](https://github.com/bigchaindb/js-driver-orm).This ORM SHOULD be implemented on top of python driver - [https://github.com/bigchaindb/bigchaindb-driver](https://github.com/bigchaindb/bigchaindb-driver).
 This implementation SHOULD include following **CRAB** operations -
 
 1. **C**reate - performs CREATE transaction with asset payload into bigchainDB.
+
+```
+/**
+* creates the asset in bigchaindb
+* @param {object} inputs - object containing keypairs and data for the asset
+*/
+def create(inputs) 
+```
 2. **R**etrieve - queries or fetches asset from bigchainDB.
+
+```
+/**
+* retrieves the asset for a given input query
+* @param {object} input - query to retrieve asset
+*/
+def retrieve(input)
+```
+
 3. **A**ppend - performs TRANSFER transaction with asset payload to a given public address in bigchainDB.
+```
+ /**
+* appends (i.e. transfer transaction) the asset in bigchaindb
+* @param {object} inputs - object incl. public key of new owner and private key for current owner
+*/
+def append(inputs) 
+```
 4. **B**urn - performs TRANSFER transaction with asset payload to a vanity address (in our case *BurnBurnBurnBurnBurnBurnBurnBurnBurnBurnBurn* - 11 times Burn) 
+
+```
+/**
+* burns the asset to unretrievable address
+* @param {object} inputs - object containing details of burn address (i.e. public key)
+*/
+def burn(inputs)
+```
 
 This implementation SHOULD also include tests and code coverage of atleast 95%.
 
