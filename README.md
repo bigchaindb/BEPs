@@ -19,12 +19,15 @@ Short Name    | Title                                                        | T
 [6/SWP](6)    | Shared Workspace Protocol                                    | Meta     | Draft      | Alberto Granzotto
 [7/PUBLIC-API](7) | Definition of the BigchainDB Public API                  | Informational | Raw   | Troy McConaghy
 [8/CRASH-RECOVERY](8) | Restore system state after crash                     | Standard | Raw        | Vanshdeep Singh
-[10/SAAR](10)  | A Strangler Application Approach to Rewriting Some Code in Go | Informational | Raw   | Alberto Granzotto
+[10/SAAR](10)  | A Strangler Application Approach to Rewriting Some Code in Go | Informational | Raw | Alberto Granzotto
 [12/TX-SPEC-1](12) | BigchainDB Transaction Spec v1                          | Standard | Stable     | Troy McConaghy
 [13/TX-SPEC-2](13) | BigchainDB Transaction Spec v2                          | Standard | Stable     | Troy McConaghy
 [14/GIDR](14) | Guidelines to Improve Drivers Reliability                    | Standard | Raw        | Alberto Granzotto
 [17/AZURE-1](17) | Listing BigchainDB in Azure Marketplace, Phase 1          | Standard | Raw        | Troy McConaghy
+[18/AZURE-1](18) | Transactional Election Process 			                     | Standard | Draft      | Alberto Granzotto
 [19/TM-STRESS](19) | Tendermint Performance Profiling                        | Informational | Raw   | Zach Bowen
+[20/BOUNTY](20)  | Bounties in BigchainDB ecosystem                          | Meta     | Raw        | Chalid Mannaa
+[21/UPSERT-VALIDATORS](21) | Dynamically add/update/remove validators at runtime | Standard | Raw    | Vanshdeep Singh
 
 # Current Participants
 
