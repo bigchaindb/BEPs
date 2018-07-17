@@ -20,6 +20,7 @@ Short Name    | Title                                                        | T
 [7/PUBLIC-API](7) | Definition of the BigchainDB Public API                  | Informational | Raw   | Troy McConaghy
 [8/CRASH-RECOVERY](8) | Restore system state after crash                     | Standard | Raw        | Vanshdeep Singh
 [10/SAAR](10)  | A Strangler Application Approach to Rewriting Some Code in Go | Informational | Raw | Alberto Granzotto
+[11/PYTHON-ORM-DRIVER](11) | ORM Implementation For Official BigchainDB Python Driver | Standard | Raw     | Manan Patel
 [12/TX-SPEC-1](12) | BigchainDB Transaction Spec v1                          | Standard | Stable     | Troy McConaghy
 [13/TX-SPEC-2](13) | BigchainDB Transaction Spec v2                          | Standard | Stable     | Troy McConaghy
 [14/GIDR](14) | Guidelines to Improve Drivers Reliability                    | Standard | Raw        | Alberto Granzotto
