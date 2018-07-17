@@ -29,39 +29,40 @@ This implementation SHOULD include following **CRAB** operations -
 
 1. **C**reate - performs CREATE transaction with asset payload into bigchainDB.
 
-```
-/**
-* creates the asset in bigchaindb
-* @param {dict} inputs - dictionary containing keypairs and data for the asset
-*/
-def create(inputs) 
+```python
+def create(inputs):
+"""
+creates the asset in bigchaindb
+@param {dict} inputs - dictionary containing keypairs and data for the asset
+"""
 ```
 2. **R**etrieve - queries or fetches asset from bigchainDB.
 
-```
-/**
-* retrieves the asset for a given input query
-* @param {dict} input - query to retrieve asset
-*/
-def retrieve(input)
+```python
+def retrieve(input):
+"""
+retrieves the asset for a given input query
+@param {dict} input - query to retrieve asset
+"""
 ```
 
 3. **A**ppend - performs TRANSFER transaction with asset payload to a given public address in bigchainDB.
-```
- /**
-* appends (i.e. transfer transaction) the asset in bigchaindb
-* @param {dict} inputs - dictionary incl. public key of new owner and private key for current owner
-*/
-def append(inputs) 
+
+```python
+def append(inputs):
+"""
+appends (i.e. transfer transaction) the asset in bigchaindb
+@param {dict} inputs - dictionary incl. public key of new owner and private key for current owner
+"""
 ```
 4. **B**urn - performs TRANSFER transaction with asset payload to a vanity address (in our case *BurnBurnBurnBurnBurnBurnBurnBurnBurnBurnBurn* - 11 times Burn) 
 
-```
-/**
-* burns the asset to unretrievable address
-* @param {dict} inputs - dictionary containing details of burn address (i.e. public key)
-*/
-def burn(inputs)
+```python
+def burn(inputs):
+"""
+burns the asset to unretrievable address
+@param {dict} inputs - dictionary containing details of burn address (i.e. public key)
+"""
 ```
 
 This implementation SHOULD also include tests and code coverage of atleast 95%.
