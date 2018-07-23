@@ -1,6 +1,6 @@
 ```
 shortname: [42/HARD-FORKS]
-name: Handling Forks
+name: Handling new transaction models and storage schemas
 type: information
 Status: raw
 editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
@@ -10,12 +10,15 @@ editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
 
 Currently, there is no active strategy to address breaking changes in BigchainDB 2.0 i.e. there is no general approach to migration such that breaking changes in transaction specs can be handled. This document is an attempt in quantifying scenarios wherein a breaking might occur and propose a generalized strategy to handle these situations.
 
+
 ## Hard fork scenarios
 1. Change in any of the transaction specs
     - Change in signature algorithm
     - Change in hashing functions
     - Change in schema
 2. Change in storage schema
+3. Tendermint introduces a hard fork because of breaking changes
+
 
 ## Handling Hard Forks
 
@@ -64,6 +67,17 @@ Tendermint allows to create follower nodes which don't validate transactions but
 - The operator can then go ahead and discard the existing older BigchainDB server and the corresponding data.
 
 The above process ensure the node keeps validating and accepting new blocks while the new database is being populated. The downtime experienced is when the Tendermint is shutdown to change the `proxy_app` address.
+
+
+### Type 3 scenarios
+When Tendermint migrates to a new version wherein new validation rules are not compatible with the existing blockchain it induces a hard fork. Tendermint encourages its users to create a new blockchain and archive the current blockchain at particular agreed upon (by the network) height. In order to support such changes BigchainDB would also need to archive the existing blockchain because the alternative approach is to run two Tendermint processes, one with the older validation logic and another with the newer validation logic. Since the latter approach is a huge hassle for BigchainDB users it would be best to recommend our user to archive the blockchain.
+
+Following describes how to archive and start a new blockchain,
+- Create a TEP which proposes a block height `h` at which the current blockchain will stop creating any new blocks.
+- Once the TEP concludes and the height `h` has been chosen, validators stop proposing new blocks once height `h` has been reached.
+- At height `h` the merkle root of the UTXO of the current blockchain is provided as the genesis state of the new blockchain.
+- The validator set at height `h` should be used as the validator set in the genesis of the new blockchain.
+- Since from Tendermint's point of view this is a new blockchain, block height will start from `0` which implies that BigchainDB would need to archive the existing blocks collection. All other collections would remain as is.
 
 
 ## Copyright Waiver
