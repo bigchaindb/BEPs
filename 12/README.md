@@ -712,6 +712,11 @@ Note: The first two rules prevent double spending.
 
 Regardless of whether the transaction is a CREATE or TRANSFER transaction: For all inputs, `input.fulfillment` must be valid. See the <a href="#transaction-components-inputs"><span>section about inputs</span></a> for more details about what that means.
 
+#### More Rules
+
+Some implementations of the BigchainDB Transactions Spec impose more rules. See the section titled [Implementation-Specific Deviations](#implementation-specific-deviations).
+
+
 ## Implementation-Specific Deviations
 
 Some implementations of BigchainDB-compliant servers or drivers deviate from the BigchainDB Transaction Spec.
