@@ -14,7 +14,7 @@ This document describes a set of small, specific changes that could be made to t
 # Motivation
 
 - We want BigchainDB Server to be able to check if a transaction is valid, even if it conforms to an older version of the transaction spec.
-- We want to be able reuse some Python code in both BigchainDB Server and the BigchainDB Python driver, without importing the entire server codebase into the driver codebase (as we do now).
+- We want to be able reuse some Python code in both BigchainDB Server and the BigchainDB Python driver, without importing the entire server codebase into the driver codebase, and without manually copying & pasting code from the sever codebase into the driver codebase (as we do now).
 - We want a given BigchainDB network to be able to support RBAC and other specialized business logic. The operators of a particular network should be able to decide what to support and what not to support in their network.
 - We want the transaction-related code to be easier to work with in general.
 
@@ -37,15 +37,27 @@ While these long-term goals won’t be achieved completely by the steps specifie
 
 The idea is that the BigchainDB node operator can decide which transaction validation plugins they will enable. The codebase already has something like a “pluggable validation” system, which is inappropriately named “pluggable consensus”. It only supports one plugin at a time?
 
+## Strategy
+
+We will:
+
+1. Revive and improve the existing pluggable validation system, right from the start.
+1. Leave existing transaction-validation code alone, and write "new" (duplicate) transaction-validation code in plugins.
+1. Gradually change transaction-validation calls to call transaction validation plugins, rather than the old (hard-wired) transaction-validation code.
+1. Delete old and unused transaction-validation code.
+
+In the end, there should be no transaction-validation code outside of plugins.
+
 ## Specific Tasks Proposed
 
+1. Use a phrase other than "pluggable consensus" for that feature, including in the code. See [issue #1779](https://github.com/bigchaindb/bigchaindb/issues/1779).
+1. Change the pluggable validation code so that it runs through an ordered _list_ of transaction-validation plugins (not just one plugin.)
 1. Move the code for checking the MongoDB-specific things (listed in https://github.com/bigchaindb/BEPs/blob/master/13/README.md#bigchaindb-server-deviations ) from the webserver code to the transaction-validation code. Maybe only do those checks if the backend database is MongoDB? ([Suggested by Alberto](https://github.com/bigchaindb/bigchaindb/issues/2317#issuecomment-393228308)) We might be able to check for `$` at the start of keys during JSON Schema validation, using "[Pattern Properties](https://spacetelescope.github.io/understanding-json-schema/reference/object.html?highlight=patternproperties#pattern-properties)."
 1. (Suggested by Vanshdeep) De-couple database-dependent validation from database-independent validation.
-1. Use a phrase other than "pluggable consensus" for that feature. See [issue #1779](https://github.com/bigchaindb/bigchaindb/issues/1779).
 1. Separate the code for checking transaction validity from the code for converting a transaction object to/from a Python dict. This just means that the code for converting a dict to an object of class Transaction shouldn't also do transaction validation as a hidden side effect. The transaction validation code should be something separate. Some transaction validation could be done before the conversion to an object (e.g. JSON Schema validation) and some could be done after. It's possible that the conversion might fail even if the JSON string or dict passes JSON Schema validation. I'm not sure. It might not be possible, and if it is, then I suspect it's a weird edge case.
 1. Separate the code for checking transaction validity from the code for converting a transaction JSON string to/from a Python dict, if there is any such code.
-1. Look at [the spec for checking if a version 2.0 transaction is valid](https://github.com/bigchaindb/BEPs/blob/master/13/README.md#transaction-validation). Are all those checks _actually done_? Is all the code for doing those checks in _one logical place_ in the code?
-1. Resolve [issue #1940](https://github.com/bigchaindb/bigchaindb/issues/1940): Does the check for a duplicate transaction check in the block or mempool?
+1. Look at [the spec for checking if a version 2.0 transaction is valid](https://github.com/bigchaindb/BEPs/blob/master/13/README.md#transaction-validation). Are all those checks _actually done_? Is _all_ the code for doing those checks in transaction-validation plugins?
+1. Resolve [issue #1940](https://github.com/bigchaindb/bigchaindb/issues/1940).
 
 # References
 
