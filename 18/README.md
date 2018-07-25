@@ -23,13 +23,14 @@ The basic idea is to formalize the concept of an Election storing its data in a 
 ## Specification
 At any point in time, a Member of a BigchainDB Network can start a new Election.This Member is called **Initiator**.
 
-An Election is a transaction representing the matter of change, and some Vote tokens. The Initiator issues a `CREATE` transaction with the `amount` set to the total power of the Validators. The transaction has multiple `outputs`, one per Validator. Each output is populated with the public key of the Validator, and an amount equal to the power of the Validator.
+An Election is a transaction representing the matter of change, and some Vote tokens. The Initiator issues a `CREATE` transaction. The transaction has multiple `outputs`, one per Validator. Each output is populated with the public key of the Validator, and an amount equal to the power of the Validator.
 
 At this point the Election starts. Independently, and asynchronously, each Validator can spend its **Vote Tokens** to an **Election Address** to show agreement on the matter of change. The Election Address is the `id` of the first `CREATE` transaction. Once the Vote tokens has been transferred to that address, it is not possible to transfer it again, because their private key is not known.
 
 During the `end_block` call, all transactions about to be committed are checked. Every transfer of a vote token triggers a functions that counts the number of positive votes of Election over the number of voters. If the ratio is greater than ⅔, then the current Validator commits the change. Given the BFT nature of the system, all non-Byzantine Validator will commit the change at the same block height.
 
 Each Validator checks every new transaction that is about to be committed in a block. The process is roughly the following:
+
 1. If the transaction is **not** a valid Vote, return.
 2. If the Vote is for a **not** valid Election, return.
 3. If the Election **including** the current Vote has less than ⅔ of positive votes, return.
@@ -43,11 +44,10 @@ A Validator must be able to discern valid Votes from invalid ones. A valid vote 
 A Validator must be able to discern valid Elections from invalid ones. A valid Election is a transaction where **all** the following conditions are true.
 
 1. `operation` is `CREATE`, or equivalent.
-2. Each public key listed in `inputs.owners_before` belongs to one of the Validators.
-3. `outputs.amount` is the total power of the Validators.
-4. `outputs` has as many entries as the total number of Validators.
-5. Each Validator is represented in `outputs`.
-6. Each entry in `outputs` can be spent by only one Validator, and the amount attached to it is equal to the power of that Validator.
+1. The `inputs` satisfy the conditions for a CREATE transaction. For example, the public key listed in `inputs.owners_before` is the public key of the Initiator.
+1. `outputs` has as many entries as the total number of Validators.
+1. Each Validator is represented in `outputs`.
+1. Each entry in `outputs` can be spent by only one Validator, and the amount attached to it is equal to the power of that Validator.
 
 **Note: any change in the Validator Set will make old Elections invalid. Check [approach 2](#generalized-approach-approach-2) for a process that can tolerate a certain degree of change to the Validator Set.**
 
