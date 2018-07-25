@@ -154,5 +154,5 @@ To the extent possible under law, the person who associated CC0 with this work h
 [V_m]: http://latex.codecogs.com/gif.latex?V_m
 [V_tn_equals_V_t]: http://latex.codecogs.com/gif.latex?V_%7Bt_%7Bn%7D%7D%20%5Cequiv%20V_t
 [constrain_condition1]: http://latex.codecogs.com/gif.latex?T_%7Bnew%7D%20&plus;%20%5Csum_%7Bk%7D%20T_k%20%3E%20%5Cfrac%7B2%7D%7B3%7D%20%5CBigg%28%20%5Csum_k%20P%28v_k%2C%20t%29%20%5CBigg%29
-[constrain_condition2]: http://latex.codecogs.com/gif.latex?%5Csum_%7Bk%7D%20T_k%20%3C%20%5Cfrac%7B2%7D%7B3%7D%20%5CBigg%28%20%5Csum_k%20P%28v_k%2C%20t%29%20%5CBigg%29
+[constrain_condition2]: http://latex.codecogs.com/gif.latex?%5Csum_%7Bk%7D%20T_k%20%3C%3D%20%5Cfrac%7B2%7D%7B3%7D%20%5CBigg%28%20%5Csum_k%20P%28v_k%2C%20t%29%20%5CBigg%29
 [general_condition1]: http://latex.codecogs.com/gif.latex?%5Csum_m%20P%28v_m%2C%20t_n%29%20%3E%20%5Cfrac%7B2%7D%7B3%7D%20%5CBigg%28%5Csum_i%20P%28v_i%2C%20t_n%29%20%5CBigg%29
