@@ -1,8 +1,8 @@
 ```
-shortname: [21/UPSERT-VALIDATORS]
+shortname: BEP-21
 name: Dynamically add/update/remove validators at runtime
-type: standard
-Status: raw
+type: Standard
+Status: Raw
 editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
 ```
 

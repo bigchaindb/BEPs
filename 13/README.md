@@ -1,5 +1,5 @@
 ```
-shortname: 13/TX-SPEC-2
+shortname: BEP-13
 name: BigchainDB Transactions Spec v2
 type: Standard
 status: Stable
@@ -54,7 +54,7 @@ For the reasoning, see [bigchaindb/bigchaindb#1937](https://github.com/bigchaind
 
 # Change Process
 
-The process to change this document is [2/COSS](../2/README.md) (COSS).
+The process to change this document is [BEP-2 (COSS)](../2/README.md).
 
 # Specification
 

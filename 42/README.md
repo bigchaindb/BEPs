@@ -1,8 +1,8 @@
 ```
-shortname: [42/HARD-FORKS]
+shortname: BEP-42
 name: Handling new transaction models and storage schemas
-type: information
-Status: raw
+type: Informational
+Status: Raw
 editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
 ```
 

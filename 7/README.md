@@ -1,8 +1,8 @@
 ```
-shortname: 7/PUBLIC-API
+shortname: BEP-7
 name: Definition of the BigchainDB Public API
 type: Informational
-status: raw
+status: Raw
 editor: Troy McConaghy <troy@bigchaindb.com>
 ```
 

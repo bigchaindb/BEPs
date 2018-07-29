@@ -1,5 +1,5 @@
 ```
-shortname: 3/UPSERT-VALIDATORS
+shortname: BEP-3
 name: Dynamically add/update/remove validators at runtime
 type: standard
 status: stable

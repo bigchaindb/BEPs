@@ -1,5 +1,5 @@
 ```
-shortname: 10/SAAR
+shortname: BEP-10
 Name: A Strangler Application Approach to Rewriting Some Code in Go
 type: Informational
 status: Raw
