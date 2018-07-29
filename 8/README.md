@@ -1,8 +1,8 @@
 ```
 shortname: BEP-8
 name: Restore system state after crash
-type: standard
-status: raw
+type: Standard
+status: Raw
 editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
 ```
 

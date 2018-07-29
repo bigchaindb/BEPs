@@ -1,12 +1,11 @@
 ```
-shortname: [18/TEP]
+shortname: BEP-18
 name: Transactional Election Process
-type: standard
-status: draft
+type: Standard
+status: Draft
 editor: Alberto Granzotto <alberto@bigchaindb.com>
 contributors: Vanshdeep Singh <vanshdeep@bigchaindb.com>, Lev Berman <lev@bigchaindb.com>
 ```
-
 
 # Transactional Election Process
 

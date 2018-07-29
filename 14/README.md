@@ -1,8 +1,8 @@
 ```
 shortname: BEP-14
 name: Guidelines to Improve Drivers Reliability
-type: standard
-status: raw
+type: Standard
+status: Raw
 editor: Alberto Granzotto <alberto@bigchaindb.com>
 contributors: Lev Berman <ldmberman@gmail.com>
 ```

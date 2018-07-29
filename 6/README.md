@@ -1,4 +1,3 @@
-# Shared Workspace Protocol
 ```
 shortname: BEP-6
 name: Shared Workspace Protocol
