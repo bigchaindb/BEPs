@@ -708,7 +708,7 @@ When given a transaction to validate, validation code should check the value of 
 
 ### JSON Schema Validation
 
-JSON Schema Validation is done by checking the transaction against a formal <a href="http://json-schema.org/">JSON Schema</a> defined in a set of <a href="http://json-schema.org/">JSON Schema</a> files. At the time of writing, those files could be found in the `bigchaindb/common/schema/` directory of [the bigchaindb/bigchaindb repository on GitHub](https://github.com/bigchaindb/bigchaindb). You might have to look in the `tendermint` branch of that repository to find the v2.0 JSON Schema files.
+JSON Schema Validation is done by checking the transaction against a formal <a href="http://json-schema.org/">JSON Schema</a> defined in a set of <a href="http://json-schema.org/">JSON Schema</a> files. At the time of writing, those files could be found in the `bigchaindb/common/schema/` directory of [the bigchaindb/bigchaindb repository on GitHub](https://github.com/bigchaindb/bigchaindb).
 
 Tip 1: There’s a nice explanation of JSON Schema in the website <a href="https://spacetelescope.github.io/understanding-json-schema/index.html">“Understanding JSON Schema”</a>.
 
