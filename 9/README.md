@@ -4,7 +4,7 @@ name: Transaction Code Refactoring, Phase 1
 type: Standard
 status: Raw
 editor: Troy McConaghy <troy@bigchaindb.com>
-contributors: Vanshdeep Singh <vanshdeep@bigchaindb.com>
+contributors: Vanshdeep Singh <vanshdeep@bigchaindb.com>, Alberto Granzotto <alberto@bigchaindb.com>
 ```
 
 # Abstract
@@ -41,23 +41,24 @@ The idea is that the BigchainDB node operator can decide which transaction valid
 
 We will:
 
-1. Revive and improve the existing pluggable validation system, right from the start.
-1. Leave existing transaction-validation code alone, and write "new" (duplicate) transaction-validation code in plugins.
-1. Gradually change transaction-validation calls to call transaction validation plugins, rather than the old (hard-wired) transaction-validation code.
-1. Delete old and unused transaction-validation code.
+1. Revive and improve the existing pluggable validation system, right from the start. Define a validation interface that can be reused by the validation plugins.
+1. Stop checking the validity of partially-constructed transactions (i.e. during transaction construction).
+1. Leave existing transaction-validation code alone, as much as possible. Isolate it in a specific module. Have a [façade](https://en.wikipedia.org/wiki/Facade_pattern) to interface with the legacy validation code.
 
-In the end, there should be no transaction-validation code outside of plugins.
+We will not:
+
+1. Write transaction validation code (plugins) for v3 transactions. That will happen later. (We _can_ start thinking about what v3 transactions might look like, though.)
 
 ## Specific Tasks Proposed
 
-1. Use a phrase other than "pluggable consensus" for that feature, including in the code. See [issue #1779](https://github.com/bigchaindb/bigchaindb/issues/1779).
-1. Change the pluggable validation code so that it runs through an ordered _list_ of transaction-validation plugins (not just one plugin.)
-1. Move the code for checking the MongoDB-specific things (listed in https://github.com/bigchaindb/BEPs/blob/master/13/README.md#bigchaindb-server-deviations ) from the webserver code to the transaction-validation code. Maybe only do those checks if the backend database is MongoDB? ([Suggested by Alberto](https://github.com/bigchaindb/bigchaindb/issues/2317#issuecomment-393228308)) We might be able to check for `$` at the start of keys during JSON Schema validation, using "[Pattern Properties](https://spacetelescope.github.io/understanding-json-schema/reference/object.html?highlight=patternproperties#pattern-properties)."
-1. (Suggested by Vanshdeep) De-couple database-dependent validation from database-independent validation.
-1. Separate the code for checking transaction validity from the code for converting a transaction object to/from a Python dict. This just means that the code for converting a dict to an object of class Transaction shouldn't also do transaction validation as a hidden side effect. The transaction validation code should be something separate. Some transaction validation could be done before the conversion to an object (e.g. JSON Schema validation) and some could be done after. It's possible that the conversion might fail even if the JSON string or dict passes JSON Schema validation. I'm not sure. It might not be possible, and if it is, then I suspect it's a weird edge case.
-1. Separate the code for checking transaction validity from the code for converting a transaction JSON string to/from a Python dict, if there is any such code.
-1. Look at [the spec for checking if a version 2.0 transaction is valid](https://github.com/bigchaindb/BEPs/blob/master/13/README.md#transaction-validation). Are all those checks _actually done_? Is _all_ the code for doing those checks in transaction-validation plugins?
-1. Resolve [issue #1940](https://github.com/bigchaindb/bigchaindb/issues/1940).
+Below is a partial list of specific tasks, with no particular order. Additional tasks will be required to implement the above strategy.
+
+- Use a phrase other than "pluggable consensus" for that feature, including in the code. See [issue #1779](https://github.com/bigchaindb/bigchaindb/issues/1779).
+- Change the pluggable validation code so that it runs through an ordered _list_ of transaction-validation plugins (not just one plugin.)
+- Move the code for checking the MongoDB-specific things (listed in https://github.com/bigchaindb/BEPs/blob/master/13/README.md#bigchaindb-server-deviations ) from the webserver code to the transaction-validation code. Maybe only do those checks if the backend database is MongoDB? ([Suggested by Alberto](https://github.com/bigchaindb/bigchaindb/issues/2317#issuecomment-393228308)) We might be able to check for `$` at the start of keys during JSON Schema validation, using "[Pattern Properties](https://spacetelescope.github.io/understanding-json-schema/reference/object.html?highlight=patternproperties#pattern-properties)."
+- (Suggested by Vanshdeep) De-couple database-dependent validation from database-independent validation.
+- Look at [the spec for checking if a version 2.0 transaction is valid](https://github.com/bigchaindb/BEPs/blob/master/13/README.md#transaction-validation). Are all those checks _actually done_? Is _all_ the code for doing those checks in transaction-validation plugins?
+- Resolve [issue #1940](https://github.com/bigchaindb/bigchaindb/issues/1940).
 
 # References
 
