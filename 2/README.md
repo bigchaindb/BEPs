@@ -1,5 +1,5 @@
 ```
-shortname: 2/COSS
+shortname: BEP-2
 name: Consensus-Oriented Specification System
 type: Meta
 status: Draft
@@ -12,7 +12,7 @@ This document describes a consensus-oriented specification system (COSS) for bui
 This specification is based on [unprotocols.org 2/COSS](https://rfc.unprotocols.org/spec:2/COSS/) and on [EIP1 - EIP Purpose and Guidelines](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1.md).
 
 ## Change Process
-This document is governed by the [2/COSS](../2/README.md) (COSS).
+This document is governed by the [BEP-2 (COSS)](../2/README.md) (COSS).
 
 ## Language
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [BCP 14](https://tools.ietf.org/html/bcp14) \[[RFC2119](https://tools.ietf.org/html/rfc2119)\] \[[RFC8174](https://tools.ietf.org/html/rfc8174)\] when, and only when, they appear in all capitals, as shown here.
@@ -48,7 +48,7 @@ There are three types of BEPs:
 * A **Meta BEP** describes a process surrounding BigchainDB or proposes a change to a process.
 
 ### BEP Format
-A BEP is a set of Markdown documents (the main file SHOULD be called `README.md`), together with comments, attached files, and other resources. A BEP is identified by its number and short name (e.g. this BEP is **2/COSS**). The number of the BEP is also the name of the directory where its files are stored.
+A BEP is a set of Markdown documents (the main file SHOULD be called `README.md`), together with comments, attached files, and other resources. A BEP is identified by its number (e.g. this BEP is **BEP-2**). The number of the BEP is also the name of the directory where its files are stored.
 
 Every BEP (including branches) carries a different number. New versions of the same BEP have new numbers.
 
@@ -82,7 +82,7 @@ Each BEP SHOULD include the following sections:
 
 1. **Implementation**. The implementations must be completed before any BEP is given status "stable", but it need not be completed before the BEP is accepted. While there is merit to the approach of reaching consensus on the BEP and rationale before writing code, the principle of "rough consensus and running code" is still useful when it comes to resolving many discussions of API details.
 
-1. **Copyright Waiver**. Except for 1/C4 and 2/COSS, all BEPs MUST be released to the public domain. The following waiver SHOULD be used: _To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work._
+1. **Copyright Waiver**. Except for BEP-1 (C4) and BEP-2 (COSS), all BEPs MUST be released to the public domain. The following waiver SHOULD be used: _To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work._
 
 The first 4 sections above are based on the [Leslie Lamport's note about describing solutions](https://lamport.azurewebsites.net/pubs/state-the-problem.pdf).
 

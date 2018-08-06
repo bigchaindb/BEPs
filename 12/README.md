@@ -1,5 +1,5 @@
 ```
-shortname: 12/TX-SPEC-1
+shortname: BEP-12
 name: BigchainDB Transactions Spec v1
 type: Standard
 status: Stable
@@ -26,7 +26,7 @@ It was also implemented by several BigchainDB drivers. We may make a complete li
 
 # Change Process
 
-The process to change this document is [2/COSS](../2/README.md) (COSS).
+The process to change this document is [BEP-2 (COSS)](../2/README.md).
 
 # Specification
 
@@ -277,7 +277,7 @@ A subcondition can be implemented as an <a href="#associative-array"><span>assoc
 1. ED25519-SHA-256
 1. THRESHOLD-SHA-256
 
-Those names are from the <a href="https://tools.ietf.org/html/draft-thomas-crypto-conditions-03">crypto-conditions specification (spec)</a>, which is part of the Interledger Protocol (ILP). (It calls them "crypto-condition types.") The crypto-conditions spec includes other types, but the above types are the only ones used (currently).
+Those names are from the <a href="https://tools.ietf.org/html/draft-thomas-crypto-conditions-03">crypto-conditions specification (spec)</a>. (It calls them "crypto-condition types.") The crypto-conditions spec includes other types, but the above types are the only ones used (currently).
 
 Note: This version of the BigchainDB Transaction Spec conforms to versions 02 and 03 of the crypto-conditions spec. (The parts that it uses didn’t change from version 02 to 03.)
 

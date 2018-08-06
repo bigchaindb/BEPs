@@ -3,42 +3,44 @@
 This is the BigchainDB Enhancement Proposal project. We collect BEPs for APIs, protocols, and processes.
 
 The process to add or change a BEP is the following:
-- A BEP is created and modified by pull requests according to [C4](./1).
-- BEP lifecycle SHOULD follow the lifecycle defined in [COSS](./2).
+
+- A BEP is created and modified by pull requests according to [BEP-1 (our variant of C4)](./1).
+- The BEP life-cycle SHOULD follow the life-cycle defined in [BEP-2 (our variant of COSS)](./2).
 - Non-cosmetic changes are allowed only on [Raw](./2#raw-beps) and [Draft](./2#draft-beps) specifications.
 
-# Current BEPs
+## Current BEPs
 
-Short Name    | Title                                                        | Type     | Status     | Editor
---------------|--------------------------------------------------------------|----------|------------|-------
-[1/C4](1)     | Collective Code Construction Contract                        | Meta     | Draft      | Alberto Granzotto
-[2/COSS](2)   | Consensus-Oriented Specification System                      | Meta     | Draft      | Alberto Granzotto
-[3/UPSERT-VALIDATORS](3) | Dynamically add/update/remove validators at runtime | Standard | Stable | Vanshdeep Singh
-[4/STANDARDIZE-DC](4) | Standard process to set up a local node for development & testing, using Docker Compose | Standard | Raw | Muawia Khan
-[5/IDRP](5)   | Illegal Data Response Plan                                   | Informational | Raw   | Troy McConaghy
-[6/SWP](6)    | Shared Workspace Protocol                                    | Meta     | Draft      | Alberto Granzotto
-[7/PUBLIC-API](7) | Definition of the BigchainDB Public API                  | Informational | Raw   | Troy McConaghy
-[8/CRASH-RECOVERY](8) | Restore system state after crash                     | Standard | Raw        | Vanshdeep Singh
-[9/BEP-9](9)  | Transaction Code Refactoring, Phase 1                        | Standard | Raw        | Troy McConaghy
-[10/SAAR](10)  | A Strangler Application Approach to Rewriting Some Code in Go | Informational | Raw | Alberto Granzotto
-[11/PYTHON-ORM-DRIVER](11) | ORM Implementation For Official BigchainDB Python Driver | Standard | Raw     | Manan Patel
-[12/TX-SPEC-1](12) | BigchainDB Transaction Spec v1                          | Standard | Stable     | Troy McConaghy
-[13/TX-SPEC-2](13) | BigchainDB Transaction Spec v2                          | Standard | Stable     | Troy McConaghy
-[14/GIDR](14) | Guidelines to Improve Drivers Reliability                    | Standard | Raw        | Alberto Granzotto
-[17/AZURE-1](17) | Listing BigchainDB in Azure Marketplace, Phase 1          | Standard | Raw        | Troy McConaghy
-[18/TEP](18) | Transactional Election Process 			                     | Standard | Draft      | Alberto Granzotto
-[19/TM-STRESS](19) | Tendermint Performance Profiling                        | Informational | Raw   | Zach Bowen
-[20/BOUNTY](20)  | Bounties in BigchainDB ecosystem                          | Meta     | Raw        | Chalid Mannaa
-[21/UPSERT-VALIDATORS](21) | Dynamically add/update/remove validators at runtime | Standard | Raw    | Vanshdeep Singh
+Short Name   | Title                                                         | Type     | Status     | Editor
+-------------|---------------------------------------------------------------|----------|------------|-------
+[BEP-1](1)   | Collective Code Construction Contract                         | Meta     | Draft      | Alberto Granzotto
+[BEP-2](2)   | Consensus-Oriented Specification System                       | Meta     | Draft      | Alberto Granzotto
+[BEP-3](3)   | Dynamically add/update/remove validators at runtime           | Standard | Stable     | Vanshdeep Singh
+[BEP-4](4)   | Standard process to set up a local node for development & testing, using Docker Compose | Standard | Raw | Muawia Khan
+[BEP-5](5)   | Illegal Data Response Plan                                    | Informational | Raw   | Troy McConaghy
+[BEP-6](6)   | Shared Workspace Protocol                                     | Meta     | Draft      | Alberto Granzotto
+[BEP-7](7)   | Definition of the BigchainDB Public API                       | Informational | Raw   | Troy McConaghy
+[BEP-8](8)   | Restore system state after crash                              | Standard | Raw        | Vanshdeep Singh
+[BEP-9](9)   | Transaction Code Refactoring, Phase 1                         | Standard | Raw        | Troy McConaghy
+[BEP-10](10) | A Strangler Application Approach to Rewriting Some Code in Go | Informational | Raw   | Alberto Granzotto
+[BEP-11](11) | ORM Implementation for Official BigchainDB Python Driver      | Standard | Raw        | Manan Patel
+[BEP-12](12) | BigchainDB Transaction Spec v1                                | Standard | Stable     | Troy McConaghy
+[BEP-13](13) | BigchainDB Transaction Spec v2                                | Standard | Stable     | Troy McConaghy
+[BEP-14](14) | Guidelines to Improve Drivers Reliability                     | Standard | Raw        | Alberto Granzotto
+[BEP-17](17) | Listing BigchainDB in Azure Marketplace, Phase 1              | Standard | Raw        | Troy McConaghy
+[BEP-18](18) | Transactional Election Process 	                    		     | Standard | Draft      | Alberto Granzotto
+[BEP-19](19) | Tendermint Performance Profiling                              | Informational | Raw   | Zach Bowen
+[BEP-20](20) | Bounties in the BigchainDB Ecosystem                          | Meta     | Raw        | Chalid Mannaa
+[BEP-21](21) | Dynamically add/update/remove validators at runtime           | Standard | Raw        | Vanshdeep Singh
+[BEP-42](42) | Handling new transaction models and storage schemas           | Informational | Raw   | Vanshdeep Singh
 
-# Current Participants
+## Current Participants
 
-## Contributors
+### Contributors
 
 - Anyone who wants to contribute
 - The whole [BigchainDB Team in Berlin](https://github.com/orgs/bigchaindb/people)
 
-## Maintainers
+### Maintainers
 
 Everyone with the ability to merge pull requests. Today that is mainly BigchainDB employees.
 
@@ -52,7 +54,7 @@ Some people have specializations:
 - Docker, Kubernetes, NGINX: Shahbaz, Muawia
 - Docs: Troy
 
-## Administrators (Founders and Others)
+### Administrators (Founders and Others)
 
 - Kamal - @GataKamsky
 - Gautaum - @gautamdhameja

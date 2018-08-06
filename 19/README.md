@@ -1,5 +1,5 @@
 ```
-shortname: 19/tm_stress
+shortname: BEP-19
 Name: Tendermint Performance Profiling
 type: Informational
 status: Raw

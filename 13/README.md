@@ -1,5 +1,5 @@
 ```
-shortname: 13/TX-SPEC-2
+shortname: BEP-13
 name: BigchainDB Transactions Spec v2
 type: Standard
 status: Stable
@@ -54,7 +54,7 @@ For the reasoning, see [bigchaindb/bigchaindb#1937](https://github.com/bigchaind
 
 # Change Process
 
-The process to change this document is [2/COSS](../2/README.md) (COSS).
+The process to change this document is [BEP-2 (COSS)](../2/README.md).
 
 # Specification
 
@@ -307,7 +307,7 @@ A subcondition can be implemented as an <a href="#associative-array"><span>assoc
 1. ED25519-SHA-256
 1. THRESHOLD-SHA-256
 
-Those names are from the <a href="https://tools.ietf.org/html/draft-thomas-crypto-conditions-03">crypto-conditions specification (spec)</a>, which is part of the Interledger Protocol (ILP). (It calls them "crypto-condition types.") The crypto-conditions spec includes other types, but the above types are the only ones used (currently).
+Those names are from the <a href="https://tools.ietf.org/html/draft-thomas-crypto-conditions-03">crypto-conditions specification (spec)</a>. (It calls them "crypto-condition types.") The crypto-conditions spec includes other types, but the above types are the only ones used (currently).
 
 Note: This version of the BigchainDB Transaction Spec conforms to versions 02 and 03 of the crypto-conditions spec. (The parts that it uses didn’t change from version 02 to 03.)
 
@@ -708,7 +708,7 @@ When given a transaction to validate, validation code should check the value of 
 
 ### JSON Schema Validation
 
-JSON Schema Validation is done by checking the transaction against a formal <a href="http://json-schema.org/">JSON Schema</a> defined in a set of <a href="http://json-schema.org/">JSON Schema</a> files. At the time of writing, those files could be found in the `bigchaindb/common/schema/` directory of [the bigchaindb/bigchaindb repository on GitHub](https://github.com/bigchaindb/bigchaindb). You might have to look in the `tendermint` branch of that repository to find the v2.0 JSON Schema files.
+JSON Schema Validation is done by checking the transaction against a formal <a href="http://json-schema.org/">JSON Schema</a> defined in a set of <a href="http://json-schema.org/">JSON Schema</a> files. At the time of writing, those files could be found in the `bigchaindb/common/schema/` directory of [the bigchaindb/bigchaindb repository on GitHub](https://github.com/bigchaindb/bigchaindb).
 
 Tip 1: There’s a nice explanation of JSON Schema in the website <a href="https://spacetelescope.github.io/understanding-json-schema/index.html">“Understanding JSON Schema”</a>.
 

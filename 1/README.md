@@ -1,5 +1,5 @@
 ```
-shortname: 1/C4
+shortname: BEP-1
 name: Collective Code Construction Contract
 type: Meta
 status: Draft
