@@ -25,8 +25,9 @@ Short Name   | Title                                                         | T
 [BEP-12](12) | BigchainDB Transaction Spec v1                                | Standard | Stable     | Troy McConaghy
 [BEP-13](13) | BigchainDB Transaction Spec v2                                | Standard | Stable     | Troy McConaghy
 [BEP-14](14) | Guidelines to Improve Drivers Reliability                     | Standard | Raw        | Alberto Granzotto
+[BEP-15](15) | Ethereum Integration Tools & Demo 1                           | Standard | Raw        | Troy McConaghy
 [BEP-17](17) | Listing BigchainDB in Azure Marketplace, Phase 1              | Standard | Raw        | Troy McConaghy
-[BEP-18](18) | Transactional Election Process 	                    		     | Standard | Draft      | Alberto Granzotto
+[BEP-18](18) | Transactional Election Process                                | Standard | Draft      | Alberto Granzotto
 [BEP-19](19) | Tendermint Performance Profiling                              | Informational | Raw   | Zach Bowen
 [BEP-20](20) | Bounties in the BigchainDB Ecosystem                          | Meta     | Raw        | Chalid Mannaa
 [BEP-21](21) | Dynamically add/update/remove validators at runtime           | Standard | Raw        | Vanshdeep Singh
