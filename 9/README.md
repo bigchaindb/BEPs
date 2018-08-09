@@ -59,6 +59,7 @@ Below is a partial list of specific tasks, with no particular order. Additional 
 - (Suggested by Vanshdeep) De-couple database-dependent validation from database-independent validation.
 - Look at [the spec for checking if a version 2.0 transaction is valid](https://github.com/bigchaindb/BEPs/blob/master/13/README.md#transaction-validation). Are all those checks _actually done_? Is _all_ the code for doing those checks in transaction-validation plugins?
 - Resolve [issue #1940](https://github.com/bigchaindb/bigchaindb/issues/1940).
+- Resolve [issue #2453](https://github.com/bigchaindb/bigchaindb/issues/2453).
 
 # References
 
