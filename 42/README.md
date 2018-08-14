@@ -4,6 +4,7 @@ name: Handling new transaction models and storage schemas
 type: Informational
 Status: Raw
 editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
+contributors: Lev Berman <ldmberman@gmail.com>
 ```
 
 ## Description
@@ -70,14 +71,129 @@ The above process ensure the node keeps validating and accepting new blocks whil
 
 
 ### Type 3 scenarios
-When Tendermint migrates to a new version wherein new validation rules are not compatible with the existing blockchain it induces a hard fork. Tendermint encourages its users to create a new blockchain and archive the current blockchain at particular agreed upon (by the network) height. In order to support such changes BigchainDB would also need to archive the existing blockchain because the alternative approach is to run two Tendermint processes, one with the older validation logic and another with the newer validation logic. Since the latter approach is a huge hassle for BigchainDB users it would be best to recommend our user to archive the blockchain.
 
-Following describes how to archive and start a new blockchain,
-- Create a TEP which proposes a block height `h` at which the current blockchain will stop creating any new blocks.
-- Once the TEP concludes and the height `h` has been chosen, validators stop proposing new blocks once height `h` has been reached.
-- At height `h` the merkle root of the UTXO of the current blockchain is provided as the genesis state of the new blockchain.
-- The validator set at height `h` should be used as the validator set in the genesis of the new blockchain.
-- Since from Tendermint's point of view this is a new blockchain, block height will start from `0` which implies that BigchainDB would need to archive the existing blocks collection. All other collections would remain as is.
+This section advises on how to approach backwards-incompatible upgrades of the Tendermint chain - the type of updgrades when Tendermint can not build blocks on top of the existing chain.
+
+BigchainDB operators need a convenient way to do the following:
+
+1. Stop building blocks when the old Tendermint chain is at a jointly chosen height.
+2. Continue building blocks using the new Tendermint chain starting from that height.
+3. Replay the whole blockchain after a migration.
+4. Join the network as a new validator after a migration.
+
+Additionally, BigchainDB HTTP API usage has to be seamless - all the HTTP responses has to look like there were no migrations.
+
+Below we describe how to perform a migration while meeting the postulated requirements. Note that there is no limitation on the number of consequent migrations that can be performed this way.
+
+#### 1. Stop building blocks
+
+A CLI command can be used to instruct the node to stop building blocks at a chosen height.
+
+To make sure no blocks are committed after the agreed height, we propose an election process:
+
+- The initiator creates an election, which includes a block height.
+- The validators vote for the election. Once the election is concluded, new blocks are not committed by the validators. New transactions from the users are rejected. New blocks sent by Tendermint are rejected too. The conditions for resuming the chain operation are described below.
+
+To perform a migration election, we propose 2 CLI commands.
+
+The initiator executes:
+
+```
+$ bigchaindb migration new <height> --private-key /home/user/.tendermint/config/priv_validator.json
+```
+
+The command outputs the migration ID. The initiator distributes it among other members of the network. The process is similar to adding new validators.
+
+Validators vote for the migration:
+
+```
+$ bigchaindb migration approve <migration-id> --private-key /home/user/.tendermint/config/priv_validator.json
+```
+
+Validators can watch how the election goes:
+
+```
+$ bigchaindb migration status <migration-id>
+```
+
+Outputs:
+```
+votes_recieved=<Sum_of_votes_recieved>
+votes_allocated=<Sum_of_votes_allocated_in_election>
+network_size=<Total_network_power>
+```
+
+#### 2. Replay the blockchain
+
+In order to replay the chain up to the migration height, we need to either keep the old Tendermint version running or skip replaying the corresponding part of the chain = archive the chain. We consider the former to be a huge hassle so we conceive an archiving scheme further in this chapter.
+
+#### 3. Start the new chain
+
+Validators have to install and launch the new version of Tendermint. They need to prepare a new `genesis.json`. The new genesis file has to contain the validator set, the application hash (both at the migration height), and the identifier of the new Tendermint chain (`chain_id`).
+
+The application hash is calculated by computing the Merkle tree root of the current UTXO.
+
+`chain_id` is generated and stored by BigchainDB upon conclusion of the migration election. When Tendermint sends this ID as part of the `InitChain` ABCI request, BigchainDB understands that the user has switched to a new Tendermint version so BigchainDB switches to accept new transactions and blocks.
+
+To offer a convenient way to get the data, we propose a CLI command:
+
+```
+$ bigchaindb status
+```
+
+Its output can be extended over time to solve different purposes. For a start, it has to contain the latest known list of validators, the latest known app hash, and the identifier of the Tendermint chain.
+```
+{
+    "chain_id": "...",
+    "validators": [{
+        "pub_key": {
+            "type": "...",
+            "value": "..."
+        },
+        "power": "...",
+        "name": "..."
+    },
+    "app_hash": "..."
+}
+```
+
+Validators upgrading Tendermint are supposed to execute the command above and copy the validators, the app hash, and the chain ID into their `genesis.json`.
+
+Validators joining the network after the migration take the genesis file from existing validators, as usual.
+
+#### 4. Join the network after a migration
+
+When a validator joins the network after a migration, it does not suffice for him to know `genesis.json` - he also needs the archive of the old chain (heights from 0 to the latest migration height).
+
+Such a validator needs to take a dump of the old chain from an existing member of the network. The dump can be created via a CLI command:
+
+```
+$ bigchaindb migration dump
+```
+
+The command creates the `bigchaindb.dump` file that needs to be transferred to the new member. The dump contains all BigchainDB collections to restore the old chain from.
+
+The new validator needs to start BigchainDB and apply the dump:
+
+```
+$ bigchaindb migration apply <dump>
+```
+
+After the dump is applied, Tendermint can be started.
+
+Note that new validators joining a permissioned network inherently have to trust at least a single validator - there is no generic way to assess the validity of `genesis.json` and the archive dump upon joining the network.
+
+#### Tendermint chain height
+
+Upon concluding a migration, BigchainDB is advised to store the current migration height in a separate MongoDB collection. Every time BigchainDB needs to communicate the height to Tendermint, it needs to subtract the migration height from the height of the BigchainDB chain.
+
+With every consequent migration, the migration height is overwritten.
+
+The migration height needs to be a part of the BigchainDB dump.
+
+#### Seamless HTTP API usage
+
+Since BigchainDB retains the blocks built by old Tendermint chains, the HTTP API offers the exact same experience as if there were no migrations.
 
 
 ## Copyright Waiver
