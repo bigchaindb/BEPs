@@ -16,13 +16,17 @@ There is a large community of Ethereum developers. We'd like to make it easy for
 
 By creating some tools, and a demo showing how to use them, we hope to help Ethereum developers get started using BigchainDB in their projects.
 
+# Overview
+
+The high-level goal is to create a "Hello world" demo (with tools and documentation) showing the basic concepts of how an Ethereum DApp can write to, and read from, a BigchainDB network. A smart developer should be able to build something more sophisticated once they understand the concepts illustrated by the demo.
+
 # Specification
 
 The tools described below must all work with the Ethereum Mainnet and at least one of the Ethereum testnets.
 
 All smart contract code to implement this BEP must be written in Solidity.
 
-## Tools for Writing Data to an External BigchainDB Network
+## Writing Data to an External BigchainDB Network
 
 To write data to any BigchainDB network, one must construct a valid BigchainDB transaction then send it to the network using an HTTP POST request.
 
@@ -51,7 +55,7 @@ The external system should be written using Python or JavaScript, using the [Big
 - The external system must sign the transaction, but using which private key? An initial demo could just re-use the same keypair for all transactions it creates.
 - What BigchainDB network should the external system write to? The demo should write to [the BigchainDB Testnet](https://testnet.bigchaindb.com/).
 
-## Tools for Reading Data from an External BigchainDB Network
+## Reading Data from an External BigchainDB Network
 
 An Ethereum smart contract can't just make a call to the outside world and take action based on the response. The reason is that the Ethereum blockchain must be deterministic and replayable: one must be able to get back to the current Ethereum state by starting with the initial state and replaying all the stored transactions in order. That wouldn't be possible if some of the current state depended on external information that changed or is no longer available. That doesn't mean external data can't be used at all. It just means that external data must first be stored in the Ethereum blockchain, making it internal, before it can be used.
 
@@ -64,6 +68,7 @@ The demo should show how to do at least three different queries of the BigchainD
 - The queries should rely on queries in the existing [BigchainDB HTTP API](http://docs.bigchaindb.com/projects/server/en/master/http-client-server-api.html).
 - One query should return the value of "version" in the response to the BigchainDB Root URL, e.g. "2.0.0b5"
 - One query should illustrate how to get the specific data value that was stored in the write demo.
+- One query should illustrate how to do a more complex query. The data-being-queried could be in some(hypothetical) third-party BigchainDB database with lots of data. It doesn't have to be data that was stored in the write demo.
 
 Errors and other exceptions must be handled gracefully.
 
