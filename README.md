@@ -16,7 +16,7 @@ Short Name   | Title                                                         | T
 [BEP-2](2)   | Consensus-Oriented Specification System                       | Meta     | Draft      | Alberto Granzotto
 [BEP-3](3)   | Dynamically add/update/remove validators at runtime           | Standard | Stable     | Vanshdeep Singh
 [BEP-4](4)   | Standard process to set up a local node for development & testing, using Docker Compose | Standard | Raw | Muawia Khan
-[BEP-5](5)   | Illegal Data Response Plan                                    | Informational | Raw   | Troy McConaghy
+[BEP-5](5)   | Dealing with Illegal Data                                     | Informational | Raw   | Troy McConaghy
 [BEP-6](6)   | Shared Workspace Protocol                                     | Meta     | Draft      | Alberto Granzotto
 [BEP-7](7)   | Definition of the BigchainDB Public API                       | Informational | Raw   | Troy McConaghy
 [BEP-8](8)   | Restore system state after crash                              | Standard | Raw        | Vanshdeep Singh
