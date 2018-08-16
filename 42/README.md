@@ -99,7 +99,7 @@ To perform a migration election, we propose 2 CLI commands.
 The initiator executes:
 
 ```
-$ bigchaindb migration new --private-key /home/user/.tendermint/config/priv_validator.json
+$ bigchaindb migrate-tendermint new --private-key /home/user/.tendermint/config/priv_validator.json
 ```
 
 The command outputs the migration ID. The initiator distributes it among other members of the network. The process is similar to adding new validators.
@@ -107,13 +107,13 @@ The command outputs the migration ID. The initiator distributes it among other m
 Validators vote for the migration:
 
 ```
-$ bigchaindb migration approve <migration-id> --private-key /home/user/.tendermint/config/priv_validator.json
+$ bigchaindb migrate-tendermint approve <migration-id> --private-key /home/user/.tendermint/config/priv_validator.json
 ```
 
 Validators can watch how the election goes:
 
 ```
-$ bigchaindb migration status <migration-id>
+$ bigchaindb migrate-tendermint status <migration-id>
 ```
 
 Outputs:
@@ -206,6 +206,11 @@ With every consequent migration, the migration height is overwritten.
 
 Since BigchainDB retains the blocks built by old Tendermint chains, the HTTP API offers the exact same experience as if there were no migrations.
 
+#### Migration election specs
+
+We introduce two transaction specs, with operation types [`TENDERMINT_MIGRATION_ELECTION`][spec_tendermint_migration_election] and [`TENDERMINT_MIGRATION_ELECTION_VOTE`][spec_tendermint_migration_election_vote], for the purpose of implementing migration elections. `TENDERMINT_MIGRATION_ELECTION` is an extension of `CREATE`; `TENDERMINT_MIGRATION_ELECTION_VOTE` is an extension of `TRANSFER`.
+
+Election conclusion is inherited from [the TEP definition](../18#concluding-election).
 
 ## Copyright Waiver
 
@@ -219,3 +224,5 @@ Since BigchainDB retains the blocks built by old Tendermint chains, the HTTP API
   have waived all copyright and related or neighboring rights to this BEP.
 </p>
 
+## Reference(s)
+- [BEP-18](../18)
