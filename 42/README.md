@@ -128,8 +128,6 @@ election_status=<Election_status>
 
 Validators have to install and launch the new version of Tendermint. They need to prepare a new `genesis.json`. The new genesis file has to contain the validator set, the application hash (both at the migration height), and the identifier of the new Tendermint chain (`chain_id`).
 
-The application hash is calculated by computing the Merkle tree root of the current UTXO. Note that hash calculation is a subject to design in a separate BEP and can be changed in the future.
-
 `chain_id` is generated and stored by BigchainDB upon conclusion of the migration election. When Tendermint sends this ID as part of the `InitChain` ABCI request, BigchainDB understands that the user has switched to a new Tendermint version so BigchainDB switches to accept new transactions and blocks.
 
 To offer a convenient way to get the data, we propose a CLI command:
