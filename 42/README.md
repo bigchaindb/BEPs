@@ -124,11 +124,7 @@ network_size=<Total_network_power>
 election_status=<Election_status>
 ```
 
-#### 2. Replay the blockchain
-
-In order to replay the chain up to the migration height, we need to either keep the old Tendermint version running or skip replaying the corresponding part of the chain = archive the chain. We consider the former to be a huge hassle so we describe an archiving scheme further in this BEP.
-
-#### 3. Start the new chain
+#### 2. Start the new chain
 
 Validators have to install and launch the new version of Tendermint. They need to prepare a new `genesis.json`. The new genesis file has to contain the validator set, the application hash (both at the migration height), and the identifier of the new Tendermint chain (`chain_id`).
 
@@ -162,38 +158,49 @@ Validators upgrading Tendermint are supposed to execute the command above and co
 
 Validators joining the network after the migration take the genesis file from existing validators, as usual.
 
+#### 3. Replay the blockchain
+
+In order to replay the chain up to the migration height, we need to either keep the old Tendermint version running or skip replaying the corresponding part of the chain = archive the chain. We consider the former to be a huge hassle so we describe an archiving scheme further in this BEP.
+
+When a validator replays the chain after a migration, it does not suffice for him to know `genesis.json` - he also needs the archive of the old chain.
+
+Therefore, after the migration election is concluded, each validator has to create a chain archive and keep it together with `genesis.json`. If `genesis.json` is published somewhere, the archive should be published alongside.
+
+To generate the archive, validators can use the `mongodump` command (comes together with `mongod`):
+
+```
+$ mongodump --archive=bigchaindb.archive
+```
+
+The command creates the `bigchaindb.archive` file.
+
+To replay the chain from scratch, one has to get `genesis.json` and the archive, start BigchainDB without Tendermint, and restore from the archive:
+
+```
+$ mongorestore --archive=bigchaindb.archive
+```
+
+Afterwards, Tendermint may be started.
+
+Note that although a node can join the network and work to some extent without restoring from the archive, it is not able to properly validate transactions so restoring from the archive is a must.
+
+There might be more than one migration, so the initial chain might go from height 0 to 33277, the second chain might go to height 88234, the third chain can go from 88234 up to the recent height. In this case the validator has to use an archive containing archived blocks from height 0 to height 88234. There is no need to keep the old archives around.
+
 #### 4. Join the network after a migration
 
-When a validator joins the network after a migration, it does not suffice for him to know `genesis.json` - he also needs the archive of the old chain.
-There might be more than one migration, so the initial chain might go from height 0 to 33277, the second chain might go to height 88234, the third chain can go from 88234 up to the recent height. In this case the validator has to get an archive containing archived blocks from height 0 to height 88234.
+When a validator joins the network after a migration, he needs to receive `genesis.json` and the chain archive directly from another member of the network or from some public place.
 
-Such a validator needs to take a snapshot of the old chain from an existing member of the network. The snapshot can be created via a CLI command:
+The validator needs to restore from the archive before starting Tendermint as it is described in the previous section.
 
-```
-$ bigchaindb migration create-snapshot
-```
+Note that new validators joining a permissioned network inherently have to trust the place they are getting data from - there is no generic way to assess the validity of `genesis.json` and the archive upon joining the network.
 
-The command creates the `bigchaindb.snapshot` file that needs to be transferred to the new member. The snapshot contains all BigchainDB collections to restore the old chain from.
-
-The new validator needs to start BigchainDB without Tendermint and apply the snapshot:
-
-```
-$ bigchaindb apply-snapshot <snapshot>
-```
-
-After the snapshot is applied, Tendermint can be started.
-
-Note that although the new node can join the network and work to some extent without applying the snapshot, it is not able to properly validate transactions so applying the snapshot is a must.
-
-Also note that new validators joining a permissioned network inherently have to trust at least a single validator - there is no generic way to assess the validity of `genesis.json` and the archive snapshot upon joining the network.
+At the moment, there are no tools to verify the integrity between `genesis.json` and the archive. Such tools are subject to work on separately. In the future, one might need less trust in particular parties by downloading `genesison.json` and the archive from two different places and verifying the integrity. At the moment it is strongly recommended to download them from a single most trusted place.
 
 #### Tendermint chain height
 
 Upon concluding a migration, BigchainDB is advised to store the current migration height in a separate MongoDB collection. Every time BigchainDB needs to communicate the height to Tendermint, it needs to subtract the migration height from the height of the BigchainDB chain.
 
 With every consequent migration, the migration height is overwritten.
-
-The migration height needs to be a part of the BigchainDB snapshot.
 
 #### Seamless HTTP API usage
 
