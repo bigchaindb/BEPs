@@ -126,13 +126,13 @@ election_status=<Election_status>
 
 #### 2. Replay the blockchain
 
-In order to replay the chain up to the migration height, we need to either keep the old Tendermint version running or skip replaying the corresponding part of the chain = archive the chain. We consider the former to be a huge hassle so we conceive an archiving scheme further in this chapter.
+In order to replay the chain up to the migration height, we need to either keep the old Tendermint version running or skip replaying the corresponding part of the chain = archive the chain. We consider the former to be a huge hassle so we describe an archiving scheme further in this BEP.
 
 #### 3. Start the new chain
 
 Validators have to install and launch the new version of Tendermint. They need to prepare a new `genesis.json`. The new genesis file has to contain the validator set, the application hash (both at the migration height), and the identifier of the new Tendermint chain (`chain_id`).
 
-The application hash is calculated by computing the Merkle tree root of the current UTXO.
+The application hash is calculated by computing the Merkle tree root of the current UTXO. Note that hash calculation is a subject to design in a separate BEP and can be changed in the future.
 
 `chain_id` is generated and stored by BigchainDB upon conclusion of the migration election. When Tendermint sends this ID as part of the `InitChain` ABCI request, BigchainDB understands that the user has switched to a new Tendermint version so BigchainDB switches to accept new transactions and blocks.
 
@@ -164,25 +164,28 @@ Validators joining the network after the migration take the genesis file from ex
 
 #### 4. Join the network after a migration
 
-When a validator joins the network after a migration, it does not suffice for him to know `genesis.json` - he also needs the archive of the old chain (heights from 0 to the latest migration height).
+When a validator joins the network after a migration, it does not suffice for him to know `genesis.json` - he also needs the archive of the old chain.
+There might be more than one migration, so the initial chain might go from height 0 to 33277, the second chain might go to height 88234, the third chain can go from 88234 up to the recent height. In this case the validator has to get an archive containing archived blocks from height 0 to height 88234.
 
-Such a validator needs to take a dump of the old chain from an existing member of the network. The dump can be created via a CLI command:
-
-```
-$ bigchaindb migration dump
-```
-
-The command creates the `bigchaindb.dump` file that needs to be transferred to the new member. The dump contains all BigchainDB collections to restore the old chain from.
-
-The new validator needs to start BigchainDB and apply the dump:
+Such a validator needs to take a snapshot of the old chain from an existing member of the network. The snapshot can be created via a CLI command:
 
 ```
-$ bigchaindb migration apply <dump>
+$ bigchaindb migration create-snapshot
 ```
 
-After the dump is applied, Tendermint can be started.
+The command creates the `bigchaindb.snapshot` file that needs to be transferred to the new member. The snapshot contains all BigchainDB collections to restore the old chain from.
 
-Note that new validators joining a permissioned network inherently have to trust at least a single validator - there is no generic way to assess the validity of `genesis.json` and the archive dump upon joining the network.
+The new validator needs to start BigchainDB without Tendermint and apply the snapshot:
+
+```
+$ bigchaindb apply-snapshot <snapshot>
+```
+
+After the snapshot is applied, Tendermint can be started.
+
+Note that although the new node can join the network and work to some extent without applying the snapshot, it is not able to properly validate transactions so applying the snapshot is a must.
+
+Also note that new validators joining a permissioned network inherently have to trust at least a single validator - there is no generic way to assess the validity of `genesis.json` and the archive snapshot upon joining the network.
 
 #### Tendermint chain height
 
@@ -190,7 +193,7 @@ Upon concluding a migration, BigchainDB is advised to store the current migratio
 
 With every consequent migration, the migration height is overwritten.
 
-The migration height needs to be a part of the BigchainDB dump.
+The migration height needs to be a part of the BigchainDB snapshot.
 
 #### Seamless HTTP API usage
 
