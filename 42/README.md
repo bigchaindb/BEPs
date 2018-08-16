@@ -156,6 +156,8 @@ Validators upgrading Tendermint are supposed to execute the command above and co
 
 Validators joining the network after the migration take the genesis file from existing validators, as usual.
 
+The status command can be always used to see the validator set and the app hash of the latest known block and the identifier of the current Tendermint chain. Note that `chain_id` is only reported after Tendermint sends it as part of the `InitChain` ABCI request.
+
 #### 3. Replay the blockchain
 
 In order to replay the chain up to the migration height, we need to either keep the old Tendermint version running or skip replaying the corresponding part of the chain = archive the chain. We consider the former to be a huge hassle so we describe an archiving scheme further in this BEP.
