@@ -91,15 +91,15 @@ A CLI command can be used to instruct the node to stop building blocks at a chos
 
 To make sure no blocks are committed after the agreed height, we propose an election process:
 
-- The initiator creates an election, which includes a block height.
-- The validators vote for the election. Once the election is concluded, new blocks are not committed by the validators. New transactions from the users are rejected. New blocks sent by Tendermint are rejected too. The conditions for resuming the chain operation are described below.
+- The initiator creates an election.
+- The validators vote for the election. Once the election is concluded, new blocks are not committed by the validators. New transactions from the users are rejected. New blocks sent by Tendermint are rejected too. Further in this BEP we refer to the height at which the election is concluded as the migration height. The conditions for resuming the chain operation are described below.
 
 To perform a migration election, we propose 2 CLI commands.
 
 The initiator executes:
 
 ```
-$ bigchaindb migration new <height> --private-key /home/user/.tendermint/config/priv_validator.json
+$ bigchaindb migration new --private-key /home/user/.tendermint/config/priv_validator.json
 ```
 
 The command outputs the migration ID. The initiator distributes it among other members of the network. The process is similar to adding new validators.
@@ -121,6 +121,7 @@ Outputs:
 votes_recieved=<Sum_of_votes_recieved>
 votes_allocated=<Sum_of_votes_allocated_in_election>
 network_size=<Total_network_power>
+election_status=<Election_status>
 ```
 
 #### 2. Replay the blockchain
