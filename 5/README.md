@@ -78,17 +78,17 @@ A conceptually simpler but more expensive alternative would be to make all chang
 
 "But BigchainDB is supposed to be immutable. This breaks immutability!"
 
-Yes. And it gets you out of trouble with the law. You'll notice it's not easy to do deletion. You can't just delete data without BigchainDB complaining. You have to do something special to make it not complain first.
-
-Moreover, the planned change is extremely specific. It doesn't make the entire blockchain mutable. If only one transaction is involved, then the change will allow only two possible versions of that transaction. It won't allow arbitrary changes to the transaction. All the other transactions remain as immutable as ever.
+Yes. And it gets you out of trouble with the law. You'll notice it's not easy to do deletion. Moreover, the change is extremely specific. It doesn't make the entire blockchain mutable. If only one transaction is involved, then the change will allow only two possible versions of that transaction. It won't allow arbitrary changes to the transaction. All the other transactions remain as immutable as ever.
 
 ## Technical Notes
 
-A key technical trick used by the plan is to change the hash function and/or the signature function used by BigchainDB to a new one, such that for every item:
+A key technical trick used by the plan is to change the hash functions and the signature functions used by BigchainDB (and Tendermint) to new ones, so that hashes/signatures after the change are the _same_ as hashes/signatures after the change. Here's a concrete example of how to do that with a SHA-3 hash function:
 
-function(item_before_the_deletion) == new_function(item_after_the_deletion)
+Suppose that before the change, the SHA-3 hash of a transaction was a1b2c3... and after the change (which changed the transaction), its SHA-3 hash was afafaf... We need to change BigchainDB to use a modified-SHA-3 hash function such that:
 
-For most items, function() and new_function() will be the same function. They'll only be different for the items that were affected by the deletion.
+if SHA-3 hash is afafaf... then then the modified-SHA-3 hash is a1b2c3..., else the modified-SHA-3 hash = SHA-3 hash
+
+Similar things have to be done with signature computation and signature verification functions.
 
 # Part 3: Ideas for the Future
 
