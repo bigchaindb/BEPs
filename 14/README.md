@@ -111,6 +111,7 @@ driver = BigchainDB([
 The JavaScript driver is basically the same:
 ```javascript
 const conn = new driver.Connection([
+    'https://test.bigchaindb.com',  // the first node does not use custom headers, only common headers
     {endpoint: 'https://test.bigchaindb.com/api/v1/',
      headers: {app_id: 'your_app_id',
                app_key: 'your_app_key'}},
@@ -123,7 +124,8 @@ const conn = new driver.Connection([
                app_key: 'your_app_key',
        	       other_header: 'other value'}},
     {endpoint: 'https://test4.bigchaindb.com/api/v1/',
-     headers: {custom_auth: 'custom token'}])
+     headers: {custom_auth: 'custom token'}],
+     headers={'Content-Type': 'application/json'},  // this header is used by all nodes)
 ```
 
 
