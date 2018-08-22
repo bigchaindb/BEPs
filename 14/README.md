@@ -125,7 +125,7 @@ const conn = new driver.Connection([
        	       other_header: 'other value'}},
     {endpoint: 'https://test4.bigchaindb.com/api/v1/',
      headers: {custom_auth: 'custom token'}],
-     headers={'Content-Type': 'application/json'},  // this header is used by all nodes)
+     {'Content-Type': 'application/json'},  // this header is used by all nodes)
 ```
 
 
