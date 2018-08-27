@@ -143,7 +143,7 @@ This strategy needs to keep track of the following values:
 - `i`, the index of the BigchainDB node to use for a request (`0 ≤ i < len(E)`).
 - `timeout`, user-specified timeout, defaults to 20 seconds. Users may choose to have no timeout.
 - `T`, a list of timestamps, expressed as the number of seconds elapsed since Unix Epoch. It has the same length as `E`. On initialization, all elements contain the minimal possible timestamp `0`. It is used to track the availability of the nodes.
-- `DELAY`, in case a node is unreachable, used to calculate how much seconds must pass before the request can be repeated. The recommended value is 0.5 seconds.
+- `DELAY` is used to calculate how many seconds must pass before a failed request can be repeated. The recommended value is 0.5 seconds.
 - `retry_counts`, a list of numbers, each number is the number of times the node was retried unsuccessfully.
 
 We also need to know the current time of the system, for this we use the variable `current_time_ms`.
