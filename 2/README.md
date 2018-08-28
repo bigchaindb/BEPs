@@ -82,7 +82,19 @@ Each BEP SHOULD include the following sections:
 
 1. **Implementation**. The implementations must be completed before any BEP is given status "stable", but it need not be completed before the BEP is accepted. While there is merit to the approach of reaching consensus on the BEP and rationale before writing code, the principle of "rough consensus and running code" is still useful when it comes to resolving many discussions of API details.
 
-1. **Copyright Waiver**. Except for BEP-1 (C4) and BEP-2 (COSS), all BEPs MUST be released to the public domain. The following waiver SHOULD be used: _To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work._
+1. **Copyright Waiver**. Except for BEP-1 (C4) and BEP-2 (COSS), all BEPs MUST be released to the public domain. To do that, the following block of HTML SHOULD be used in the BEP's source Markdown file. ([HTML is valid Markdown](https://daringfireball.net/projects/markdown/syntax#html).)
+
+```html
+<p xmlns:dct="http://purl.org/dc/terms/">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+  </a>
+  <br />
+  To the extent possible under law, all contributors to this BEP
+  have waived all copyright and related or neighboring rights to this BEP.
+</p>
+```
 
 The first 4 sections above are based on the [Leslie Lamport's note about describing solutions](https://lamport.azurewebsites.net/pubs/state-the-problem.pdf).
 

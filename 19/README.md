@@ -113,6 +113,18 @@ This could be implemented in two ways. First, we could simply experiment to find
 
 In any case, the sentinel server should function as a buffer between the request author and the Tendermint layer. Incoming requests should be stored in memory and fed to Tendermint at a manageable rate. Any pauses needed to maintain throughput on the Tendermint end should be invisible to the user, as the memory buffer stays available at all times.
 
+## Copyright Waiver
+
+<p xmlns:dct="http://purl.org/dc/terms/">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+  </a>
+  <br />
+  To the extent possible under law, all contributors to this BEP
+  have waived all copyright and related or neighboring rights to this BEP.
+</p>
+
 [tm_benchmark_claim]: https://github.com/tendermint/tendermint/wiki/Benchmarks
 [Tendermint]: http://tendermint.readthedocs.io/projects/tools/en/master/install.html
 [BEP-10]: https://github.com/bigchaindb/BEPs/blob/master/10/README.md
