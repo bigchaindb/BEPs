@@ -135,8 +135,16 @@ The system is 100% compatible with the existing one. That's the goal of the incr
 The idea of this BEP is to share ideas on how we can move forward. For now, there is no specific implementation to describe how to do this in Go. We will create a public repository to experiment on this instead. This will give us some hands-on experience to understand how the actual implementation can be.
 
 ## Copyright Waiver
-To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work.
 
+<p xmlns:dct="http://purl.org/dc/terms/">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+  </a>
+  <br />
+  To the extent possible under law, all contributors to this BEP
+  have waived all copyright and related or neighboring rights to this BEP.
+</p>
 
 [bdb:post-tx]: https://docs.bigchaindb.com/projects/server/en/v2.0.0a1/http-client-server-api.html#post--api-v1-transactions?mode=mode
 [pyabci]: https://github.com/davebryson/py-abci/
