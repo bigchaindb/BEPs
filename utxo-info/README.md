@@ -1,5 +1,5 @@
 ```
-shortname: ?/UTXO-IMPL
+shortname: BEP-???
 name: A short description of the current UTXO implementation
 type: informational
 status: Draft
@@ -18,8 +18,14 @@ The UTXO (unspent transaction output) of each transaction is tracked using the a
 
 ![Merkle Tree](https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Hash_Tree.svg/800px-Hash_Tree.svg.png)
 
-
-
-
 ## Copyright Waiver
-To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related or neighboring rights to this work.
+
+<p xmlns:dct="http://purl.org/dc/terms/">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+  </a>
+  <br />
+  To the extent possible under law, all contributors to this BEP
+  have waived all copyright and related or neighboring rights to this BEP.
+</p>
