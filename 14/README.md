@@ -143,30 +143,30 @@ This strategy needs to keep track of the following values:
 - `i`, the index of the BigchainDB node to use for a request (`0 ≤ i < len(E)`).
 - `timeout`, user-specified timeout, defaults to 20 seconds. Users may choose to have no timeout.
 - `T`, a list of timestamps, expressed as the number of seconds elapsed since Unix Epoch. It has the same length as `E`. On initialization, all elements contain the minimal possible timestamp `0`. It is used to track the availability of the nodes.
-- `DELAY`, in case a node is unreachable, how much seonds we must pass before the request can be repeated. This is used in combination with `T`.
-- `retry_count`, how many times the node was retried unsuccessfully.
+- `DELAY` is used to calculate how many seconds must pass before a failed request can be repeated. The recommended value is 0.5 seconds.
+- `retry_counts`, a list of numbers, each number is the number of times the node was retried unsuccessfully.
 
 We also need to know the current time of the system, for this we use the variable `current_time_ms`.
 
 When a driver needs to forward a request to the network, the following algorithm (or equivalent) SHALL be implemented:
 
-1. pick the node `i` with the minimal `T[i]`, that is the earliest available node
+1. pick the node `i` with the minimal `T[i]`, that is the earliest available node; in case of a tie, prefer the one with the smaller list index
 1. wait until `current_time_ms > T[i]` or timeout is expired
 1. if timeout is expired, return
 1. if timeout is not expired, make the request
 1. if timeout is expired while the request is in progress, return
-1. in case of a successful response, set `retry_count` to 0, set `T` to `0`, return
-1. in case of a connection error (e.g. DNS failure, connection refused), set `T` to `DELAY * 2 ** retry_count`, increment `retry_count`, repeat from step 1.
-1. in case of other error, return
+1. in case of a successful response, set `retry_counts[i]` to 0, set `T[i]` to `0`, return
+1. in case of a connection error (e.g. DNS failure, connection refused), set `T[i]` to what is smaller - `DELAY * 2 ** retry_counts[i]` or `timeout/2 or 10` (the delay increases exponentially but is capped at the half of the timeout or 10 seconds when there is no timeout), increment `retry_counts[i]`, repeat from step 1
+1. in case of other error, return.
 
-The algorithm achieves the following traits:
+The algorithm has the following traits:
 
 - Available nodes are exploited as much as possible, what optimizes the request time.
 - Exponential backoff is there for all the nodes no matter how many nodes are there and how many requests were made, what prevents the network from being overloaded.
 - Users can wait for a reply from an available node for as long as they wish, expressing it via `timeout`.
 
 ## Rationale
-There are many optimizations that can be done, for example the round-robin strategy can be improved by prioritizing nodes with low latency, or `DELAY` can be capped to a max value, or `jitter` may be introduced.
+There are many optimizations that can be done, for example the round-robin strategy can be improved by prioritizing nodes with low latency, or `jitter` may be introduced.
 
 There are a lot of interesting things to work with, for example adding a [AIMD][wiki:AIMD] algorithm to evaluate how much the BigchainDB network is congested, and adapt the request-rate.
 
