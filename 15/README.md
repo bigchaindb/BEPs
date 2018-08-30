@@ -4,11 +4,12 @@ name: Ethereum Integration Tools & Demo 1
 type: Standard
 status: Raw
 editor: Troy McConaghy <troy@bigchaindb.com>
+reviewers: Gautam Dhameja <gautam@bigchaindb.com>
 ```
 
 # Abstract
 
-This BEP lists the requirements of an initial set of tools to integrate BigchainDB with Ethereum, including a demo illustrating how to use the tools.
+This BEP outlines the requirements of a "Hello world" demo (with tools and documentation) showing the basic concepts of how an Ethereum DApp can read from, or write to, a BigchainDB network. A smart developer should be able to build something more sophisticated once they understand the concepts illustrated by the demo.
 
 # Motivation
 
@@ -16,65 +17,45 @@ There is a large community of Ethereum developers. We'd like to make it easy for
 
 By creating some tools, and a demo showing how to use them, we hope to help Ethereum developers get started using BigchainDB in their projects.
 
-# Overview
-
-The high-level goal is to create a "Hello world" demo (with tools and documentation) showing the basic concepts of how an Ethereum DApp can write to, and read from, a BigchainDB network. A smart developer should be able to build something more sophisticated once they understand the concepts illustrated by the demo.
-
 # Specification
 
-The tools described below must all work with the Ethereum Mainnet and at least one of the Ethereum testnets.
+## Reading Data from an External BigchainDB Network
 
-All smart contract code to implement this BEP must be written in Solidity.
+An Ethereum smart contract can't just make a call to the outside world and take action based on the response. The reason is that the blockchain must be deterministic and replayable: one must be able to get back to the current state by starting with the initial state and replaying all the stored transactions in order. That wouldn't be possible if some of the current state depended on external information that changed or is no longer available. That doesn't mean external data can't be used at all. It just means that external data must first be stored in the blockchain, making it internal, before it can be used.
+
+An external service is required: an oracle. While we could implement a new oracle, it would be non-trivial and a deviation from BigchainDB's focus. Therefore, to implement this BEP, we should use an existing, well-known oracle service or software.
+
+The demo must illustrate how to query a BigchainDB network (such as the BigchainDB Testnet), and how to write data (based on the query response) to:
+
+1. the Public Ethereum network (Mainnet). [Oraclize](https://docs.oraclize.it/) is one good option for this.
+1. a private, permissioned network that can run EVM smart contracts (e.g. powered by Hyperledger Burrow or Ethermint). Stargate, a toolkit by Oraclize, could be used for this.
 
 ## Writing Data to an External BigchainDB Network
 
 To write data to any BigchainDB network, one must construct a valid BigchainDB transaction then send it to the network using an HTTP POST request.
 
-To be valid, a BigchainDB transaction must be signed. To sign a transaction, the software doing the signing must have a private key. Since that private key shouldn't be stored in the Ethereum Mainnet (because then it wouldn't be private anymore), it must be signed by a system outside of the Ethereum Mainnet.
+To be valid, a BigchainDB transaction must be signed. To sign a transaction, the software doing the signing must have a private key. If the software doing the signing is an EVM smart contract, then the private key must be stored in the associated blockchain: it wouldn't be private anymore! All the smart contracts in that blockchain would be able to sign things with that private key.
 
-In principle, it might be possible for an Ethereum smart contract to construct an un-signed BigchainDB transaction, but that would probably cost a lot of gas, and in the end, some external system must do the final signing anyway.
+Therefore the private key must not be stored in the EVM blockchain network. It must be stored outside, and therefore BigchainDB transaction signing must also be done outside the EVM blockchain network. Broadly speaking, there are two options to demonstrate:
 
-A better design would use an external system to construct and sign the BigchainDB transaction, possibly containing some information generated (or referenced) by a smart contract in the Ethereum Mainnet. Here is one potential sequence of events:
+1. End users hold their own private keys and never share them with anyone. Therefore they must also sign all their BigchainDB transactions.
+1. A separate service holds all the private keys and does all the BigchainDB transaction signing.
 
-1. An external system monitors the Ethereum Mainnet, watching for some trigger involving a specific storage smart contract.
-1. If that trigger is spotted, the external system springs into action, constructing a new BigchainDB transaction containing data that may be from the storage smart contract, or data that the storage smart contract referenced, such as some data at a particular IPFS hash.
-1. The external system signs the transaction.
-1. The external system POSTs the transaction to a specific BigchainDB network for validation and storage. The network is either specified by the smart contract or is implied.
-1. The external system gets the result of the HTTP POST request. (It either works or it doesn't.) It sends an Ethereum transaction to the storage smart contract to let it know what happened.
+In the demo, the trigger event that (ultimately) causes a BigchainDB transaction to get posted to a BigchainDB network, must originate within an EVM blockchain network (e.g. the Ethereum Mainnet or a private blockchain running EVM smart contracts). Typically, a separate service will monitor the EVM blockchain to watch for that event. When the trigger event happens, the service will post the appropriate BigchainDB transaction to the BigchainDB network. (It might construct and sign that transaction itself, or it might get it pre-signed from an end user and just hold on to it.)
 
-Note how the storage smart contract 1) caused the storage to happen and 2) told the external system what to store in the BigchainDB network, at least in part.
+If the BigchainDB transaction comes from an end user, then that end user might want to put the hash of their BigchainDB transaction (i.e. the transaction "id" value) in the EVM smart contract, if possible. That way, the EVM blockchain would contain proof that the separate service didn't tamper with their BigchainDB transaction before posting it to the BigchainDB network.
 
-The external system should be written using Python or JavaScript, using the [BigchainDB driver](http://docs.bigchaindb.com/projects/server/en/master/drivers-clients/index.html) for the chosen language.
+The data to be written to the BigchainDB network could come from the inside EVM blockchain, outside the EVM blockchain, or both. The implementer of the demo can decide which possibility to demonstrate.
 
-### Remarks
+The separate service should be written using Python or JavaScript, using the [BigchainDB driver](http://docs.bigchaindb.com/projects/server/en/master/drivers-clients/index.html) for the chosen language.
 
-- Each project using these tools will have its own external service (probably self-hosted), and its own storage smart contract.
-- There are existing tools and services for monitoring the Ethereum Mainnet. The external system only needs to monitor one smart contract: the storage smart contract.
-- The question of _what data to store_ was left ambiguous. The demo could store some data (e.g. a hash) generated by the storage smart contract.
-- The data-to-store could be stored in one or more fields of the BigchainDB transaction, including the `asset.data` of a CREATE transaction, the `metadata` of a CREATE or TRANSFER transaction, the `amount` of the single output of a CREATE transaction, or other places.
-- The external system must sign the transaction, but using which private key? An initial demo could just re-use the same keypair for all transactions it creates.
-- What BigchainDB network should the external system write to? The demo should write to [the BigchainDB Testnet](https://testnet.bigchaindb.com/).
-
-## Reading Data from an External BigchainDB Network
-
-An Ethereum smart contract can't just make a call to the outside world and take action based on the response. The reason is that the Ethereum blockchain must be deterministic and replayable: one must be able to get back to the current Ethereum state by starting with the initial state and replaying all the stored transactions in order. That wouldn't be possible if some of the current state depended on external information that changed or is no longer available. That doesn't mean external data can't be used at all. It just means that external data must first be stored in the Ethereum blockchain, making it internal, before it can be used.
-
-Once again, an external service is required: an oracle.
-
-While we could implement a new BigchainDB-specific oracle, it would be non-trivial and a deviation from BigchainDB's focus. Therefore, to implement this BEP, we should use an existing, well-known oracle service. [Oraclize](https://docs.oraclize.it/) is one good option, but others might also work, if they can be justified.
-
-The demo should show how to do at least three different queries of the BigchainDB Testnet.
-
-- The queries should rely on queries in the existing [BigchainDB HTTP API](http://docs.bigchaindb.com/projects/server/en/master/http-client-server-api.html).
-- One query should return the value of "version" in the response to the BigchainDB Root URL, e.g. "2.0.0b5"
-- One query should illustrate how to get the specific data value that was stored in the write demo.
-- One query should illustrate how to do a more complex query. The data-being-queried could be in some(hypothetical) third-party BigchainDB database with lots of data. It doesn't have to be data that was stored in the write demo.
-
-Errors and other exceptions must be handled gracefully.
-
-There will be fees to do get transactions processed, to run the smart contracts, to use the oracle, to store data on-chain, and probably more.
+Other than demonstrating the two cases listed above, we leave all other design decisions up to the implementors of this BEP.
 
 ## Additional Requirements
+
+All smart contract code to implement this BEP must be written in Solidity.
+
+Errors and other exceptions must be handled gracefully.
 
 A new public GitHub repository must be created under the `bigchaindb` organization on GitHub, to store all code and documentation written to implement this BEP.
 
@@ -82,7 +63,7 @@ The code should be licensed under an Apache v2 license. The documentation should
 
 The documentation should explain all the steps to set up and run the demo (both writing and reading), including how to set up the external service and the oracle service. That documentation could be written using one or more Markdown files.
 
-The smart contracts must be tested on one of the Ethereum Testnets. The testing code, and some example results, should be included in the GitHub repo. There should be documentation about how to run the test.
+The smart contracts must be tested on one of the Ethereum Testnets, if possible. The testing code, and some example results, should be included in the GitHub repo. There should be documentation about how to run the tests.
 
 # Rationale
 
