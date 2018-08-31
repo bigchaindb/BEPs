@@ -4,7 +4,7 @@ name: Ethereum Integration Tools & Demo 1
 type: Standard
 status: Raw
 editor: Troy McConaghy <troy@bigchaindb.com>
-reviewers: Gautam Dhameja <gautam@bigchaindb.com>
+contributors: Gautam Dhameja <gautam@bigchaindb.com>
 ```
 
 # Abstract
@@ -17,6 +17,12 @@ There is a large community of Ethereum developers. We'd like to make it easy for
 
 By creating some tools, and a demo showing how to use them, we hope to help Ethereum developers get started using BigchainDB in their projects.
 
+# Terminology
+
+We use "Ethereum Mainnet" to mean the main, public Ethereum network.
+
+We use "private Ethereum network" to mean any private, permissioned blockchain network that can run Ethereum Virtual Machine (EVM) smart contracts. Such a network might be powered by Parity Proof-of-Authority, Hyperledger Burrow, or Ethermint, for example.
+
 # Specification
 
 ## Reading Data from an External BigchainDB Network
@@ -27,8 +33,8 @@ To connect the two blockchains, an external service is required: an oracle. Whil
 
 The demo must illustrate how to query a BigchainDB network (such as the BigchainDB Testnet), and how to write data (based on the query response) to:
 
-1. The Public Ethereum network (Mainnet). [Oraclize](https://docs.oraclize.it/) is one good option for this.
-1. A private, permissioned Ethereum network. Stargate, a toolkit by Oraclize, could be used for this.
+1. The Ethereum Mainnet. [Oraclize](https://docs.oraclize.it/) is one good option for this.
+1. A private Ethereum network. Stargate, a toolkit by Oraclize, could be used for this.
 
 ## Writing Data to an External BigchainDB Network
 
@@ -36,12 +42,12 @@ To write data to any BigchainDB network, one must construct a valid BigchainDB t
 
 To be valid, a BigchainDB transaction must be signed. To sign a transaction, the software doing the signing must have a private key. If the software doing the signing is an EVM smart contract, then the private key must be stored in the associated blockchain: it wouldn't be private anymore! All the smart contracts in that blockchain would be able to sign things with that private key.
 
-Therefore, it's fairly obvious that the private key **must** not be stored in the Ethereum network. It must be stored outside, and therefore BigchainDB transaction signing must also be done outside the Ethereum network. Broadly speaking, there are two options to demonstrate:
+Therefore, it's fairly obvious that the private key **must** not be stored in the Ethereum network (Mainnet or private). It must be stored outside, and therefore BigchainDB transaction signing must also be done outside. Broadly speaking, there are two options to demonstrate:
 
 1. End users hold their own private keys and never share them with anyone. Therefore they must also sign all their BigchainDB transactions.
 1. A separate **secured** service holds all the private keys and does all the BigchainDB transaction signing.
 
-In the demo, the trigger event that (ultimately) causes a BigchainDB transaction to get posted to a BigchainDB network, must originate within an EVM blockchain network (e.g. the Ethereum Mainnet or a private blockchain running EVM smart contracts). Typically, a separate service will monitor the EVM blockchain to watch for that event. When the trigger event happens, the service will post the appropriate BigchainDB transaction to the BigchainDB network. (It might construct and sign that transaction itself, or it might get it pre-signed from an end user and just hold on to it.)
+In the demo, the trigger event that (ultimately) causes a BigchainDB transaction to get posted to a BigchainDB network, must originate within the Ethereum Mainnet or a private Ethereum network. Typically, a separate service will monitor the EVM blockchain to watch for that event. When the trigger event happens, the service will post the appropriate BigchainDB transaction to the BigchainDB network. (It might construct and sign that transaction itself, or it might get it pre-signed from an end user and just hold on to it.)
 
 If the BigchainDB transaction comes from an end user, then that end user might want to put the hash of their BigchainDB transaction (i.e. the transaction "id" value) in the EVM smart contract, if possible. That way, the EVM blockchain would contain proof that the separate service didn't tamper with their BigchainDB transaction before posting it to the BigchainDB network.
 
