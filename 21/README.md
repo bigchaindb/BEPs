@@ -52,9 +52,13 @@ Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new nod
   public_key=Wn2DedV9OA0LJJjOxr7Sl7jqCSYjQihA6dCBX+iHaEI=
   power=10
   node_id=82190eb6396bdd80b83aef0f931d0f45738ed075
+  status=ONGOING
   ```
 
-  The above command list the details about the node which is being added/updated/deleted from the network.
+  The above command list the details about the node which is being added/updated/deleted from the network. The `status=` can have only three possible values i.e. 
+    - `ONGOING`: `<election_id>` is still ongoing i.e. `>2/3` of the votes haven't been received yet.
+    - `CONCLUDED`: `<election_id>` received `>2/3` votes, election was concluded and the proposed change was applied.
+    - `INCONCLUSIVE`: `<election_id>` cannot be concluded even if `>2/3` votes are casted because the validator set has changed since the time the election was proposed.
 
 4. If the node operator aggrees to the operation being proposed by the `election_id` then they can vote on the same using the following,
 
@@ -65,14 +69,6 @@ Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new nod
   The above command `POST`s a [`VALIDATOR_ELECTION_VOTE`][spec_validator_election_vote] transaction casting the vote of the node for given `election_id`.
   NOTE: The `VALIDATOR_ELECTION_VOTE` transaction is signed using the private key generated and stored by Tendermint in `priv_validator.json`.
 
-5. Node operators can check the status of the election as follows,
-
-  ```
-  $ bigchaindb upsert-validator status <election_id>
-  votes_recieved=<Sum_of_votes_recieved>
-  votes_allocated=<Sum_of_votes_allocated_in_election>
-  network_size=<Total_network_power>
-  ```
 
 ### Validating transaction schemas
 Two new transaction specs namely, [`VALIDATOR_ELECTION`][spec_validator_election] and [`VALIDATOR_ELECTION_VOTE`][spec_validator_election_vote] have been proposed for implementing this BEP. It is worth mentioning that `VALIDATOR_ELECTION` is an extension of [`CREATE` transaction](../13) and `VALIDATOR_ELECTION_VOTE` is an extension of [`TRANSFER` transaction](../13). Consequentially the validation of each of these new transaction specs must be evaluated by re-using the validation for the base spec after which the schema can be validated against its extended spec.
