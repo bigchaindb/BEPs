@@ -2,7 +2,7 @@
 shortname: BEP-21
 name: Dynamically add/update/remove validators at runtime
 type: Standard
-Status: Raw
+Status: Draft
 editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
 ```
 
@@ -99,7 +99,7 @@ The approach suggested in this specification is entirely different. The previous
 Primary assignee(s): @kansi
 
 ### Targeted Release
-BigchainDB 2.0
+BigchainDB 2.0.0b6
 
 
 ## Reference(s)
