@@ -87,8 +87,6 @@ Below we describe how to perform a migration while meeting the postulated requir
 
 #### 1. Stop building blocks
 
-A CLI command can be used to instruct the node to stop building blocks at a chosen height.
-
 To make sure no blocks are committed after the agreed height, we propose an election process:
 
 - The initiator creates an election.
@@ -99,7 +97,7 @@ To perform a migration election, we propose 2 CLI commands.
 The initiator executes:
 
 ```
-$ bigchaindb migrate-tendermint new --private-key /home/user/.tendermint/config/priv_validator.json
+$ bigchaindb election migrate-abci-chain new --private-key /home/user/.tendermint/config/priv_validator.json
 ```
 
 The command outputs the migration ID. The initiator distributes it among other members of the network. The process is similar to adding new validators.
@@ -107,13 +105,13 @@ The command outputs the migration ID. The initiator distributes it among other m
 Validators vote for the migration:
 
 ```
-$ bigchaindb migrate-tendermint approve <migration-id> --private-key /home/user/.tendermint/config/priv_validator.json
+$ bigchaindb election approve <election-id> --private-key /home/user/.tendermint/config/priv_validator.json
 ```
 
 Validators can watch how the election goes:
 
 ```
-$ bigchaindb migrate-tendermint status <migration-id>
+$ bigchaindb election status <election-id>
 ```
 
 Outputs:
@@ -208,7 +206,7 @@ Since BigchainDB retains the blocks built by old Tendermint chains, the HTTP API
 
 #### Migration election specs
 
-We introduce two transaction specs, with operation types [`TENDERMINT_MIGRATION_ELECTION`][spec_tendermint_migration_election] and [`TENDERMINT_MIGRATION_ELECTION_VOTE`][spec_tendermint_migration_election_vote], for the purpose of implementing migration elections. `TENDERMINT_MIGRATION_ELECTION` is an extension of `CREATE`; `TENDERMINT_MIGRATION_ELECTION_VOTE` is an extension of `TRANSFER`.
+We introduce a new transaction operation, `TENDERMINT_MIGRATION_ELECTION`, for the purpose of implementing migration elections. `TENDERMINT_MIGRATION_ELECTION` is an extension of `CREATE` and does not introduce any schema changes apart from the new operation.
 
 Election conclusion is inherited from [the TEP definition](../18#concluding-election).
 
@@ -223,6 +221,3 @@ Election conclusion is inherited from [the TEP definition](../18#concluding-elec
   To the extent possible under law, all contributors to this BEP
   have waived all copyright and related or neighboring rights to this BEP.
 </p>
-
-## Reference(s)
-- [BEP-18](../18)
