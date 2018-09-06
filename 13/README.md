@@ -89,8 +89,6 @@ The process to change this document is [BEP-2 (COSS)](../2/README.md).
     - [How Validation Code Decides Which Version to Use](#how-validation-code-decides-which-version-to-use)
     - [JSON Schema Validation](#json-schema-validation)
     - [Other Constraints](#other-constraints)
-- [Implementation-Specific Deviations](#implementation-specific-deviations)
-    - [BigchainDB Server Deviations](#bigchaindb-server-deviations)
 - [A Note about Owners](#a-note-about-owners)
 - [Glossary](#glossary)
     - [associative array](#associative-array)
@@ -747,20 +745,9 @@ Note: The first two rules prevent double spending.
 
 Regardless of whether the transaction is a CREATE or TRANSFER transaction: For all inputs, `input.fulfillment` must be valid. See the <a href="#transaction-components-inputs"><span>section about inputs</span></a> for more details about what that means.
 
-#### More Rules
+#### Rules Depending on the Database Backend Used
 
-Some implementations of the BigchainDB Transactions Spec impose more rules. See the section titled [Implementation-Specific Deviations](#implementation-specific-deviations).
-
-
-## Implementation-Specific Deviations
-
-Some implementations of BigchainDB-compliant servers or drivers deviate from the BigchainDB Transaction Spec.
-
-### BigchainDB Server Deviations
-
-<a href="https://github.com/bigchaindb/bigchaindb">BigchainDB Server</a> is a BigchainDB-compliant server implemented in Python.
-
-When BigchainDB Server is used *with MongoDB*, it inherits some quirks from MongoDB:
+If the database backend is MongoDB:
 
 - All key names (e.g. anywhere in the JSON documents stored in `asset.data` or `metadata`):
   - must not begin with `$`
