@@ -76,7 +76,7 @@ This section advises on how to approach backwards-incompatible upgrades of the T
 
 BigchainDB operators need a convenient way to do the following:
 
-1. Stop building blocks when the old Tendermint chain is at a jointly chosen height.
+1. Stop building blocks for the old Tendermint chain at the same height as all the other operators.
 2. Continue building blocks using the new Tendermint chain starting from that height.
 3. Replay the whole blockchain after a migration.
 4. Join the network as a new validator after a migration.
@@ -178,6 +178,8 @@ To replay the chain from scratch, one has to get `genesis.json` and the archive,
 $ mongorestore --archive=bigchaindb.archive
 ```
 
+Note that we do not take a dump of the Tendermint storage. After a migration, Tendermint starts building a new chain according to the new format so no old data is carried over by design.
+
 Afterwards, Tendermint may be started.
 
 Note that although a node can join the network and work to some extent without restoring from the archive, it is not able to properly validate transactions so restoring from the archive is a must.
@@ -206,7 +208,7 @@ Since BigchainDB retains the blocks built by old Tendermint chains, the HTTP API
 
 #### Migration election specs
 
-We introduce a new transaction operation, `TENDERMINT_MIGRATION_ELECTION`, for the purpose of implementing migration elections. `TENDERMINT_MIGRATION_ELECTION` is an extension of `CREATE` and does not introduce any schema changes apart from the new operation.
+We introduce a new [transaction operation](./tendermint_migration_election.yaml), `TENDERMINT_MIGRATION_ELECTION`, for the purpose of implementing migration elections. `TENDERMINT_MIGRATION_ELECTION` is an extension of `CREATE`. Its asset contains the new ABCI chain ID.
 
 Election conclusion is inherited from [the TEP definition](../18#concluding-election).
 
