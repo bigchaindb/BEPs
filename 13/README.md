@@ -89,8 +89,6 @@ The process to change this document is [BEP-2 (COSS)](../2/README.md).
     - [How Validation Code Decides Which Version to Use](#how-validation-code-decides-which-version-to-use)
     - [JSON Schema Validation](#json-schema-validation)
     - [Other Constraints](#other-constraints)
-- [Implementation-Specific Deviations](#implementation-specific-deviations)
-    - [BigchainDB Server Deviations](#bigchaindb-server-deviations)
 - [A Note about Owners](#a-note-about-owners)
 - [Glossary](#glossary)
     - [associative array](#associative-array)
@@ -476,7 +474,8 @@ In a CREATE transaction, an asset can be <a href="#ctnull"><span>ctnull</span></
 }
 ```
 
-The meaning of a “valid associative array” may depend on the implementation; see the section about <a href="#implementation-specific-deviations"><span>implementation-specific deviations</span></a>.
+The meaning of a “valid associative array” may depend on the database backend used;
+see the transaction validation rules that depend on the database backend used.
 
 In a TRANSFER transaction, an asset must be an <a href="#associative-array"><span>associative array</span></a> containing exactly one key-value pair. The key must be `"id"` and the value must be a 64-character hex string: a <a href="#transaction-components-transaction-id"><span>transaction ID</span></a>. Here’s a JSON example:
 
@@ -490,7 +489,10 @@ In a TRANSFER transaction, an asset must be an <a href="#associative-array"><spa
 
 User-provided transaction metadata.
 
-It can be any valid <a href="#associative-array"><span>associative array</span></a>, or <a href="#ctnull"><span>ctnull</span></a> (e.g. `None` in Python). The meaning of a “valid associative array” may depend on the implementation; see the section about <a href="#implementation-specific-deviations"><span>implementation-specific deviations</span></a>. Here’s a JSON example:
+It can be any valid <a href="#associative-array"><span>associative array</span></a>, or <a href="#ctnull"><span>ctnull</span></a> (e.g. `None` in Python).
+The meaning of a “valid associative array” may depend on the database backend used;
+see the transaction validation rules that depend on the database backend used.
+Here’s a JSON example:
 
 ```json
 {
@@ -747,20 +749,9 @@ Note: The first two rules prevent double spending.
 
 Regardless of whether the transaction is a CREATE or TRANSFER transaction: For all inputs, `input.fulfillment` must be valid. See the <a href="#transaction-components-inputs"><span>section about inputs</span></a> for more details about what that means.
 
-#### More Rules
+#### Rules Depending on the Database Backend Used
 
-Some implementations of the BigchainDB Transactions Spec impose more rules. See the section titled [Implementation-Specific Deviations](#implementation-specific-deviations).
-
-
-## Implementation-Specific Deviations
-
-Some implementations of BigchainDB-compliant servers or drivers deviate from the BigchainDB Transaction Spec.
-
-### BigchainDB Server Deviations
-
-<a href="https://github.com/bigchaindb/bigchaindb">BigchainDB Server</a> is a BigchainDB-compliant server implemented in Python.
-
-When BigchainDB Server is used *with MongoDB*, it inherits some quirks from MongoDB:
+If the database backend is MongoDB:
 
 - All key names (e.g. anywhere in the JSON documents stored in `asset.data` or `metadata`):
   - must not begin with `$`
