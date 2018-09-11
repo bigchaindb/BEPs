@@ -106,21 +106,40 @@ If below conditions hold then the election is concluded and the proposed change 
 The above constraints state that if the Validators with which an election ![][EC_t] was initiated still hold super-majority then the election can be concluded.
 
 ##### Approach 1 vs Approach 2
-
 Approach 1 is easier to comprehend and explain because of how constrained it is.
 
-Approach 2 has two benefits over the Approach 1.
-
-1. Elections can have intersections. In other words, the following is possible:
-
-```election 1 creation height < election 2 creation height < election 1 conclusion height < election 2 conclusion height```
-
-2. Elections can survive network updates. For example, each Validator in the network can move to a new address and delegate his vote to the new address. Elections created prior to such migrations can still be concluded.
+Approach 2 allows elections to survive validator set changes within certain limits.
 
 For a start, we plan to implement Approach 1 because of its simplicity. We are able to switch to Approach 2 in the future by the means of a soft fork with additional support for the new type of elections described in Approach 2.
 
 ### Applying change
 During the `end_block` call, all transactions about to be committed are checked. Every vote token triggers a function (which implements **Approch 1** or **Approach 2**) that checks the necessary conditions. If the function returns `True` then the current Validator applies the suggested change in ![][EC_t]. Given the BFT nature of the system, all non-Byzantine Validator will commit the change at the same block height.
+
+### Command-line interface
+The interface for creating an election depends on the type of the election and has to be described by the BEP documenting this particular type.
+
+The CLI command for creating a new election should use the following template:
+```
+$ bigchaindb election <type> new ...
+```
+
+The CLI command for approving an election does not depend on its type. It should follow the template:
+```
+$ bigchaindb election approve <election_id> --private-key PATH_TO_PRIVATE_KEY
+```
+
+Moreover, we do not need to know the election type to display its status. The command should look like:
+```
+$ bigchaindb election show <election_id>
+```
+
+The expected output is:
+```
+status=<status>
+```
+
+
+Additional data, specific to a particular election type, can be added to the output of the status command.
 
 ## Rationale
 A *blockchain* is a Byzantine fault tolerant, replicated state machine. BigchainDB is a permissioned one, this means that the nodes that validate transactions and create blocks know about each other: their identity is not anonymous. This is not true for networks like Bitcoin or Ethereum: in those permissionless blockchains the Validator set changes over time and the identity is anonymous.
