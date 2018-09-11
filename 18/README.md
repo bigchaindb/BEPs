@@ -22,11 +22,11 @@ The basic idea is to formalize the concept of an Election storing its data in a 
 ## Specification
 At any point in time, a Member of a BigchainDB Network can start a new Election.This Member is called **Initiator**.
 
-An Election is a transaction representing the matter of change, and some Vote tokens. The Initiator issues a `CREATE` transaction. The transaction has multiple `outputs`, one per Validator. Each output is populated with the public key of the Validator, and an amount equal to the power of the Validator.
+An Election is a transaction representing the matter of change, and some Vote tokens. Election transactions follow the `CREATE` transaction spec. The Initiator issues an election transaction. The transaction has multiple `outputs`, one per Validator. Each output is populated with the public key of the Validator, and an amount equal to the power of the Validator.
 
-At this point the Election starts. Independently, and asynchronously, each Validator can spend its **Vote Tokens** to an **Election Address** to show agreement on the matter of change. The Election Address is the `id` of the first `CREATE` transaction. Once the Vote tokens has been transferred to that address, it is not possible to transfer it again, because their private key is not known.
+At this point the Election starts. Independently, and asynchronously, each Validator can spend its **Vote Tokens** to an **Election Address** to show agreement on the matter of change. The Election Address is the `id` of the election transaction. Once the Vote tokens has been transferred to that address, it is not possible to transfer it again, because their private key is not known.
 
-During the `end_block` call, all transactions about to be committed are checked. Every transfer of a vote token triggers a functions that counts the number of positive votes of Election over the number of voters. If the ratio is greater than ⅔, then the current Validator commits the change. Given the BFT nature of the system, all non-Byzantine Validator will commit the change at the same block height.
+During the `end_block` call, all transactions about to be committed are checked. Every transfer of a vote token triggers a function that counts the number of positive votes of Election over the number of voters. If the ratio is greater than ⅔, then the current Validator commits the change. Given the BFT nature of the system, all non-Byzantine Validator will commit the change at the same block height.
 
 Each Validator checks every new transaction that is about to be committed in a block. The process is roughly the following:
 
@@ -42,22 +42,36 @@ A Validator must be able to discern valid Votes from invalid ones. A valid vote 
 ### What is a valid Election?
 A Validator must be able to discern valid Elections from invalid ones. A valid Election is a transaction where **all** the following conditions are true.
 
-1. `operation` is `CREATE`, or equivalent.
-1. The `inputs` satisfy the conditions for a CREATE transaction. For example, the public key listed in `inputs.owners_before` is the public key of the Initiator.
+1. The transaction complies to the `CREATE` transaction JSON schema.
+1. The transaction additionally complies to the [election JSON schema](#./election_transaction.yaml).
+1. `operation` has a value specific to the particular election, e.g. `VALIDATOR_ELECTION`.
 1. `outputs` has as many entries as the total number of Validators.
 1. Each Validator is represented in `outputs`.
 1. Each entry in `outputs` can be spent by only one Validator, and the amount attached to it is equal to the power of that Validator.
 
-**Note: any change in the Validator Set will make old Elections invalid. Check [approach 2](#generalized-approach-approach-2) for a process that can tolerate a certain degree of change to the Validator Set.**
+**Note: any change in the Validator Set makes old Elections invalid. Check [approach 2](#generalized-approach-approach-2) for a process that can tolerate a certain degree of change to the Validator Set.**
+
+### Election statuses
+The lifecycle of an Election is described by the three statuses:
+
+- `ongoing`
+- `concluded`
+- `inconclusive`
+
+`ongoing` are valid Elections denoted by committed transactions, which did not receive a sufficient amount of votes, and the validator set has not changed since their creation.
+
+Elections become `concluded` after they receive a sufficient amount of votes. See [Concluding Election](#concluding-election) for more details on how elections are concluded.
+
+Elections are considered `inconclusive` if they had not been concluded by the time the validator set was changed.
 
 ### Extra: Vote delegation
-Vote delegation is trivial. Let's consider a Network of three Members: Alice, Bob, and Carly. Alice is the Initiator, and starts a new Election. Alice generates a `CREATE` transaction with three outputs, one per each Member. Bob wants to delegate his vote to Carly, so he transfers his output to Carly, granting her more votes she can spend in the way she wants.
+Vote delegation is trivial. Let's consider a Network of three Members: Alice, Bob, and Carly. Alice is the Initiator, and starts a new Election. Alice generates an election transaction with three outputs, one per each Member. Bob wants to delegate his vote to Carly, so he transfers his output to Carly, granting her more votes she can spend in the way she wants.
 
 ### About Election finality
 Let the Validator Set be denoted by ![V_t][eq_V_t] at time ![][eq_t], a member of a BigchainDB Network can start a new Election. This member is called **Initiator** (![v_it][eq_v_it] s.t. ![v_it in V][eq1]) .
 
 #### Valid Election
-An Election proposal is a transaction representing the matter of change. The _Initiator_ ![v_it][eq_v_it], issues a create election transaction ![][EC_t]. The election MUST contain outputs  such that each output is populated with the public key of the Validator ![][eq_v_k] s.t. ![][v_k_in_V_t], and an amount equal to the current power ![][eq_p(v_k, t)]  of the Validator.
+An Election proposal is a transaction representing the matter of change. The _Initiator_ ![v_it][eq_v_it], issues an election transaction ![][EC_t]. The election MUST contain outputs  such that each output is populated with the public key of the Validator ![][eq_v_k] s.t. ![][v_k_in_V_t], and an amount equal to the current power ![][eq_p(v_k, t)]  of the Validator.
 
 #### Voting
 Once ![][EC_t] is committed in a block, the election starts. Independently and asynchronously, each Validator may spend its vote tokens (referred as ![][T_k]) to the election address ![][EC_t_addr] to show agreement on the matter of change. The Election Address ![][EC_t_addr] is the `id` of the transaction ![][EC_t].
