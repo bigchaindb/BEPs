@@ -150,7 +150,12 @@ In this context, a Member of a BigchainDB Network can start an election on a spe
 
 The *matter* is domain specific, and can be something like adding a new Validator to the Network, adding support for a new transaction model, and so on. Each *matter* has some specific logic (code) that is triggered when the election is successful. All non byzantine nodes reach the same conclusion on the election at the same block height, and they all trigger the same logic if the election is successful (even if they voted against).
 
-### About Election finality
+#### About the conclusion threshold
+The conclusion threshold we choose in this BEP is ⅔ of the Network power. Although it matches the threshold used by consensus algorithms powering permissioned blockchains with instant finality, it does not, in general, have to be this big for custom elections.
+
+The consensus engine ensures all the validators agree on the exact block they commit. Therefore, byzantine actors can not make one group of validators think a particular election is concluded while at the same time making the other group think the same election is not concluded, even when the threshold is less than ⅔.
+
+#### About Election finality
 We had some discussions around the *finality* of an election. In the original design, the current Validator Set is used to decide the outcome of an election. Any change to the Validator Set would make all existing elections invalid. To overcome this issue, another approach has been proposed and documented. This new approach can tolerate a certain degree of change to the Validator Set.
 
 ## Backwards Compatibility
