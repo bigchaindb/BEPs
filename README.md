@@ -58,7 +58,7 @@ Some people have specializations:
 ### Administrators (Founders and Others)
 
 - Kamal - @GataKamsky
-- Gautaum - @gautamdhameja
+- Gautam - @gautamdhameja
 - Alberto - @vrde
 - Vanshdeep - @kansi
 - Troy - @ttmc
