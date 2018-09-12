@@ -37,14 +37,19 @@ Each Validator checks every new transaction that is about to be committed in a b
 5. If the Election **excluding** the current Vote has less than ⅔ of positive votes and **including** the current Vote has more than ⅔ of positive votes, execute the logic to implement the Election.
 
 ### What is a valid Vote?
-A Validator must be able to discern valid Votes from invalid ones. A valid vote is a transaction that spends one or more Vote Tokens to the Election Address.
+A Validator must be able to discern valid Votes from invalid ones. A valid vote is a transaction where all the following conditions are true.
+
+1. The `operation` is `VOTE`.
+1. Except for `operation`, the transaction follows the `TRANSFER` transaction spec.
+1. It spends one or more Vote Tokens to the Election Address.
+
 
 ### What is a valid Election?
 A Validator must be able to discern valid Elections from invalid ones. A valid Election is a transaction where **all** the following conditions are true.
 
 1. The transaction complies to the `CREATE` transaction JSON schema.
 1. The transaction additionally complies to the [election JSON schema](#./election_transaction.yaml).
-1. `operation` has a value specific to the particular election, e.g. `VALIDATOR_ELECTION`.
+1. The transaction meets schema requirements, specific to the particular election, if any.
 1. `outputs` has as many entries as the total number of Validators.
 1. Each Validator is represented in `outputs`.
 1. Each entry in `outputs` can be spent by only one Validator, and the amount attached to it is equal to the power of that Validator.

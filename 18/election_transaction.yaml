@@ -6,13 +6,9 @@ required:
 - operation
 - outputs
 properties:
-  asset:
-    properties:
-      data:
-        properties:
-          seed:
-            type: string
-            description: "An optional random string to make each new election with the same parameters unique."
+  operation:
+    - type: string
+    - description: "Defines the type of the election."
   outputs:
     type: array
     items:
