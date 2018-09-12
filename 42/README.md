@@ -208,7 +208,7 @@ Since BigchainDB retains the blocks built by old Tendermint chains, the HTTP API
 
 #### Migration election specs
 
-We introduce a new [transaction operation](./tendermint_migration_election.yaml), `TENDERMINT_MIGRATION_ELECTION`, for the purpose of implementing migration elections. `TENDERMINT_MIGRATION_ELECTION` is an extension of `CREATE`. Its asset contains the new ABCI chain ID.
+We introduce a new [transaction operation](./tendermint_migration_election.yaml), `TENDERMINT_MIGRATION_ELECTION`, for the purpose of implementing migration elections. `TENDERMINT_MIGRATION_ELECTION` follows the base election spec documented in [the TEP](../18).
 
 Election conclusion is inherited from [the TEP definition](../18#concluding-election).
 
