@@ -97,30 +97,12 @@ To perform a migration election, we propose 2 CLI commands.
 The initiator executes:
 
 ```
-$ bigchaindb election migrate-abci-chain new --private-key /home/user/.tendermint/config/priv_validator.json
+$ bigchaindb election chain-migration new --private-key /home/user/.tendermint/config/priv_validator.json
 ```
 
 The command outputs the migration ID. The initiator distributes it among other members of the network. The process is similar to adding new validators.
 
-Validators vote for the migration:
-
-```
-$ bigchaindb election approve <election-id> --private-key /home/user/.tendermint/config/priv_validator.json
-```
-
-Validators can watch how the election goes:
-
-```
-$ bigchaindb election status <election-id>
-```
-
-Outputs:
-```
-votes_recieved=<Sum_of_votes_recieved>
-votes_allocated=<Sum_of_votes_allocated_in_election>
-network_size=<Total_network_power>
-election_status=<Election_status>
-```
+To vote for an election or to see its status, validators can use common CLI described in [the BEP-18](../18).
 
 #### 2. Start the new chain
 
