@@ -110,26 +110,22 @@ Validators have to install and launch the new version of Tendermint. They need t
 
 `chain_id` is generated and stored by BigchainDB upon conclusion of the migration election. When Tendermint sends this ID as part of the `InitChain` ABCI request, BigchainDB understands that the user has switched to a new Tendermint version so BigchainDB switches to accept new transactions and blocks.
 
-To offer a convenient way to get the data, we propose a CLI command:
+To offer a convenient way to get the data, we extend the output of the election status CLI command.
 
+It has to contain the latest known list of validators, the latest known app hash, and the identifier of the Tendermint chain.
 ```
-$ bigchaindb status
-```
-
-Its output can be extended over time to solve different purposes. For a start, it has to contain the latest known list of validators, the latest known app hash, and the identifier of the Tendermint chain.
-```
-{
-    "chain_id": "...",
-    "validators": [{
-        "pub_key": {
-            "type": "...",
-            "value": "..."
-        },
-        "power": "...",
-        "name": "..."
+status=...
+chain_id=...
+validators=[{
+    "pub_key": {
+        "type": "...",
+        "value": "..."
     },
-    "app_hash": "..."
-}
+    "power": "...",
+    "name": "..."
+}]
+app_hash=...
+
 ```
 
 Validators upgrading Tendermint are supposed to execute the command above and copy the validators, the app hash, and the chain ID into their `genesis.json`.
