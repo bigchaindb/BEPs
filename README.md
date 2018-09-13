@@ -32,6 +32,7 @@ Short Name   | Title                                                         | T
 [BEP-19](19) | Tendermint Performance Profiling                              | Informational | Raw   | Zach Bowen
 [BEP-20](20) | Bounties in the BigchainDB Ecosystem                          | Meta     | Raw        | Chalid Mannaa
 [BEP-21](21) | Dynamically add/update/remove validators at runtime           | Standard | Raw        | Vanshdeep Singh
+[BEP-22](22) | Performance Study: Analysis of Transaction Throughput in a BigchainDB Network | Informational | Raw        | Alberto Granzotto
 [BEP-42](42) | Handling new transaction models and storage schemas           | Informational | Raw   | Vanshdeep Singh
 
 ## Current Participants
