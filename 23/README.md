@@ -42,6 +42,7 @@ METHODS. The methods section will help you determine exactly how the authors per
 
 The methods describes both specific techniques and the overall experimental strategy used by the scientists. Generally, the methods section does not need to be read in detail. Refer to this section if you have a specific question about the experimental design.
 -->
+*Note: to reproduce our results, make sure to adapt the configuration files, scripts, and commands to your setup. For example, your nodes will have different IP addresses.*
 
 The performance tests were run on the Microsoft Azure cloud infrastructure. For the BigchainDB nodes, we choose compute optimized virtual machines from the [Fsv2 series][azure:fsv2], specifically *Standard F32s v2* (32 vCPUs, 64GiB memory, SSD drives with estimated IOPS limit of 64000, expected network bandwidth in Mbps 14,000). For the machine generating the workload, we used a *Standard F8s v2* (8 vCPUs, 16GiB memory). The virtual machines were all in the same datacenter.
 
@@ -204,7 +205,7 @@ Name: d_accept, dtype: float64
 0.997    7.686003
 Name: d_commit, dtype: float64
 ```
-BigchainDB was able to process 1,000,000 transactions in 26 minutes without any failure.
+BigchainDB was able to process 1,000,000 transactions in about 26 minutes without any failure.
 
 In terms of responsiveness, the system performed consistently during the whole test:
 - 99.7% of transactions have been **accepted** within 2.033 seconds, 95% within 0.113 seconds, and 68% within 0.018 seconds.
@@ -251,9 +252,9 @@ Authors often use the discussion to describe what their work suggests and how it
 
 The aims of the study are twofold, on one side we want to have an understanding on how a BigchainDB network performs under stress; on the other side we want to define a methodology we can use for a) future versions of BigchainDB, b) running other tests under different conditions.
 
-About the performance of the system, we can conclude that BigchainDB performs consistently and correctly under constant stress, and it's able to finalize one million transactions within one hour and always be responsive. Enabling parallel validation allows BigchainDB to finalize the same number of transactions less than half an hour.
+About the performance of the system, we can conclude that BigchainDB performs consistently and correctly under constant stress, and it's able to finalize one million transactions within one hour and always be responsive. Enabling parallel validation allows BigchainDB to finalize the same number of transactions in less than half an hour.
 
-We also ran a short test to measure the peak performance of the system: under favorable conditions we are able to reach ~1000 finalized transactions per second. We are confident that we can improve the system and reach this performance under constant, heavy load.
+We also ran a short test to measure the peak performance of the system: under favorable conditions we are able to reach ~1000 finalized transactions per second.
 
 ## Copyright Waiver
 <p xmlns:dct="http://purl.org/dc/terms/">
