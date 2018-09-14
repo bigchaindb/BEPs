@@ -97,7 +97,7 @@ To perform a migration election, we propose 2 CLI commands.
 The initiator executes:
 
 ```
-$ bigchaindb election chain-migration new --private-key /home/user/.tendermint/config/priv_validator.json
+$ bigchaindb election new chain-migration --private-key /home/user/.tendermint/config/priv_validator.json
 ```
 
 The command outputs the migration ID. The initiator distributes it among other members of the network. The process is similar to adding new validators.
@@ -172,7 +172,7 @@ The validator needs to restore from the archive before starting Tendermint as it
 
 Note that new validators joining a permissioned network inherently have to trust the place they are getting data from - there is no generic way to assess the validity of `genesis.json` and the archive upon joining the network.
 
-At the moment, there are no tools to verify the integrity between `genesis.json` and the archive. Such tools are subject to work on separately. In the future, one might need less trust in particular parties by downloading `genesison.json` and the archive from two different places and verifying the integrity. At the moment it is strongly recommended to download them from a single most trusted place.
+At the moment, there are no tools to verify the integrity between `genesis.json` and the archive. Such tools are subject to work on separately. In the future, one might need less trust in particular parties by downloading `genesis.json` and the archive from two different places and verifying the integrity. At the moment it is strongly recommended to download them from a single most trusted place.
 
 #### Tendermint chain height
 
@@ -186,7 +186,7 @@ Since BigchainDB retains the blocks built by old Tendermint chains, the HTTP API
 
 #### Migration election specs
 
-We introduce a new [transaction operation](./tendermint_migration_election.yaml), `TENDERMINT_MIGRATION_ELECTION`, for the purpose of implementing migration elections. `TENDERMINT_MIGRATION_ELECTION` follows the base election spec documented in [the TEP](../18).
+We introduce a new transaction operation, `TENDERMINT_MIGRATION_ELECTION`, for the purpose of implementing migration elections. `TENDERMINT_MIGRATION_ELECTION` follows the base election spec documented in [the TEP](../18).
 
 Election conclusion is inherited from [the TEP definition](../18#concluding-election).
 
