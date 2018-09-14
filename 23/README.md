@@ -10,7 +10,7 @@ contributors: Troy McConaghy <troy@bigchaindb.com>, Muawia Khan <muawia@bigchain
 # Performance Study: Analysis of Transaction Throughput in a BigchainDB Network
 
 ## Abstract
-Transaction throughput is a key metric to evaluate the suitability of a blockchain system for real world applications. BigchainDB is now in its beta phase, and we don't expect major changes in the parts of the code that are responsible for the throughput of the system (i.e. the validation logic), for this reason we can now run performance tests and publish our results. The tested setup consists of a 4 node network running a [recent version of BigchainDB][bdb:git-commit]. Each node runs on a different virtual machine, hosted in the [Azure infrastructure][azure:landing-page]. A fifth virtual machine is used to generate the workload and collect metrics. Depending on the configuration of the system, a BigchainDB network under constant load finalizes between 300 and 1000 transactions per second.
+Transaction throughput is a key metric to evaluate the suitability of a blockchain system for real world applications. BigchainDB is now in its beta phase, and we don't expect major changes in the parts of the code that are responsible for the throughput of the system (i.e. the validation logic), for this reason we can now run performance tests and publish our results. The tested setup consists of a 4 node network running a [recent version of BigchainDB][bdb:git-commit]. Each node runs on a different virtual machine, hosted in the [Azure infrastructure][azure:landing-page]. A fifth virtual machine is used to generate the workload and collect metrics. Depending on the configuration of the system, the tested BigchainDB network, under constant load, finalizes between 300 and 1000 transactions per second.
 
 ## Introduction
 Blockchain systems are currently under heavy research and development. Different projects have different definitions of what a blockchain is—or should be.
@@ -99,7 +99,7 @@ The second one used the experimental feature for parallel validation, enabled on
 The third one used the experimental feature for parallel validation, enabled on start with `bigchaindb start --experimental-parallel-validation`, and was run with a smaller amount of requests to test the peak performance of the system.
 
 ### Experiment 1: finalize 1,000,000 transactions
-For each node in the network, we started all services using the startup script.  After some seconds, we switched to the workload-generating virtual machine, and ran:
+For each node in the network, we started all services using the startup script. After some seconds, we switched to the workload-generating virtual machine, and ran:
 
 ```
 bigchaindb-benchmark\
@@ -112,7 +112,7 @@ bigchaindb-benchmark\
     send -r1000000 --mode=sync
 ```
 
-The generated `CSV` file with the results was then copied to another machine
+This command uses 32 workers to push 1,000,000 transaction of 765 bytes to the four nodes in the network. The generated `CSV` file with the results was then copied to another machine
 
 ### Experiment 2: finalize 1,000,000 transactions (experimental parallelization)
 For each node in the network, we started BigchainDB with `bigchaindb start --experimental-parallel-validation`. After some seconds, we switched to the workload generating virtual machine, and ran:
@@ -128,6 +128,8 @@ bigchaindb-benchmark\
     send -r1000000 --mode=sync
 ```
 
+This command uses 32 workers to push 1,000,000 transaction of 765 bytes to the four nodes in the network. The generated `CSV` file with the results was then copied to another machine
+
 ### Experiment 3: finalize 16,000 transactions (experimental parallelization)
 For each node in the network, we started BigchainDB with `bigchaindb start --experimental-parallel-validation` and we changed the flag `skip_timeout_commit` to `true` in `${HOME}/.tendermint/config/config.toml` (we noticed a significant delay to create the last block of the test, and skipping the timeout commit seems to help in this regard). After some seconds, we switched to the workload generating virtual machine, and ran:
 
@@ -141,7 +143,7 @@ bigchaindb-benchmark\
     --peer http://10.240.0.7:9984\
     send -r16000 --mode=sync
 ```
-The generated `CSV` file with the results was then copied to another machine.
+This command uses 32 workers to push 16,000 transaction of 765 bytes to the four nodes in the network. The generated `CSV` file with the results was then copied to another machine
 
 ## Results
 Each experiment generated a CSV file containing the following columns:
