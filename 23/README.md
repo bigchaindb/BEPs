@@ -31,11 +31,10 @@ Given that, the metrics we measured in our experiments are:
 
 Those metrics reflect the different states of a valid transaction: accepted and finalized.
 
-Even if the reference metric is how many transactions the network finalizes per second, during this analysis we dig deeper and analyze the distribution on accepted transactions, committed etc. We want to make sure that the system is responsive most of the time, and we don't want to get fooled by an average that hides a lot of data behind it. Knowing the actual distribution of how much time it takes for a transaction to be accepted and then committed allows us to have a clear understanding of the responsiveness of the system, and this is something we won't know if we look only at the average. For this reason we developed our own tool, `bigchaindb-benchmark`.
-[BigchainDB Benchmark][bdb:benchmark-tool] is the tool we developed to generate the workload and collect statistics. It can simulate a large amount of workload by spawning multiple processes, and output a CSV file to timestamp the different steps in the life cycle of a transaction. This allows us to measure the distribution of how long it takes for a transaction to be accepted and later finalized.
+Even if the reference metric is how many transactions the network finalizes per second, during this analysis we dig deeper and analyze the distribution on accepted transactions, committed etc. We want to make sure that the system is responsive most of the time, and we don't want to get fooled by an average that hides a lot of data behind it. Knowing the actual distribution of how much time it takes for a transaction to be accepted and then committed allows us to have a clear understanding of the responsiveness of the system, and this is something we won't know if we look only at the average. For this reason we developed our own benchmarking tool to generate the workload and collect statistics; we call it [bigchaindb-benchmark][bdb:benchmark-tool]. It can simulate a large amount of workload by spawning multiple processes, and output a CSV file to timestamp the different steps in the life cycle of a transaction. This allows us to measure the distribution of how long it takes for a transaction to be accepted and later finalized.
 We also run other tests using a customized version of [`tm-bench`][tm:tm-bench].
 
-Another thing to consider is that BigchainDB is a multi-asset blockchain. With BigchainDB, users can create their own custom assets. Each new asset is identified by a unique value, that is the `id` of the `CREATE` transaction that minted it. Assets have their own unique history or—in more precise terms—directed acyclic graph. In order to check if a transaction is a double spend, we can safely ignore all transactions related to other assets. This means that when BigchainDB has to validate a block, it can parallelize validation, exploiting all cores in the current machine (more details to come). To understand if we could get a performance boost out of this, we integrated a new experimental feature that enables parallel validation of transactions. This feature is a proof of concept to show that higher throughput is realizable. Note: this feature skips also *Check Tx*, used by Tendermint to check a transaction before storing it in the mempool. BigchainDB validates transactions as soon as they are posted to the HTTP API, so *Check Tx* in this case is redundant. We must mention that *Check Tx* is used also to validate transactions coming from the other nodes of the network, so disabling it might allow byzantine actors to push invalid transactions to the mempool (handling invalid transactions is [actively discussed in the Tendermint issue tracker][tm:invalid-txs]). Even if an invalid transaction makes it to the mempool, it will be always discarded during the *Deliver Tx* phase, so this experimental feature will still maintain a correct state of the application. Parallel validation is an optimistic approach that will be eventually developed for specific production use cases.
+Another thing to consider is that BigchainDB is a multi-asset blockchain. With BigchainDB, users can create their own custom assets. Each new asset is identified by a unique value, that is the `id` of the `CREATE` transaction that minted it. Assets have their own unique history or—in more precise terms—directed acyclic graph. In order to check if a transaction is a double spend, we can safely ignore all transactions related to other assets. This means that when BigchainDB has to validate a block, it can parallelize validation, exploiting all cores in the current machine (more details to come). To understand if we could get a performance boost out of this, we integrated a new experimental feature that enables parallel validation of transactions. This feature is a proof of concept to show that higher throughput is realizable. Note: this feature skips also *CheckTx*, used by Tendermint to check a transaction before storing it in the mempool. BigchainDB validates transactions as soon as they are posted to the HTTP API, so *CheckTx* in this case is redundant. We must mention that *CheckTx* is used also to validate transactions coming from the other nodes of the network, so disabling it might allow byzantine actors to push invalid transactions to the mempool (handling invalid transactions is [actively discussed in the Tendermint issue tracker][tm:invalid-txs]). Even if an invalid transaction makes it to the mempool, it will be always discarded during the *Deliver Tx* phase, so this experimental feature will still maintain a correct state of the application. Parallel validation is an optimistic approach that will be eventually developed for specific production use cases.
 
 ## Methods
 <!--
@@ -44,7 +43,7 @@ METHODS. The methods section will help you determine exactly how the authors per
 The methods describes both specific techniques and the overall experimental strategy used by the scientists. Generally, the methods section does not need to be read in detail. Refer to this section if you have a specific question about the experimental design.
 -->
 
-The performance tests were run on the Microsoft Azure cloud infrastructure. For the BigchainDB nodes, we choose compute optimized virtual machines from the [Fsv2 series][azure:fsv2], specifically *Standard F32s v2* (32 vCPUs, 64GiB memory, SSD drives with estimated IOPS limit of 5000). For the machine generating the workload, we used a *Standard F8s v2* (8 vCPUs, 16GiB memory). The virtual machines were all in the same datacenter.
+The performance tests were run on the Microsoft Azure cloud infrastructure. For the BigchainDB nodes, we choose compute optimized virtual machines from the [Fsv2 series][azure:fsv2], specifically *Standard F32s v2* (32 vCPUs, 64GiB memory, SSD drives with estimated IOPS limit of 64000, expected network bandwidth in Mbps 14,000). For the machine generating the workload, we used a *Standard F8s v2* (8 vCPUs, 16GiB memory). The virtual machines were all in the same datacenter.
 
 Note that the IOPS limit is crucial. A low number will create a bottleneck in disk reads and writes, slowing down database operations. To have a rough idea on the actual IO speed of the disk, `hdparam` was used.
 
@@ -58,7 +57,7 @@ benchmark1@benchmark1:~$ sudo hdparm -Tt /dev/sda
 
 All machines were provided with the operating system *Ubuntu 18.04.1 LTS (Bionic Beaver)*. For simplicity we provided all machines (both the machine generating the workload and the machines running the BigchainDB nodes) with the same software:
 
-- BigchainDB, [commit 6a9064196ad49baf3933051be6e116a3440fbad2][bdb:git-commit]
+- BigchainDB, [commit 6a9064196ad49baf3933051be6e116a3440fbad2][bdb:git-commit] (between version 2.0.0b5 and 2.0.0b6)
 - Tendermint 0.22.8
 - MongoDB v3.6.3
 
@@ -69,7 +68,7 @@ Three main configuration files were generated and edited (all of them are includ
 - The Tendermint [`genesis.json`][self:genesis.json] file (generated though the previous command `tendermint init`) was customized with the public keys of the four nodes. It was then copied into all machines under `${HOME}/.tendermint/config/genesis.json`.
 - The BigchainDB [`.bigchaindb`][self:bigchaindb.json] was generated via `bigchaindb configure` and copied into all machines under `${HOME}/.bigchaindb`.
 
-We also had a **setup** and **teardown** procedure we run before and after every test.
+We also had a **setup** and **teardown** procedure we ran before and after every test.
 
 The **setup** procedure was responsible to start the BigchainDB and the Tendermint process.
 ```bash
@@ -112,7 +111,7 @@ bigchaindb-benchmark\
     send -r1000000 --mode=sync
 ```
 
-This command uses 32 workers to push 1,000,000 transaction of 765 bytes to the four nodes in the network. The generated `CSV` file with the results was then copied to another machine
+This command uses 32 workers to push 1,000,000 transaction of 765 bytes to the four nodes in the network. The generated `CSV` file with the results was then copied to another machine.
 
 ### Experiment 2: finalize 1,000,000 transactions (experimental parallelization)
 For each node in the network, we started BigchainDB with `bigchaindb start --experimental-parallel-validation`. After some seconds, we switched to the workload generating virtual machine, and ran:
@@ -128,7 +127,7 @@ bigchaindb-benchmark\
     send -r1000000 --mode=sync
 ```
 
-This command uses 32 workers to push 1,000,000 transaction of 765 bytes to the four nodes in the network. The generated `CSV` file with the results was then copied to another machine
+This command uses 32 workers to push 1,000,000 transaction of 765 bytes to the four nodes in the network. The generated `CSV` file with the results was then copied to another machine.
 
 ### Experiment 3: finalize 16,000 transactions (experimental parallelization)
 For each node in the network, we started BigchainDB with `bigchaindb start --experimental-parallel-validation` and we changed the flag `skip_timeout_commit` to `true` in `${HOME}/.tendermint/config/config.toml` (we noticed a significant delay to create the last block of the test, and skipping the timeout commit seems to help in this regard). After some seconds, we switched to the workload generating virtual machine, and ran:
@@ -143,7 +142,8 @@ bigchaindb-benchmark\
     --peer http://10.240.0.7:9984\
     send -r16000 --mode=sync
 ```
-This command uses 32 workers to push 16,000 transaction of 765 bytes to the four nodes in the network. The generated `CSV` file with the results was then copied to another machine
+
+This command uses 32 workers to push 16,000 transaction of 765 bytes to the four nodes in the network. The generated `CSV` file with the results was then copied to another machine.
 
 ## Results
 Each experiment generated a CSV file containing the following columns:
