@@ -56,6 +56,8 @@ A Validator must be able to discern valid Elections from invalid ones. A valid E
 
 **Note: any change in the Validator Set makes old Elections invalid. Check [approach 2](#generalized-approach-approach-2) for a process that can tolerate a certain degree of change to the Validator Set.**
 
+**Note 2: when final votes for multiple elections are present in the same block, all elections that do not change the Validator Set and only one election of those which do change the Validator Set are concluded.**
+
 ### Election statuses
 The lifecycle of an Election is described by the three statuses:
 
