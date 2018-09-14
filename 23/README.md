@@ -253,6 +253,16 @@ About the performance of the system, we can conclude that BigchainDB performs co
 
 We also ran a short test to measure the peak performance of the system: under favorable conditions we are able to reach ~1000 finalized transactions per second. We are confident that we can improve the system and reach this performance under constant, heavy load.
 
+## Copyright Waiver
+<p xmlns:dct="http://purl.org/dc/terms/">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+  </a>
+  <br />
+  To the extent possible under law, all contributors to this BEP
+  have waived all copyright and related or neighboring rights to this BEP.
+</p>
 
 [bdb:git-commit]: https://github.com/bigchaindb/bigchaindb/commit/6a9064196ad49baf3933051be6e116a3440fbad2
 [azure:landing-page]: https://azure.microsoft.com/
