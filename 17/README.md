@@ -3,7 +3,7 @@ shortname: BEP-17
 name: Listing BigchainDB in Azure Marketplace, Phase 1
 type: Standard
 status: Raw
-editor: Troy McCoanghy <troy@bigchaindb.com>
+editor: Troy McConaghy <troy@bigchaindb.com>
 ```
 
 # Abstract
