@@ -1,5 +1,5 @@
 ```
-shortname: BEP-22
+shortname: BEP-23
 name: Performance Study: Analysis of Transaction Throughput in a BigchainDB Network
 type: Informational
 status: Raw
