@@ -154,7 +154,7 @@ Each experiment generated a CSV file containing the following columns:
 - `ts_commit`: timestamp when the transaction was committed and finalized.
 - `ts_error`: timestamp of an error if it occurred.
 
-We built a script called `analysis.py` to process those CSV files and output four different graphs per experiment:
+We built a script called [`analysis.py`][bdb:analysis.py] to process those CSV files and output four different graphs per experiment:
 - Distribution of how much time it takes to **accept** a transaction.
 - Distribution of how much time it takes to **finalize** a transaction.
 - **Accepted** transactions per second.
@@ -268,7 +268,8 @@ We also ran a short test to measure the peak performance of the system: under fa
 
 [bdb:git-commit]: https://github.com/bigchaindb/bigchaindb/commit/6a9064196ad49baf3933051be6e116a3440fbad2
 [azure:landing-page]: https://azure.microsoft.com/
-[bdb:benchmark-tool]: https://github.com/bigchaindb/benchmark
+[bdb:benchmark-tool]: https://github.com/bigchaindb/benchmark/tree/32f525a7979b7bd6a701294386af61c7e471472f
+[bdb:analysis.py]: https://github.com/bigchaindb/benchmark/blob/32f525a7979b7bd6a701294386af61c7e471472f/playground/analysis.py
 [azure:fsv2]: https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-compute#fsv2-series-sup1sup
 [tm:tm-bench]: https://github.com/tendermint/tendermint/tree/059a03a66a0d950b5e4c8956145ce708d239a182/tools/tm-bench
 [tm:invalid-txs]: https://github.com/tendermint/tendermint/issues/2175
