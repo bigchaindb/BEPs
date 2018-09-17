@@ -39,8 +39,8 @@ Each Validator checks every new transaction that is about to be committed in a b
 ### What is a valid Vote?
 A Validator must be able to discern valid Votes from invalid ones. A valid vote is a transaction where all the following conditions are true.
 
-1. The `operation` is `VOTE`.
-1. Except for `operation`, the transaction follows the `TRANSFER` transaction spec.
+1. The transaction follows the `TRANSFER` transaction spec.
+1. The transaction additionally follows the [election vote](./election_transaction_vote.yaml) transaction spec.
 1. It spends one or more Vote Tokens to the Election Address.
 
 
