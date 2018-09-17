@@ -1,0 +1,47 @@
+{
+    "server": {
+        "bind": "0.0.0.0:9984",
+        "loglevel": "info",
+        "workers": null
+    },
+    "wsserver": {
+        "scheme": "ws",
+        "host": "0.0.0.0",
+        "port": 9985,
+        "advertised_scheme": "ws",
+        "advertised_host": "localhost",
+        "advertised_port": 9985
+    },
+    "tendermint": {
+        "host": "localhost",
+        "port": 26657
+    },
+    "database": {
+        "backend": "localmongodb",
+        "connection_timeout": 5000,
+        "max_tries": 3,
+        "ssl": false,
+        "ca_cert": null,
+        "certfile": null,
+        "keyfile": null,
+        "keyfile_passphrase": null,
+        "crlfile": null,
+        "host": "localhost",
+        "port": 27017,
+        "name": "bigchain",
+        "replicaset": null,
+        "login": null,
+        "password": null
+    },
+    "log": {
+        "file": "/home/benchmark1/bigchaindb.log",
+        "error_file": "/home/benchmark1/bigchaindb-errors.log",
+        "level_console": "info",
+        "level_logfile": "info",
+        "datefmt_console": "%Y-%m-%d %H:%M:%S",
+        "datefmt_logfile": "%Y-%m-%d %H:%M:%S",
+        "fmt_console": "[%(asctime)s] [%(levelname)s] (%(name)s) %(message)s (%(processName)-10s - pid: %(process)d)",
+        "fmt_logfile": "[%(asctime)s] [%(levelname)s] (%(name)s) %(message)s (%(processName)-10s - pid: %(process)d)",
+        "granular_levels": {}
+    }
+}
