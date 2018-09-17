@@ -2,7 +2,7 @@
 shortname: BEP-15
 name: Ethereum Integration Tools & Demo 1
 type: Standard
-status: Raw
+status: Draft
 editor: Troy McConaghy <troy@bigchaindb.com>
 contributors: Gautam Dhameja <gautam@bigchaindb.com>
 ```
