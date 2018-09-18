@@ -127,7 +127,7 @@ The interface for creating an election depends on the type of the election and h
 
 The CLI command for creating a new election should use the following template:
 ```
-$ bigchaindb election <type> new ...
+$ bigchaindb election new <type> ...
 ```
 
 The CLI command for approving an election does not depend on its type. It should follow the template:
