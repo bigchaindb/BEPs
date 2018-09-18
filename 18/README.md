@@ -22,11 +22,11 @@ The basic idea is to formalize the concept of an Election storing its data in a 
 ## Specification
 At any point in time, a Member of a BigchainDB Network can start a new Election.This Member is called **Initiator**.
 
-An Election is a transaction representing the matter of change, and some Vote tokens. The Initiator issues a `CREATE` transaction. The transaction has multiple `outputs`, one per Validator. Each output is populated with the public key of the Validator, and an amount equal to the power of the Validator.
+An Election is a transaction representing the matter of change, and some Vote tokens. Election transactions follow the `CREATE` transaction spec. The Initiator issues an election transaction. The transaction has multiple `outputs`, one per Validator. Each output is populated with the public key of the Validator, and an amount equal to the power of the Validator.
 
-At this point the Election starts. Independently, and asynchronously, each Validator can spend its **Vote Tokens** to an **Election Address** to show agreement on the matter of change. The Election Address is the `id` of the first `CREATE` transaction. Once the Vote tokens has been transferred to that address, it is not possible to transfer it again, because their private key is not known.
+At this point the Election starts. Independently, and asynchronously, each Validator can spend its **Vote Tokens** to an **Election Address** to show agreement on the matter of change. The Election Address is the `id` of the election transaction. Once the Vote tokens has been transferred to that address, it is not possible to transfer it again, because their private key is not known.
 
-During the `end_block` call, all transactions about to be committed are checked. Every transfer of a vote token triggers a functions that counts the number of positive votes of Election over the number of voters. If the ratio is greater than ⅔, then the current Validator commits the change. Given the BFT nature of the system, all non-Byzantine Validator will commit the change at the same block height.
+During the `end_block` call, all transactions about to be committed are checked. Every transfer of a vote token triggers a function that counts the number of positive votes of Election over the number of voters. If the ratio is greater than ⅔, then the current Validator commits the change. Given the BFT nature of the system, all non-Byzantine Validator will commit the change at the same block height.
 
 Each Validator checks every new transaction that is about to be committed in a block. The process is roughly the following:
 
@@ -37,27 +37,48 @@ Each Validator checks every new transaction that is about to be committed in a b
 5. If the Election **excluding** the current Vote has less than ⅔ of positive votes and **including** the current Vote has more than ⅔ of positive votes, execute the logic to implement the Election.
 
 ### What is a valid Vote?
-A Validator must be able to discern valid Votes from invalid ones. A valid vote is a transaction that spends one or more Vote Tokens to the Election Address.
+A Validator must be able to discern valid Votes from invalid ones. A valid vote is a transaction where all the following conditions are true.
+
+1. The transaction follows the `TRANSFER` transaction spec.
+1. The transaction additionally follows the [election vote](./election_transaction_vote.yaml) transaction spec.
+1. It spends one or more Vote Tokens to the Election Address.
+
 
 ### What is a valid Election?
 A Validator must be able to discern valid Elections from invalid ones. A valid Election is a transaction where **all** the following conditions are true.
 
-1. `operation` is `CREATE`, or equivalent.
-1. The `inputs` satisfy the conditions for a CREATE transaction. For example, the public key listed in `inputs.owners_before` is the public key of the Initiator.
+1. The transaction complies to the `CREATE` transaction JSON schema.
+1. The transaction additionally complies to the [election JSON schema](#./election_transaction.yaml).
+1. The transaction meets schema requirements, specific to the particular election, if any.
 1. `outputs` has as many entries as the total number of Validators.
 1. Each Validator is represented in `outputs`.
 1. Each entry in `outputs` can be spent by only one Validator, and the amount attached to it is equal to the power of that Validator.
 
-**Note: any change in the Validator Set will make old Elections invalid. Check [approach 2](#generalized-approach-approach-2) for a process that can tolerate a certain degree of change to the Validator Set.**
+**Note: any change in the Validator Set makes old Elections invalid. Check [approach 2](#generalized-approach-approach-2) for a process that can tolerate a certain degree of change to the Validator Set.**
+
+**Note 2: pending validator changes do not make elections invalid.**
+
+### Election statuses
+The lifecycle of an Election is described by the three statuses:
+
+- `ongoing`
+- `concluded`
+- `inconclusive`
+
+`ongoing` are valid Elections denoted by committed transactions, which did not receive a sufficient amount of votes, and the validator set has not changed since their creation.
+
+Elections become `concluded` after they receive a sufficient amount of votes. See [Concluding Election](#concluding-election) for more details on how elections are concluded.
+
+Elections are considered `inconclusive` if they had not been concluded by the time the validator set was changed.
 
 ### Extra: Vote delegation
-Vote delegation is trivial. Let's consider a Network of three Members: Alice, Bob, and Carly. Alice is the Initiator, and starts a new Election. Alice generates a `CREATE` transaction with three outputs, one per each Member. Bob wants to delegate his vote to Carly, so he transfers his output to Carly, granting her more votes she can spend in the way she wants.
+Vote delegation is trivial. Let's consider a Network of three Members: Alice, Bob, and Carly. Alice is the Initiator, and starts a new Election. Alice generates an election transaction with three outputs, one per each Member. Bob wants to delegate his vote to Carly, so he transfers his output to Carly, granting her more votes she can spend in the way she wants.
 
 ### About Election finality
 Let the Validator Set be denoted by ![V_t][eq_V_t] at time ![][eq_t], a member of a BigchainDB Network can start a new Election. This member is called **Initiator** (![v_it][eq_v_it] s.t. ![v_it in V][eq1]) .
 
 #### Valid Election
-An Election proposal is a transaction representing the matter of change. The _Initiator_ ![v_it][eq_v_it], issues a create election transaction ![][EC_t]. The election MUST contain outputs  such that each output is populated with the public key of the Validator ![][eq_v_k] s.t. ![][v_k_in_V_t], and an amount equal to the current power ![][eq_p(v_k, t)]  of the Validator.
+An Election proposal is a transaction representing the matter of change. The _Initiator_ ![v_it][eq_v_it], issues an election transaction ![][EC_t]. The election MUST contain outputs  such that each output is populated with the public key of the Validator ![][eq_v_k] s.t. ![][v_k_in_V_t], and an amount equal to the current power ![][eq_p(v_k, t)]  of the Validator.
 
 #### Voting
 Once ![][EC_t] is committed in a block, the election starts. Independently and asynchronously, each Validator may spend its vote tokens (referred as ![][T_k]) to the election address ![][EC_t_addr] to show agreement on the matter of change. The Election Address ![][EC_t_addr] is the `id` of the transaction ![][EC_t].
@@ -92,21 +113,40 @@ If below conditions hold then the election is concluded and the proposed change 
 The above constraints state that if the Validators with which an election ![][EC_t] was initiated still hold super-majority then the election can be concluded.
 
 ##### Approach 1 vs Approach 2
-
 Approach 1 is easier to comprehend and explain because of how constrained it is.
 
-Approach 2 has two benefits over the Approach 1.
-
-1. Elections can have intersections. In other words, the following is possible:
-
-```election 1 creation height < election 2 creation height < election 1 conclusion height < election 2 conclusion height```
-
-2. Elections can survive network updates. For example, each Validator in the network can move to a new address and delegate his vote to the new address. Elections created prior to such migrations can still be concluded.
+Approach 2 allows elections to survive validator set changes within certain limits.
 
 For a start, we plan to implement Approach 1 because of its simplicity. We are able to switch to Approach 2 in the future by the means of a soft fork with additional support for the new type of elections described in Approach 2.
 
 ### Applying change
 During the `end_block` call, all transactions about to be committed are checked. Every vote token triggers a function (which implements **Approch 1** or **Approach 2**) that checks the necessary conditions. If the function returns `True` then the current Validator applies the suggested change in ![][EC_t]. Given the BFT nature of the system, all non-Byzantine Validator will commit the change at the same block height.
+
+### Command-line interface
+The interface for creating an election depends on the type of the election and has to be described by the BEP documenting this particular type.
+
+The CLI command for creating a new election should use the following template:
+```
+$ bigchaindb election new <type> ...
+```
+
+The CLI command for approving an election does not depend on its type. It should follow the template:
+```
+$ bigchaindb election approve <election_id> --private-key PATH_TO_PRIVATE_KEY
+```
+
+Moreover, we do not need to know the election type to display its status. The command should look like:
+```
+$ bigchaindb election show <election_id>
+```
+
+The expected output is:
+```
+status=<status>
+```
+
+
+Additional data, specific to a particular election type, can be added to the output of the status command.
 
 ## Rationale
 A *blockchain* is a Byzantine fault tolerant, replicated state machine. BigchainDB is a permissioned one, this means that the nodes that validate transactions and create blocks know about each other: their identity is not anonymous. This is not true for networks like Bitcoin or Ethereum: in those permissionless blockchains the Validator set changes over time and the identity is anonymous.
@@ -117,7 +157,12 @@ In this context, a Member of a BigchainDB Network can start an election on a spe
 
 The *matter* is domain specific, and can be something like adding a new Validator to the Network, adding support for a new transaction model, and so on. Each *matter* has some specific logic (code) that is triggered when the election is successful. All non byzantine nodes reach the same conclusion on the election at the same block height, and they all trigger the same logic if the election is successful (even if they voted against).
 
-### About Election finality
+#### About the conclusion threshold
+The conclusion threshold we choose in this BEP is ⅔ of the Network power. Although it matches the threshold used by consensus algorithms powering permissioned blockchains with instant finality, it does not, in general, have to be this big for custom elections.
+
+The consensus engine ensures all the validators agree on the exact block they commit. Therefore, byzantine actors can not make one group of validators think a particular election is concluded while at the same time making the other group think the same election is not concluded, even when the threshold is less than ⅔.
+
+#### About Election finality
 We had some discussions around the *finality* of an election. In the original design, the current Validator Set is used to decide the outcome of an election. Any change to the Validator Set would make all existing elections invalid. To overcome this issue, another approach has been proposed and documented. This new approach can tolerate a certain degree of change to the Validator Set.
 
 ## Backwards Compatibility
