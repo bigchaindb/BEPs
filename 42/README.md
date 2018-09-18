@@ -121,8 +121,7 @@ validators=[{
         "type": "...",
         "value": "..."
     },
-    "power": "...",
-    "name": "..."
+    "power": "..."
 }]
 app_hash=...
 
