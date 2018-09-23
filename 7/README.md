@@ -22,7 +22,7 @@ The _BigchainDB Server_ **Public API** includes:
 
 * The configuration defaults, schemas, and paths where configuration files are stored.
 * The Command Line Interface, i.e. `bigchaindb subcommand STUFF`
-* The transaction spec. Currently known as the IPDB Transaction Spec, but that may get renamed.
+* The Transaction Spec.
 * The HTTP API (including payloads sent to and received from them, so it includes transactions here again).
 * The Events API, also called the Event Stream API.
 
@@ -38,7 +38,7 @@ At the time of writing, the various components of the BigchainDB Public API were
 
 * [Configuration settings (latest release)](https://docs.bigchaindb.com/projects/server/en/latest/server-reference/configuration.html)
 * [Command Line Interface (latest release)](https://docs.bigchaindb.com/projects/server/en/latest/server-reference/bigchaindb-cli.html)
-* [Transaction Spec (all versions)](https://github.com/ipdb/ipdb-tx-spec)
+* [Transactions Specs (all versions)](https://github.com/bigchaindb/BEPs/tree/master/tx-specs)
 * [HTTP API (latest release)](https://docs.bigchaindb.com/projects/server/en/latest/http-client-server-api.html)
 * [Events API (latest release)](https://docs.bigchaindb.com/projects/server/en/latest/events/index.html)
 
