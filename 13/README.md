@@ -16,7 +16,7 @@ This document contains a specification of a BigchainDB *transaction*, including:
 
 # Motivation
 
-Anyone who wants to write a BigchainDB server or BigchainDB driver needs to know how to assembe, compute and check the validity of BigchainDB transactions. They don't want to read some example code and guess. They want a spec. This is that spec.
+Anyone who wants to write a BigchainDB server or BigchainDB driver needs to know how to assemble, compute and check the validity of BigchainDB transactions. They don't want to read some example code and guess. They want a spec. This is that spec.
 
 # Compatibility and Known Implementations
 
@@ -52,6 +52,10 @@ In v2.0, when computing the `fulfillment` for each input, the message-to-sign *d
 
 For the reasoning, see [bigchaindb/bigchaindb#1937](https://github.com/bigchaindb/bigchaindb/pull/1937).
 
+## 4. Three new transaction types
+
+In v1.0, the only allowed values for `operation` were `"CREATE"` and `"TRANSFER"`. In v2.0, three more values are allowed: `"VALIDATOR_ELECTION"`, `"CHAIN_MIGRATION_ELECTION"` and `"VOTE"`. Those new transaction types have different validation rules.
+
 # Change Process
 
 The process to change this document is [BEP-2 (COSS)](../2/README.md).
@@ -67,6 +71,7 @@ The process to change this document is [BEP-2 (COSS)](../2/README.md).
 - [1. Allowed "version" value changes from "1.0" to "2.0"](#1-allowed-version-value-changes-from-10-to-20)
 - [2. Hash-then-Fulfill to Fulfill-then-Hash](#2-hash-then-fulfill-to-fulfill-then-hash)
 - [3. A Change in the Message-to-Sign](#3-a-change-in-the-message-to-sign)
+- [4. Three new transaction types](#4-three-new-transaction-types)
 - [Introduction](#introduction)
 - [Versioning](#versioning)
 - [Example Transactions](#example-transactions)
@@ -457,7 +462,13 @@ To change it into a 1-of-2 condition, just change the value of `threshold` to 1 
 
 ### Transaction Components: Operation
 
-The operation indicates the type/kind of transaction, and how it should be validated. It must be a string. The allowed values are `"CREATE"` and `"TRANSFER"`.
+The operation indicates the type/kind of transaction, and how it should be validated. It must be a string. The allowed values are:
+
+- `"CREATE"`
+- `"TRANSFER"`
+- `"VALIDATOR_ELECTION"`
+- `"CHAIN_MIGRATION_ELECTION"`
+- `"VOTE"`
 
 ### Transaction Components: Asset
 
@@ -484,6 +495,12 @@ In a TRANSFER transaction, an asset must be an <a href="#associative-array"><spa
     "id": "38100137cea87fb9bd751e2372abb2c73e7d5bcf39d940a5516a324d9c7fb88d"
 }
 ```
+
+In a VALIDATOR_ELECTION transaction, the allowed asset values are governed by [BEP-18](../18) and [BEP-21](../21).
+
+In a CHAIN_MIGRATION_ELECTION transaction, the allowed asset values are governed by [BEP-18](../18) and [BEP-42](../42).
+
+In a VOTE transaction, the allowed asset values are governed by [BEP-18](../18).
 
 ### Transaction Components: Metadata
 
@@ -759,6 +776,10 @@ If the database backend is MongoDB:
   - must not contain the <a href="https://en.wikipedia.org/wiki/Null_character">null character</a> (Unicode code point U+0000)
 
 - If there’s a key named `"language"` anywhere in the JSON documents stored in `asset.data` or `metadata`, then its value must be one of the <a href="https://docs.mongodb.com/manual/reference/text-search-languages/">supported values (language codes)</a>, because MongoDB uses that to guide its full text search. Moreover, BigchainDB Server only allows the language codes supported by *MongoDB Community Edition* (not MongoDB Enterprise).
+
+#### Additional Rules
+
+There are additional validation rules affecting VALIDATOR_ELECTION, CHAIN_MIGRATION_ELECTION and VOTE transactions. See [BEP-18](../18), [BEP-21](../21) and [BEP-42](../42).
 
 ## A Note about Owners
 
