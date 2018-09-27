@@ -62,12 +62,12 @@ Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new nod
   $ bigchaindb election approve <election_id> --private-key /home/user/.tendermint/config/priv_validator.json
   ```
 
-  The above command `POST`s a [`VALIDATOR_ELECTION_VOTE`][spec_validator_election_vote] transaction casting the vote of the node for given `election_id`.
-  NOTE: The `VALIDATOR_ELECTION_VOTE` transaction is signed using the private key generated and stored by Tendermint in `priv_validator.json`.
+  The above command `POST`s a [`ELECTION_VOTE`][spec_election_vote] transaction casting the vote of the node for given `election_id`.
+  NOTE: The `ELECTION_VOTE` transaction is signed using the private key generated and stored by Tendermint in `priv_validator.json`.
 
 
 ### Validating transaction schemas
-Two new transaction specs namely, [`VALIDATOR_ELECTION`][spec_validator_election] and [`VALIDATOR_ELECTION_VOTE`][spec_validator_election_vote] have been proposed for implementing this BEP. It is worth mentioning that `VALIDATOR_ELECTION` is an extension of [`CREATE` transaction](../13) and `VALIDATOR_ELECTION_VOTE` is an extension of [`TRANSFER` transaction](../13). Consequentially the validation of each of these new transaction specs must be evaluated by re-using the validation for the base spec after which the schema can be validated against its extended spec.
+Two new transaction specs namely, [`VALIDATOR_ELECTION`][spec_validator_election] and [`ELECTION_VOTE`][spec_validator_election_vote] have been proposed for implementing this BEP. It is worth mentioning that `VALIDATOR_ELECTION` is an extension of [`CREATE` transaction](../13) and `ELECTION_VOTE` is an extension of [`TRANSFER` transaction](../13). Consequentially the validation of each of these new transaction specs must be evaluated by re-using the validation for the base spec after which the schema can be validated against its extended spec.
 
 
 ### Election process
@@ -117,4 +117,4 @@ BigchainDB 2.0.0b6
 </p>
 
 [spec_validator_election]: ./transaction_validator_election_v2.0.yaml
-[spec_validator_election_vote]: ../18/transaction_vote_v2.0.yaml
+[spec_election_vote]: ../18/transaction_vote_v2.0.yaml
