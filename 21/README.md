@@ -11,31 +11,28 @@ editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
 The current [BEP-3](../3/) spec for adding new validators requires that the node administrators coordinate when dynamically adding a new validator i.e. all the node operators have to simultaneously execute `upsert-validator` in order to ensure that the validator is added on all the nodes. A lack of coordination can result in a situation wherein only a part of the network updates their validator set which could eventually lead to a network hangup. Furthermore, for a sufficiently large network the coordination itself can become a tedious task.
 Another major issue with the current implementation is that a new dynamically added validator (`V_i`) cannot be propagated to any new dynamically added validators added after `V_i` i.e. consider the following scenario,
 
-
 - Given a 4 node network wherein the `genesis.json` file contains each of the four nodes `{N1,N2,N3,N4}` a validator.
 - When a new node `N5` is to be dynamically added, each node executes `upsert-validator` on their respective nodes (including `N5`) and adds `N5`.
 - When another new node `N6` needs to be added then each of the nodes in the network `{N1,N2,N3,N4,N5}` execute `upsert-validator` to add the new node `N6`.
 - At this point the node `N6` won't see `N5` as a validator because the `genesis.json` would only contain `{N1,N2,N3,N4}` as validators.
 - Since `N5` was added dynamically and `upsert-validator` only mutates the local validator set of a given node it implies that in order for the `N6` to see `N5` as a validator it would have to execute `upsert-validator N5_PUB_KEY N5_POWER` on its own node at the exact block height (when syncing with the network) when `N5` was previously added by the network.
 
-
 From the above description it is evident that propagating dynamically added validators is a major hassle with huge possibility of errors.
 
+## Technical Details
 
-## Technical details
-
-To solve the aforementioned issue, following change to the behaviour of `upsert-validator` is being proposed. We use the transaction election process (TEP) proposed in [BEP 18](../18) to automate and synchronize the operation on the validator set.
+To solve the aforementioned issue, the following change to the behaviour of `upsert-validator` is being proposed. We use the transaction election process (TEP) proposed in [BEP 18](../18) to automate and synchronize the operation on the validator set.
 
 Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new node `E` to the network then following steps should be followed,
 
 1. Node `A` executes
 
-  ```
-  $ bigchaindb election new upsert-validator E_PUBKEY E_POWER E_NODE_ID --private-key /home/user/.tendermint/config/priv_validator.json
-  [SUCCESS] Submitted proposal with id: <election_id>
- ```
+   ```
+   $ bigchaindb election new upsert-validator E_PUBKEY E_POWER E_NODE_ID --private-key /home/user/.tendermint/config/priv_validator.json
+   [SUCCESS] Submitted proposal with id: <election_id>
+   ```
 
-  The above command `POST`s a [`VALIDATOR_ELECTION`][spec_validator_election] transaction and returns the `election_id`.
+  The above command `POST`s a `VALIDATOR_ELECTION` transaction and returns the `election_id`.
 
   NOTE:
 
@@ -48,61 +45,62 @@ Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new nod
 
 3. The node operator can list the contents of `election_id` request using [`bigchaindb election show ...`](../18),
 
-  ```
-  $ bigchaindb election show <election_id>
-  public_key=Wn2DedV9OA0LJJjOxr7Sl7jqCSYjQihA6dCBX+iHaEI=
-  power=10
-  node_id=82190eb6396bdd80b83aef0f931d0f45738ed075
-  status=ONGOING
-  ```
+   ```
+   $ bigchaindb election show <election_id>
+   public_key=Wn2DedV9OA0LJJjOxr7Sl7jqCSYjQihA6dCBX+iHaEI=
+   power=10
+   node_id=82190eb6396bdd80b83aef0f931d0f45738ed075
+   status=ONGOING
+   ```
 
 4. If the node operator aggrees to the operation being proposed by the `election_id` then they can vote on the same using the following,
 
-  ```
-  $ bigchaindb election approve <election_id> --private-key /home/user/.tendermint/config/priv_validator.json
-  ```
+   ```
+   $ bigchaindb election approve <election_id> --private-key /home/user/.tendermint/config/priv_validator.json
+   ```
 
-  The above command `POST`s a [`ELECTION_VOTE`][spec_election_vote] transaction casting the vote of the node for given `election_id`.
-  NOTE: The `ELECTION_VOTE` transaction is signed using the private key generated and stored by Tendermint in `priv_validator.json`.
+  The above command `POST`s a `VOTE` transaction casting the vote of the node for given `election_id`.
+  NOTE: The `VOTE` transaction is signed using the private key generated and stored by Tendermint in `priv_validator.json`.
 
+### Two New Transaction Types & Validating Them
 
-### Validating transaction schemas
-Two new transaction specs namely, [`VALIDATOR_ELECTION`][spec_validator_election] and [`ELECTION_VOTE`][spec_validator_election_vote] have been proposed for implementing this BEP. It is worth mentioning that `VALIDATOR_ELECTION` is an extension of [`CREATE` transaction](../13) and `ELECTION_VOTE` is an extension of [`TRANSFER` transaction](../13). Consequentially the validation of each of these new transaction specs must be evaluated by re-using the validation for the base spec after which the schema can be validated against its extended spec.
+Two new transaction ("operation") types are proposed, namely `VALIDATOR_ELECTION` and `VOTE`. The `VALIDATOR_ELECTION` transaction is an extension of the`CREATE` transaction and `VOTE` is an extension of `TRANSFER`. A `VALIDATOR_ELECTION` transaction must satisfy all the constraints that a `CREATE` transaction must satisfy, plus some additional ones (e.g. its own JSON schema). A `VOTE` transaction must satisfy all the constraints that a `TRANSFER` transaction must satisfy, plus some additional ones (e.g. its own JSON schema).
 
+### Election Process
 
-### Election process
+#### Valid Election
 
-#### Valid election
+A valid `VALIDATOR_ELECTION` is one where the total change to validator set power is < 1/3 `CURRENT_POWER`.
 
-A valid `VALIDATOR_ELECTION` is one where change to validator set is `< 1/3 CURRENT_POWER`.
-
-#### Valid vote
+#### Valid Vote
 
 A validator can choose to vote/delegate/burn their vote. It is purely up to a voter to decide how to spend their vote.
 
-#### Election conclusion
+#### Election Conclusion
 
 Election conclusion is inherited from [TEP definition](../18#concluding-election). Note that this BEP is aimed at implementing only [constrained approach](../18#constrained-approach-approach-1).
 
+## Backwards Compatibility
 
-## Backwards Compatibility 
 The approach suggested in this specification is entirely different. The previous approach involved storing `upsert-validator` request in a seperate collection, which will not be required anymore. So migrating to the implementation of this new approach would involve to optionally drop collection holding the `upsert-validator` request.
-
 
 ## Implementation
 
-### Assignee(s)
-Primary assignee(s): @kansi
+### Assignees
+
+- @kansi
+- @ldmberman
+- @z-bowen
 
 ### Targeted Release
+
 BigchainDB 2.0.0b6
 
+## References
 
-## Reference(s)
 - [BEP-3](../3)
 - [BEP-18](../18)
 - [Tendermint validators](http://tendermint.readthedocs.io/en/master/specification/validators.html)
-
 
 ## Copyright Waiver
 
@@ -115,6 +113,3 @@ BigchainDB 2.0.0b6
   To the extent possible under law, all contributors to this BEP
   have waived all copyright and related or neighboring rights to this BEP.
 </p>
-
-[spec_validator_election]: ./transaction_validator_election_v2.0.yaml
-[spec_election_vote]: ../18/transaction_vote_v2.0.yaml
