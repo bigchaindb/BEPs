@@ -183,11 +183,11 @@ With every consequent migration, the migration height is overwritten.
 
 Since BigchainDB retains the blocks built by old Tendermint chains, the HTTP API offers the exact same experience as if there were no migrations.
 
-#### Migration election specs
+#### Chain Migration Election Transactions 
 
-We introduce a new transaction operation, `TENDERMINT_MIGRATION_ELECTION`, for the purpose of implementing migration elections. `TENDERMINT_MIGRATION_ELECTION` follows the base election spec documented in [the TEP](../18).
+We introduce a new transaction operation, `CHAIN_MIGRATION_ELECTION`, for the purpose of implementing chain-migration elections. A `CHAIN_MIGRATION_ELECTION` transaction follows the base election spec documented in [BEP-18](../18). At the time of writing, the JSON Schema file for a `CHAIN_MIGRATION_ELECTION` transaction could be found in the `bigchaindb/common/schema/` directory of [the bigchaindb/bigchaindb repository on GitHub](https://github.com/bigchaindb/bigchaindb).
 
-Election conclusion is inherited from [the TEP definition](../18#concluding-election).
+Election conclusion is inherited from [BEP-18: Concluding Election](../18#concluding-election).
 
 ## Copyright Waiver
 
