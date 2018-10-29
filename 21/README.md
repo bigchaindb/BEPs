@@ -8,7 +8,7 @@ editor: Vanshdeep Singh <vanshdeep@bigchaindb.com>
 
 ## Description
 
-The current [BEP-3](../3/) spec for adding new validators requires that the node administrators coordinate when dynamically adding a new validator i.e. all the node operators have to simultaneously execute `upsert-validator` in order to ensure that the validator is added on all the nodes. A lack of coordination can result in a situation wherein only a part of the network updates their validator set which could eventually lead to a network hangup. Furthermore, for a sufficiently large network the coordination itself can become a tedious task.
+The original [BEP-3](../3/) spec for adding new validators required that the node administrators coordinate when dynamically adding a new validator i.e. all the node operators have to simultaneously execute `upsert-validator` in order to ensure that the validator is added on all the nodes. A lack of coordination can result in a situation wherein only a part of the network updates their validator set which could eventually lead to a network hangup. Furthermore, for a sufficiently large network the coordination itself can become a tedious task.
 Another major issue with the current implementation is that a new dynamically added validator (`V_i`) cannot be propagated to any new dynamically added validators added after `V_i` i.e. consider the following scenario,
 
 - Given a 4 node network wherein the `genesis.json` file contains each of the four nodes `{N1,N2,N3,N4}` a validator.
@@ -64,7 +64,9 @@ Consider a network of 4 nodes `{A,B,C,D}`. If a node `A` wishes to add a new nod
 
 ### Two New Transaction Types & Validating Them
 
-Two new transaction ("operation") types are proposed, namely `VALIDATOR_ELECTION` and `VOTE`. The `VALIDATOR_ELECTION` transaction is an extension of the`CREATE` transaction and `VOTE` is an extension of `TRANSFER`. A `VALIDATOR_ELECTION` transaction must satisfy all the constraints that a `CREATE` transaction must satisfy, plus some additional ones (e.g. its own JSON schema). A `VOTE` transaction must satisfy all the constraints that a `TRANSFER` transaction must satisfy, plus some additional ones (e.g. its own JSON schema).
+Two new transaction ("operation") types are proposed, namely `VALIDATOR_ELECTION` and `VOTE`. The `VALIDATOR_ELECTION` transaction is an extension of the`CREATE` transaction and `VOTE` is an extension of `TRANSFER`. A `VALIDATOR_ELECTION` transaction must satisfy all the constraints that a `CREATE` transaction must satisfy, plus some additional ones (e.g. its own JSON Schema). A `VOTE` transaction must satisfy all the constraints that a `TRANSFER` transaction must satisfy, plus some additional ones (e.g. its own JSON Schema).
+
+Note: At the time of writing, all BigchainDB JSON Schema files (YAML files) could be found in the `bigchaindb/common/schema/` directory of [the bigchaindb/bigchaindb repository on GitHub](https://github.com/bigchaindb/bigchaindb).
 
 ### Election Process
 

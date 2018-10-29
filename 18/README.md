@@ -39,24 +39,26 @@ Each Validator checks every new transaction that is about to be committed in a b
 ### What is a valid Vote?
 A Validator must be able to discern valid Votes from invalid ones. A valid vote is a transaction where all the following conditions are true.
 
-1. The transaction follows the `TRANSFER` transaction spec.
-1. The transaction additionally follows the [election vote](./election_transaction_vote.yaml) transaction spec.
+1. It's a valid BigchainDB `TRANSFER` transaction.
+1. It conforms to the JSON Schema of a `VOTE` transaction.
 1. It spends one or more Vote Tokens to the Election Address.
 
+Note: At the time of writing, all BigchainDB JSON Schema files (YAML files) could be found in the `bigchaindb/common/schema/` directory of [the bigchaindb/bigchaindb repository on GitHub](https://github.com/bigchaindb/bigchaindb).
 
 ### What is a valid Election?
-A Validator must be able to discern valid Elections from invalid ones. A valid Election is a transaction where **all** the following conditions are true.
+A Validator must be able to discern valid Elections from invalid ones. A valid Election is a transaction where all the following conditions are true.
 
-1. The transaction complies to the `CREATE` transaction JSON schema.
-1. The transaction additionally complies to the [election JSON schema](#./election_transaction.yaml).
-1. The transaction meets schema requirements, specific to the particular election, if any.
+1. It's a valid BigchainDB `CREATE` transaction.
+1. It conforms to one of the JSON Schemas for BigchainDB elections (e.g. `VALIDATOR_ELECTION` or `CHAIN_MIGRATION_ELECTION`).
 1. `outputs` has as many entries as the total number of Validators.
 1. Each Validator is represented in `outputs`.
 1. Each entry in `outputs` can be spent by only one Validator, and the amount attached to it is equal to the power of that Validator.
 
-**Note: any change in the Validator Set makes old Elections invalid. Check [approach 2](#generalized-approach-approach-2) for a process that can tolerate a certain degree of change to the Validator Set.**
+**Note: Any change in the Validator Set makes old Elections invalid. Check [approach 2](#generalized-approach-approach-2) for a process that can tolerate a certain degree of change to the Validator Set.**
 
-**Note 2: pending validator changes do not make elections invalid.**
+**Note 2: Pending validator changes do not make elections invalid.**
+
+Note 3: At the time of writing, all BigchainDB JSON Schema files (YAML files) could be found in the `bigchaindb/common/schema/` directory of [the bigchaindb/bigchaindb repository on GitHub](https://github.com/bigchaindb/bigchaindb).
 
 ### Election statuses
 The lifecycle of an Election is described by the three statuses:
