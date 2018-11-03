@@ -13,7 +13,7 @@ This BEP outlines code that could be written as an initial demo of how one can u
 
 # Motivation
 
-Potential BigchainDB users often ask about how they can keep some data private, or private-for-some. There are many options. One useful building block is _proxy re-encryption_. It would be nice if there was some example code (with documentation) showing a way to use proxy re-encryption with BigchainDB.
+Potential BigchainDB users often ask about how they can keep some data private, or private-for-some. There are many options. One useful building block is _proxy re-encryption_.
 
 # Cryptographic Background
 
