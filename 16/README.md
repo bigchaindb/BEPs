@@ -2,9 +2,13 @@
 shortname: BEP-16
 name: How to handle external pull requests
 type: Meta
-status: Stable
+status: Deprecated
 editor: Troy McConaghy <troy@bigchaindb.com>
 ```
+
+# Deprecation Warning
+
+The following process was followed when BigchainDB GmbH (the company) led the development of BigchainDB software. At some point, BigchainDB GmbH will no longer have that role, so BEP-16 is deprecated.
 
 # Abstract
 
