@@ -12,7 +12,7 @@ This document describes a consensus-oriented specification system (COSS) for bui
 This specification is based on [unprotocols.org 2/COSS](https://rfc.unprotocols.org/spec:2/COSS/) and on [EIP1 - EIP Purpose and Guidelines](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1.md).
 
 ## Change Process
-This document is governed by the [BEP-2 (COSS)](../2/README.md) (COSS).
+This document is governed by the [BEP-2 (COSS)](../2/README.md).
 
 ## Language
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [BCP 14](https://tools.ietf.org/html/bcp14) \[[RFC2119](https://tools.ietf.org/html/rfc2119)\] \[[RFC8174](https://tools.ietf.org/html/rfc8174)\] when, and only when, they appear in all capitals, as shown here.
