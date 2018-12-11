@@ -63,12 +63,12 @@ Here's what we reccommend a node operator do if they discover illegal data store
 1. Be sure that illegal data has been clearly identified. Have some reasonable, validated and difficult-to-dispute evidence that the data is illegal. Avoid [crying wolf](https://dictionary.cambridge.org/dictionary/english/cry-wolf).
 1. Publicly announce that you've discovered illegal data on your computer and that you are following the plan spelled out here. You can link to this page. The process now begins. You are acting responsibly. Law enforcement should give you a a reasonable amount of time to act.
 1. Inform all other members of the BigchainDB consortium where your node is a cluster member. Tell them to follow the same plan.
-1. Contact BigchainDB GmbH at contact@bigchaindb.com or some other way. Employees tend to have an email like firstname@bigchaindb.com. You need their help. They will help. They don't want you to get in trouble with the law either! That would be bad for BigchainDB. (Note: You don't _have_ to contact BigchainDB if you have developers who are competent to do the next step without help.)
-1. The BigchainDB team (or your team) will work with you create a modified version of BigchainDB Server (software) that is okay with certain specific data being deleted. This the core magic bit. It means that soon you will be deleting data and breaking the "immutability rule" but there's _nothing_ that was stopping you from doing that before. You could always delete data, but it would have broken BigchainDB. Unless BigchainDB was modified not to care, which is what's now happening!
+1. Maybe contact the current maintainers of BigchainDB Server (i.e. the bigchaindb/bigchaindb repository on GitHub) to ask for assistance, if needed.
+1. Create a modified version of BigchainDB Server (software) that is okay with certain specific data being deleted, possibly with the assistance of the current maintainers of BigchainDB Server. This the core magic bit. It means that soon you will be deleting data and breaking the "immutability rule" but there's _nothing_ that was stopping you from doing that before. You could always delete data, but it would have broken BigchainDB. Unless BigchainDB was modified not to care, which is what's now happening!
 1. Upgrade BigchainDB Server on your node to run the new version. *All nodes in the network must do this upgrade.*
 1. Delete the illegal data. *All nodes in the network must do this deletion step.*
 
-Optional follow-up: a _second_ version of BigchainDB Server that will only believe the new situation, with the illegal data deleted is okay. The old situation, with the illegal data still there, should register as an error. Upgrade to that.
+Optional follow-up: Develop _one more_ version of BigchainDB Server that will only believe the new situation, with the illegal data deleted is okay. The old situation, with the illegal data still there, should register as an error. Upgrade to that.
 
 Note: BigchainDB currently stores all data on-chain, but if it stores some data off-chain in the future, then the general idea of the plan would still work. It would just have to be modified a bit.
 
