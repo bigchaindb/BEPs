@@ -77,7 +77,7 @@ We required that all smart contract code be written in Solidity because, at the 
 
 # Change Process
 
-BigchainDB GmbH has a process to improve BEPs like this one. Please see [BEP-1 (C4)](../1) and [BEP-2 (COSS)](../2).
+There is a process to improve BEPs like this one. Please see [BEP-1 (C4)](../1) and [BEP-2 (COSS)](../2).
 
 # Implementation
 
