@@ -140,7 +140,7 @@ The basic idea is that everyone hosting a Bitcoin or Ethereum full node will hav
 
 ## How to Improve this BEP
 
-BigchainDB GmbH has a process to improve BEPs like this one. Please see [BEP-1 (C4)](https://github.com/bigchaindb/BEPs/blob/master/1) and [BEP-2 (COSS)](https://github.com/bigchaindb/BEPs/blob/master/2).
+There is a process to improve BEPs like this one. Please see [BEP-1 (C4)](https://github.com/bigchaindb/BEPs/blob/master/1) and [BEP-2 (COSS)](https://github.com/bigchaindb/BEPs/blob/master/2).
 
 ## Copyright Waiver
 
