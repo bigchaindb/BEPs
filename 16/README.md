@@ -8,7 +8,9 @@ editor: Troy McConaghy <troy@bigchaindb.com>
 
 # Deprecation Warning
 
-The following process was followed when BigchainDB GmbH (the company) led the development of BigchainDB software. At some point, BigchainDB GmbH will no longer have that role, so BEP-16 is deprecated.
+The following process was followed when BigchainDB GmbH (the company) led the development of BigchainDB software. BigchainDB GmbH no longer has that role, so BEP-16 is deprecated.
+
+BEP-16 was replaced by [BEP-24](../24).
 
 # Abstract
 

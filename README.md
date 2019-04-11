@@ -33,4 +33,5 @@ Short Name   | Title                                                         | T
 [BEP-21](21) | Dynamically add/update/remove validators at runtime           | Standard | Raw        | Vanshdeep Singh
 [BEP-22](22) | Proxy Re-Encryption Demo 1                                    | Standard | Raw        | Troy McConaghy
 [BEP-23](23) | Performance Study: Analysis of Transaction Throughput in a BigchainDB Network | Informational | Raw        | Alberto Granzotto
+[BEP-24](24) | How to handle ALL pull requests                               | Meta     | Draft      | Troy McConaghy
 [BEP-42](42) | Handling new transaction models and storage schemas           | Informational | Raw   | Vanshdeep Singh
