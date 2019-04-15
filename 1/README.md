@@ -45,8 +45,7 @@ C4 is meant to provide a reusable optimal collaboration model for open source so
 
 1. The project SHALL use the Apache 2 license.
 1. All contributions to the project source code ("patches") SHALL use the same license as the project.
-1. A new contributor contributing a patch MUST agree to a Contributor License Agreement (CLA) before their patch can be merged.
-1. Each Contributor SHALL be responsible for identifying themselves in the project Contributor list.
+1. All contributors contributing a patch MUST do and understand the steps listed in [BEP-24](../24).
 
 ### 2.3. Patch Requirements
 
