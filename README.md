@@ -20,6 +20,7 @@ Short Name   | Title                                                         | T
 [BEP-6](6)   | Shared Workspace Protocol                                     | Meta     | Draft      | Alberto Granzotto
 [BEP-7](7)   | Definition of the BigchainDB Public API                       | Informational | Raw   | Troy McConaghy
 [BEP-8](8)   | Restore system state after crash                              | Standard | Raw        | Vanshdeep Singh
+[BEP-9](9)   | Transaction Code Refactoring, Phase 1                         | Standard | Raw        | Troy McConaghy
 [BEP-10](10) | A Strangler Application Approach to Rewriting Some Code in Go | Informational | Raw   | Alberto Granzotto
 [BEP-11](11) | ORM Implementation for Official BigchainDB Python Driver      | Standard | Raw        | Manan Patel
 [BEP-12](12) | BigchainDB Transaction Spec v1                                | Standard | Stable     | Troy McConaghy
